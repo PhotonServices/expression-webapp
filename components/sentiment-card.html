@@ -11,6 +11,7 @@ found at http://opensource.org/licenses/MIT
 Author: Francisco Gutiérrez (fsalvador23@gmail.com)
 -->
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../components/action-bar.html">
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,100' rel='stylesheet' type='text/css'>
 <polymer-element name="sentiment-card" attributes="sentiment title image">
   <template>
@@ -36,6 +37,9 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     -moz-transform-style: preserve-3d;
     -o-transform-style: preserve-3d;
     transform-style: preserve-3d;
+    -webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
+    -moz-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
+    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
   }
 
   #card.flipped {
@@ -84,6 +88,11 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     width: 280px;
     color: white;
   }
+  action-bar{
+    position:absolute;
+    right: -10px;
+    top: -5px;
+  }
   </style>
   <section class="container">
     <div id="card">
@@ -92,7 +101,8 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
         <h1 class='title'>{{title}}</h1>
       </div>
       <div id="back">
-        <h1 class='content'>This is the backside of the card, yay!!!</h1>
+        <action-bar></action-bar>
+        <h1 class='content'></h1>
         <h1 class='title'>{{title}}</h1>
       </div>
     </div>
@@ -118,7 +128,7 @@ Polymer("sentiment-card", {
       self.card.className = "flipped";
       setTimeout(function () {
         self.front.style.display = "none";
-     }, 500);
+     }, 200);
     });
   }
 });
