@@ -1,0 +1,126 @@
+<!--
+@license
+The MIT License (MIT)
+
+Copyright (c) 2014 The Photon Services Authors. All rights reserved.
+This code may only be used under the BSD style license
+found at http://opensource.org/licenses/MIT
+
+-->
+<!-- Sentiment Card View Component.
+Author: Francisco Gutiérrez (fsalvador23@gmail.com)
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,100' rel='stylesheet' type='text/css'>
+<polymer-element name="sentiment-card" attributes="sentiment title image">
+  <template>
+  <style>
+  :host{
+    width: 300px;
+    height: 210px;
+    font-family: 'Roboto','Helvetica', sans-serif;
+  }
+  .container {
+    width: 300px;
+    height: 210px;
+  }
+
+  #card {
+    width: 100%;
+    height: 100%;
+    -webkit-transition: -webkit-transform 1s;
+    -moz-transition: -moz-transform 1s;
+    -o-transition: -o-transform 1s;
+    transition: transform 1s;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
+
+  #card.flipped {
+    -webkit-transform: rotateY(180deg );
+    -moz-transform: rotateY(180deg );
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+  }
+
+  #card div {
+    display: block;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  #card #front {
+    background: red;
+  }
+  #card #back {
+    background: blue;
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg );
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+  }
+  #front img {
+    display:block;
+    margin-top: 26.5px;
+    margin-bottom: 22.5px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .title {
+    position: absolute;
+    bottom: 0px;
+    margin: 10px;
+    padding: 0px;
+    font-weight: 100;
+    font-size: 24px;
+    width: 280px;
+    color: white;
+  }
+  </style>
+  <section class="container">
+    <div id="card">
+      <div id="front" select="front">
+        <img src={{image}} height="120px" width="120px" alt="Item" align="center"/>
+        <h1 class='title'>{{title}}</h1>
+      </div>
+      <div id="back">
+        <h1 class='content'>This is the backside of the card, yay!!!</h1>
+        <h1 class='title'>{{title}}</h1>
+      </div>
+    </div>
+  </section>
+</template>
+<script>
+Polymer("sentiment-card", {
+  attached: function(){
+    var self = this.$;
+    var title = this.title;
+    var sentiment = this.sentiment;
+    if(sentiment > 1) {
+        self.front.style.backgroundColor = "#99CC00";
+        self.back.style.backgroundColor = "#99CC00";
+      } else if (sentiment < -1) {
+        self.front.style.backgroundColor = "#EA6153";
+        self.back.style.backgroundColor = "#EA6153";
+      } else {
+        self.front.style.backgroundColor = "#F39C12";
+        self.back.style.backgroundColor = "#F39C12";
+    }
+    this.addEventListener("click", function() {
+      self.card.className = "flipped";
+      setTimeout(function () {
+        self.front.style.display = "none";
+     }, 500);
+    });
+  }
+});
+</script>
+</polymer-element>
