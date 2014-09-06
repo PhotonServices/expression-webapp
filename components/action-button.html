@@ -1,0 +1,30 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-icon-button/core-icon-button.html">
+<!--
+action-bar: A bar which holds a set of action items.
+-->
+<polymer-element name="action-button" attributes="pin tooltip icon onAction">
+  <template>
+  <style>
+  :host {
+    padding:0px;
+    margin:0px;
+  }
+  core-icon-button {
+    margin:1.5px;
+    background: #107FC9;
+    border-radius: 50px;
+    -webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
+    -moz-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
+    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
+  }
+  </style>
+  <div vertical layout center id="bar">
+    <core-icon-button icon="{{icon}}"></core-icon-button>
+  </div>
+</template>
+<script>
+Polymer('action-button', {
+});
+</script>
+</polymer-element>

@@ -1,0 +1,26 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="action-button.html">
+<!--
+action-bar: A bar which holds a set of action items.
+-->
+<polymer-element name="action-bar" attributes="">
+  <template>
+  <style>
+  .back {
+    width:  5px;
+    height: 5px;
+    background:white;
+    border-radius: 150px;
+  }
+  </style>
+  <div vertical layout center id="bar">
+    <action-button name="pin"  tooltip="" icon="keep" onAction=""></action-button>
+    <action-button name="pin"  tooltip="" icon="create" onAction=""></action-button>
+    <action-button name="pin"  tooltip="" icon="send" onAction=""></action-button>
+  </div>
+</template>
+<script>
+Polymer('action-bar', {
+});
+</script>
+</polymer-element>
