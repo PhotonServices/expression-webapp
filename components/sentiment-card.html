@@ -11,7 +11,8 @@ found at http://opensource.org/licenses/MIT
 Author: Francisco Gutiérrez (fsalvador23@gmail.com)
 -->
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../components/action-bar.html">
+<link rel="import" href="action-bar.html">
+<link rel="import" href="widget-bar.html">
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,100' rel='stylesheet' type='text/css'>
 <polymer-element name="sentiment-card" attributes="sentiment title image">
   <template>
@@ -101,6 +102,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
       </div>
       <div id="back">
         <action-bar></action-bar>
+        <widget-bar></widget-bar>
         <h1 class='content'></h1>
         <h1 class='title'>{{title}}</h1>
       </div>
