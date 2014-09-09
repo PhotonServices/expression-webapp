@@ -5,27 +5,33 @@
 <!--
 action-bar: A bar which holds a set of action items.
 -->
-<polymer-element name="action-button" attributes="icon" on-click="{{clickHandler}}" vertical layout center>
+<polymer-element name="action-button" attributes="icon theme" on-click="{{clickHandler}}" horizontal layout center>
   <template>
   <style>
   :host {
-    padding:0px;
-    margin: 0px;
     width:  37.5px;
     height: 37.5px;
+    margin: 3.75px;
     border-radius: 50px;
-    background: #107FC9;
+      background: #107FC9;
     cursor: pointer;
+    -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.51);
+    -moz-box-shadow:    0px 2px 3px 0px rgba(0,0,0,0.51);
+    box-shadow:         0px 2px 3px 0px rgba(0,0,0,0.51);
   }
-  :host:hover{
-    -webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
-    -moz-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
-    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
+  :host(:hover){
+    -webkit-box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.51);
+    -moz-box-shadow:    0px 2px 6px 0px rgba(0,0,0,0.51);
+    box-shadow:         0px 2px 6px 0px rgba(0,0,0,0.51);
+  }
+  :host(:active){
+    -webkit-box-shadow: inset 0px 0px 2px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow:    inset 0px 0px 2px 0px rgba(0,0,0,0.75);
+    box-shadow:         inset 0px 0px 2px 0px rgba(0,0,0,0.75);
   }
   core-icon {
-    -webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
-    -moz-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
-    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
+    margin-left: auto;
+    margin-right: auto;
   }
   core-icon > svg{
     fill: white;
