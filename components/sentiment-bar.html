@@ -1,0 +1,42 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<!--
+A widget bar
+-->
+<polymer-element name="sentiment-bar" attributes="value sentiment">
+  <template>
+  <style>
+  :host{
+    width: 23px;
+    height: 100px;
+    color: white;
+    -webkit-box-shadow: 2px 1px 4px 0px rgba(0,0,0,0.51);
+    -moz-box-shadow:    2px 1px 4px 0px rgba(0,0,0,0.51);
+    box-shadow:         2px 1px 4px 0px rgba(0,0,0,0.51);
+  }
+  </style>
+  <div vertical layout center id="emoticon">
+  </div>
+</template>
+<script>
+Polymer('sentiment-bar', {
+  attached: function() {
+    var self = this.$;
+    this.style.height = this.value+"px";
+    // if(this.shadow == "true"){
+    //   this.style.boxShadow = "0px 2px 4px 0px rgba(0,0,0,0.51)";
+    // }
+    if(this.sentiment == "very-positive"){
+      this.style.background = "#00C273";
+    } else if(this.sentiment == "positive"){
+      this.style.background = "#86C300";
+    } else if(this.sentiment == "negative"){
+      this.style.background = "#FF8A00";
+    } else if(this.sentiment == "very-negative"){
+      this.style.background = "#FF0035";
+    } else if(this.sentiment == "neutral"){
+      this.style.background = "#FBBF00";
+    }
+  }
+});
+</script>
+</polymer-element>
