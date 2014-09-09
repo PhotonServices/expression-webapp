@@ -20,9 +20,6 @@ Polymer('sentiment-bar', {
   attached: function() {
     var self = this.$;
     this.style.height = this.value+"px";
-    // if(this.shadow == "true"){
-    //   this.style.boxShadow = "0px 2px 4px 0px rgba(0,0,0,0.51)";
-    // }
     if(this.sentiment == "very-positive"){
       this.style.background = "#00C273";
       this.innerHTML = ":D";

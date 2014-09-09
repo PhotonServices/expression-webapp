@@ -1,25 +1,37 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/core-icon-button/core-icon-button.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/core-icons/social-icons.html">
+
 <!--
 action-bar: A bar which holds a set of action items.
 -->
-<polymer-element name="action-button" attributes="pin tooltip icon onAction" on-click="{{clickHandler}}">
+<polymer-element name="action-button" attributes="icon" on-click="{{clickHandler}}" vertical layout center>
   <template>
   <style>
   :host {
     padding:0px;
-    margin:0px;
-  }
-  core-icon-button {
-    margin: 1.5px;
+    margin: 0px;
+    width:  37.5px;
+    height: 37.5px;
     border-radius: 50px;
     background: #107FC9;
+    cursor: pointer;
+  }
+  :host:hover{
     -webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
     -moz-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
     box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
   }
+  core-icon {
+    -webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
+    -moz-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
+    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
+  }
+  core-icon > svg{
+    fill: white;
+  }
   </style>
-  <core-icon-button icon="{{icon}}"></core-icon-button>
+  <core-icon icon="{{icon}}"></core-icon>
 </template>
 <script>
 Polymer('action-button', {
