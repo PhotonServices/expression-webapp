@@ -2,7 +2,7 @@
 <!--
 A widget bar
 -->
-<polymer-element name="sentiment-bar" attributes="value sentiment">
+<polymer-element name="sentiment-bar" attributes="value sentiment" on-click="{{clickHandler}}">
   <template>
   <style>
   :host{
@@ -14,8 +14,6 @@ A widget bar
     box-shadow:         2px 1px 4px 0px rgba(0,0,0,0.51);
   }
   </style>
-  <div vertical layout center id="emoticon">
-  </div>
 </template>
 <script>
 Polymer('sentiment-bar', {
@@ -27,15 +25,23 @@ Polymer('sentiment-bar', {
     // }
     if(this.sentiment == "very-positive"){
       this.style.background = "#00C273";
+      this.innerHTML = ":D";
     } else if(this.sentiment == "positive"){
       this.style.background = "#86C300";
+      this.innerHTML = ":)";
     } else if(this.sentiment == "negative"){
       this.style.background = "#FF8A00";
+      this.innerHTML = ":(";
     } else if(this.sentiment == "very-negative"){
       this.style.background = "#FF0035";
+      this.innerHTML = "D:";
     } else if(this.sentiment == "neutral"){
       this.style.background = "#FBBF00";
+      this.innerHTML = ":S";
     }
+  },
+  clickHandler: function(){
+      console.log(this);
   }
 });
 </script>

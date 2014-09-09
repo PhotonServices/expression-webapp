@@ -11,28 +11,25 @@ found at http://opensource.org/licenses/MIT
 Author: Francisco Gutiérrez (fsalvador23@gmail.com)
 -->
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="action-bar.html">
-<link rel="import" href="widget-bar.html">
+<link rel="import" href="action-container.html">
+<link rel="import" href="widget-container.html">
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,100' rel='stylesheet' type='text/css'>
 <polymer-element name="sentiment-card" attributes="sentiment title image">
   <template>
   <style>
   :host{
+    position: fixed;
     width: 300px;
     height: 210px;
     font-family: 'Roboto','Helvetica', sans-serif;
   }
-  .container {
-    width: 300px;
-    height: 210px;
-  }
   #card {
     width: 100%;
     height: 100%;
-    -webkit-transition: -webkit-transform 1s;
-    -moz-transition: -moz-transform 1s;
-    -o-transition: -o-transform 1s;
-    transition: transform 1s;
+    -webkit-transition: -webkit-transform 0.5s;
+    -moz-transition: -moz-transform 0.5s;
+    -o-transition: -o-transform 0.5s;
+    transition: transform 0.5s;
     -webkit-transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
     -o-transform-style: preserve-3d;
@@ -50,26 +47,27 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
   }
 
   #card div {
+    position: absolute;
+    background: blue;
     display: block;
     height: 100%;
     width: 100%;
     margin: 0px;
     padding: 0px;
-    position: absolute;
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     -o-backface-visibility: hidden;
     backface-visibility: hidden;
   }
   #card #front {
-    background: red;
+    /*background: red;*/
   }
   #card #back {
-    background: blue;
+    /*background: blue;*/
     -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg );
-    -o-transform: rotateY(180deg);
-    transform: rotateY(180deg);
+    -moz-transform:    rotateY(180deg);
+    -o-transform:      rotateY(180deg);
+    transform:         rotateY(180deg);
   }
   #front img {
     display:block;
@@ -88,26 +86,24 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     width: 280px;
     color: white;
   }
-  action-bar{
+  action-container {
     position:absolute;
     right: -15px;
     top: -5px;
   }
   </style>
-  <section class="container">
     <div id="card">
       <div id="front" select="front">
         <img src={{image}} height="120px" width="120px" alt="Item" align="center"/>
-        <h1 class='title'>{{title}}</h1>
+        <a href=""><h1 class='title'>{{title}}</h1></a>
       </div>
       <div id="back">
         <action-container></action-container>
         <widget-container></widget-container>
         <h1 class='content'></h1>
-        <h1 class='title'>{{title}}</h1>
+        <a href=""><h1 class='title'>{{title}}</h1></a>
       </div>
     </div>
-  </section>
 </template>
 <script>
 Polymer("sentiment-card", {
@@ -127,9 +123,7 @@ Polymer("sentiment-card", {
     }
     this.addEventListener("click", function() {
       self.card.className = "flipped";
-      setTimeout(function () {
-        self.front.style.display = "none";
-      }, 200);
+      self.front.style.display = "none";
     });
   }
 });

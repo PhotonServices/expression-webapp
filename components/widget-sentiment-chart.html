@@ -1,29 +1,31 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="sentiment-bar.html">
 
 <!--
 A widget bar
 -->
-<polymer-element name="card-widget-sentiment">
+<polymer-element name="widget-sentiment-chart">
   <template>
   <style>
   :host {
-    margin: 20px;
+    position: relative;
+    cursor: pointer;
+    overflow:hidden;
   }
   </style>
   <div horizontal layout end id="sentimentBar" on-click="{{clickHandler}}">
     <sentiment-bar value="25" sentiment="very-negative"></sentiment-bar>
     <sentiment-bar value="15" sentiment="negative"></sentiment-bar>
     <sentiment-bar value="25" sentiment="neutral"></sentiment-bar>
-    <sentiment-bar value="20" sentiment="positive"></sentiment-bar>
+    <sentiment-bar value="100" sentiment="positive"></sentiment-bar>
     <sentiment-bar value="15" sentiment="very-positive"></sentiment-bar>
-  </span>
   </div>
 </template>
 <script>
-Polymer('card-widget-sentiment', {
+Polymer('widget-sentiment-chart', {
   clickHandler: function(){
-      console.log("asd");
+      console.log(this);
   }
 });
 </script>
