@@ -3,7 +3,7 @@
 <!--
 action-bar: A bar which holds a set of action items.
 -->
-<polymer-element name="action-button" attributes="pin tooltip icon onAction">
+<polymer-element name="action-button" attributes="pin tooltip icon onAction" on-click="{{clickHandler}}">
   <template>
   <style>
   :host {
@@ -13,17 +13,19 @@ action-bar: A bar which holds a set of action items.
   core-icon-button {
     margin:1.5px;
     border-radius: 50px;
+    background: #107FC9;
     -webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
     -moz-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
     box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
   }
   </style>
-  <div>
-    <core-icon-button icon="{{icon}}"></core-icon-button>
-  </div>
+    <core-icon-button icon="{{icon}}" click=""></core-icon-button>
 </template>
 <script>
 Polymer('action-button', {
+  clickHandler: function(){
+      console.log(this);
+  }
 });
 </script>
 </polymer-element>
