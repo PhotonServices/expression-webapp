@@ -1,19 +1,33 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
 <!--
 A widget bar
 -->
-<polymer-element name="sentiment-bar" attributes="value sentiment" on-click="{{clickHandler}}">
-  <template>
-  <style>
-  :host{
-    width: 23px;
-    height: 100px;
-    color: white;
-    -webkit-box-shadow: 2px 1px 4px 0px rgba(0,0,0,0.51);
-    -moz-box-shadow:    2px 1px 4px 0px rgba(0,0,0,0.51);
-    box-shadow:         2px 1px 4px 0px rgba(0,0,0,0.51);
-  }
-  </style>
+<polymer-element name="sentiment-bar"
+attributes="value sentiment heart emoticon"
+on-click="{{clickHandler}}"
+vertical layout center>
+<template>
+<style>
+:host{
+  width: 23px;
+  height: 100px;
+  color: white;
+  -webkit-box-shadow: 2px 1px 4px 0px rgba(0,0,0,0.51);
+  -moz-box-shadow:    2px 1px 4px 0px rgba(0,0,0,0.51);
+  box-shadow:         2px 1px 4px 0px rgba(0,0,0,0.51);
+}
+#emoticon{
+  font-family: HelveticaNeue-Medium;
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+}
+core-icon > svg{
+  fill: rgba(255,255,255,0.5);
+  transform:scale(0.75);
+}
+</style>
+<div id="emoticon"></div>
 </template>
 <script>
 Polymer('sentiment-bar', {
@@ -22,23 +36,30 @@ Polymer('sentiment-bar', {
     this.style.height = this.value+"px";
     if(this.sentiment == "very-positive"){
       this.style.background = "#00C273";
-      this.innerHTML = ":D";
     } else if(this.sentiment == "positive"){
       this.style.background = "#86C300";
-      this.innerHTML = ":)";
     } else if(this.sentiment == "negative"){
       this.style.background = "#FF8A00";
-      this.innerHTML = ":(";
     } else if(this.sentiment == "very-negative"){
       this.style.background = "#FF0035";
-      this.innerHTML = "D:";
     } else if(this.sentiment == "neutral"){
       this.style.background = "#FBBF00";
-      this.innerHTML = ":S";
+    }
+    if(this.heart == "true"){
+      self.emoticon.innerHTML = "<core-icon icon='favorite' size='24'></core-icon>";
+    }
+    if(this.emoticon == "true"){
+      switch(this.sentiment) {
+        case "neutral":      self.emoticon.innerHTML = ":|"; break;
+        case "positive":     self.emoticon.innerHTML = ":)"; break;
+        case "negative":     self.emoticon.innerHTML = ":("; break;
+        case "very-positive":self.emoticon.innerHTML = ":D"; break;
+        case "very-negative":self.emoticon.innerHTML = "D:"; break;
+      }
     }
   },
   clickHandler: function(){
-      console.log(this);
+    console.log(this);
   }
 });
 </script>

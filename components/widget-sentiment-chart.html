@@ -9,24 +9,49 @@ A widget bar
   <template>
   <style>
   :host {
+    height: 100px;
+    width: 100px;
     position: relative;
     cursor: pointer;
     overflow:hidden;
   }
+  .subtitle{
+    position: absolute;
+    font-family: Roboto-Light;
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+  }
+  #metadata{
+    position: absolute;
+    left:0;
+    bottom: 0;
+  }
   </style>
   <div horizontal layout end id="sentimentBar" on-click="{{clickHandler}}">
-    <sentiment-bar value="25" sentiment="very-negative"></sentiment-bar>
-    <sentiment-bar value="15" sentiment="negative"></sentiment-bar>
-    <sentiment-bar value="25" sentiment="neutral"></sentiment-bar>
-    <sentiment-bar value="100" sentiment="positive"></sentiment-bar>
-    <sentiment-bar value="15" sentiment="very-positive"></sentiment-bar>
+    <sentiment-bar value="25"  sentiment="very-negative"></sentiment-bar>
+    <sentiment-bar value="15"  sentiment="negative"     ></sentiment-bar>
+    <sentiment-bar value="25"  sentiment="neutral"  heart="true"   ></sentiment-bar>
+    <sentiment-bar value="100" sentiment="positive" emoticon="true"></sentiment-bar>
+    <sentiment-bar value="15"  sentiment="very-positive"></sentiment-bar>
+    <div id="metadata" horizontal layout center></div>
   </div>
 </template>
 <script>
 Polymer('widget-sentiment-chart', {
   clickHandler: function(){
-      var self = this.$;
-      // self.sentimentBar.style.padding = "5px";
+    var self = this.$;
+    for(i=0; i <5; i++){
+      var newNode = document.createElement('div');
+      newNode.innerHTML = self.sentimentBar.children[i].getAttribute("value") + "%";
+      newNode.className = "subtitle";
+      self.metadata.appendChild(newNode);
+      self.sentimentBar.children[i].style.transform  = "translate("+(i+2)*20+"px, 0px)";
+      self.sentimentBar.children[i].style.transition = "all .7s";
+    }
+    for(j=0; j <5; j++){
+      self.metadata.children[j].style.transform ="translate("+(j+1)*42+"px, 0px)";
+      self.metadata.children[j].style.transition = "all .7s";
+    }
   }
 });
 </script>
