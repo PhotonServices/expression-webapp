@@ -1,21 +1,18 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../bower_components/paper-shadow/paper-shadow.html">
 <!--
 A widget bar
 -->
 <polymer-element name="sentiment-bar"
 attributes="value sentiment heart emoticon"
-on-click="{{clickHandler}}"
-vertical layout center>
+vertical layout center on-click="{{clickHandler}}">
 <template>
 <style>
 :host{
   width: 23px;
   height: 100px;
-  color: white;
-  -webkit-box-shadow: 2px 1px 4px 0px rgba(0,0,0,0.51);
-  -moz-box-shadow:    2px 1px 4px 0px rgba(0,0,0,0.51);
-  box-shadow:         2px 1px 4px 0px rgba(0,0,0,0.51);
 }
 #emoticon{
   font-family: HelveticaNeue-Medium;
@@ -26,27 +23,41 @@ core-icon > svg{
   fill: rgba(255,255,255,0.5);
   transform:scale(0.75);
 }
+#ripple{
+  overflow: hidden;
+  width: 23px;
+  height: 100px;
+}
 </style>
 <div id="emoticon"></div>
+<core-icon icon='' size='24' id="favorite"></core-icon>
+<paper-ripple id="ripple" fit></paper-ripple>
+<paper-shadow z="1" id="myShadow" animated></paper-shadow>
 </template>
 <script>
 Polymer('sentiment-bar', {
   attached: function() {
     var self = this.$;
     this.style.height = this.value+"px";
+    self.ripple.style.height = this.value+"px";
     if(this.sentiment == "very-positive"){
       this.style.background = "#00C273";
+      self.ripple.style.color = "#29ffa8";
     } else if(this.sentiment == "positive"){
       this.style.background = "#86C300";
+      self.ripple.style.color = "#bcff2a";
     } else if(this.sentiment == "negative"){
       this.style.background = "#FF8A00";
+      self.ripple.style.color = "#fff";
     } else if(this.sentiment == "very-negative"){
       this.style.background = "#FF0035";
+      self.ripple.style.color = "#ffd9e1";
     } else if(this.sentiment == "neutral"){
       this.style.background = "#FBBF00";
+      self.ripple.style.color = "#fff";
     }
     if(this.heart == "true"){
-      self.emoticon.innerHTML = "<core-icon icon='favorite' size='24'></core-icon>";
+      self.favorite.setAttribute("icon","favorite");
     }
     if(this.emoticon == "true"){
       switch(this.sentiment) {
@@ -57,10 +68,13 @@ Polymer('sentiment-bar', {
         case "very-negative":self.emoticon.innerHTML = "D:"; break;
       }
     }
-  },
-  clickHandler: function(){
-    console.log(this);
   }
+  // ...
+  // clickHandler: function() {
+  //   var self = this.$;
+  //   self.myShadow.setAttribute("z","5");
+  //   setTimeout(function(){self.myShadow.setAttribute("z","1");}, 75);
+  // }
 });
 </script>
 </polymer-element>

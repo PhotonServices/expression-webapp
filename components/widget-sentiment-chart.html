@@ -1,5 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="sentiment-bar.html">
 
 <!--
@@ -22,14 +22,29 @@ A widget bar
     color: rgba(255,255,255,0.75);
   }
   #metadata{
+    display:none;
     position: absolute;
     left:0;
     bottom: 0;
   }
+  paper-fab {
+    display: none;
+    z-index: 1;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    transform: scale(0.45);
+    background: #107FC9;
+  }
+  paper-fab::shadow svg {
+    transform: scale(1.25);
+    fill: white;
+  }
   </style>
+  <paper-fab icon="chevron-left" id="backButton" on-tap="{{backHandler}}"></paper-fab>
   <div horizontal layout end id="sentimentBar" on-click="{{clickHandler}}">
-    <sentiment-bar value="25"  sentiment="very-negative"></sentiment-bar>
-    <sentiment-bar value="15"  sentiment="negative"     ></sentiment-bar>
+    <sentiment-bar value="100"  sentiment="very-negative"></sentiment-bar>
+    <sentiment-bar value="15"  sentiment="negative" emoticon="true"></sentiment-bar>
     <sentiment-bar value="25"  sentiment="neutral"  heart="true"   ></sentiment-bar>
     <sentiment-bar value="100" sentiment="positive" emoticon="true"></sentiment-bar>
     <sentiment-bar value="15"  sentiment="very-positive"></sentiment-bar>
@@ -40,6 +55,9 @@ A widget bar
 Polymer('widget-sentiment-chart', {
   clickHandler: function(){
     var self = this.$;
+    self.backButton.style.display = "block";
+    self.metadata.style.display = "block";
+    self.metadata.innerHTML="";
     for(i=0; i <5; i++){
       var newNode = document.createElement('div');
       newNode.innerHTML = self.sentimentBar.children[i].getAttribute("value") + "%";
@@ -51,6 +69,20 @@ Polymer('widget-sentiment-chart', {
     for(j=0; j <5; j++){
       self.metadata.children[j].style.transform ="translate("+(j+1)*42+"px, 0px)";
       self.metadata.children[j].style.transition = "all .7s";
+    }
+  },
+  backHandler: function(){
+    var self = this.$;
+    self.backButton.style.display = "none";
+    self.metadata.style.display = "none";
+    for(i=0; i <5; i++){
+      var newNode = document.createElement('div');
+      newNode.innerHTML = self.sentimentBar.children[i].getAttribute("value") + "%";
+      newNode.className = "subtitle";
+      self.metadata.appendChild(newNode);
+      self.sentimentBar.children[i].style.transform  = "translate("+(i-2)/20+"px, 0px)";
+      self.sentimentBar.children[i].style.transition = "all .7s";
+      self.metadata.innerHTML="";
     }
   }
 });

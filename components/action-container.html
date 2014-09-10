@@ -1,16 +1,31 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="action-button.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/core-icons/social-icons.html">
+<link rel="import" href="../bower_components/core-icons/communication-icons.html">
+<!-- <link rel="import" href="action-button.html"> -->
 <!--
 action-bar: A bar which holds a set of action items.
 -->
 <polymer-element name="action-container">
   <template>
   <style>
+  paper-fab{
+    margin: 0px;
+    transform: scale(0.75);
+    background: #107FC9;
+  }
+  paper-fab::shadow svg {
+    transform: scale(1.25);
+    fill: white;
+  }
   </style>
   <div vertical layout center id="bar">
-    <action-button name="keep"   tooltip="" icon="keep"                 onAction=""></action-button>
+    <paper-fab icon="keep"></paper-fab>
+    <paper-fab icon="social:share-alt"></paper-fab>
+    <paper-fab icon="communication:comment"></paper-fab>
+    <!-- <action-button name="keep"   tooltip="" icon="keep"                 onAction=""></action-button>
     <action-button name="share"  tooltip="" icon="social:share-alt"     onAction=""></action-button>
-    <action-button name="create" tooltip="" icon="communication:comment"onAction=""></action-button>
+    <action-button name="create" tooltip="" icon="communication:comment"onAction=""></action-button> -->
   </div>
 </template>
 <script>
