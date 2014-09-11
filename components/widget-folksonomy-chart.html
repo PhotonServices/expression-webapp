@@ -1,4 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-animation/core-animation.html">
 <!--
 @author Francisco Gutiérrez - fsalvador23@gmail.com
 -->
@@ -10,9 +11,6 @@ vertical layout center>
 <style>
 :host{
   height: 70px;
-}
-#list{
-  overflow: visible;
 }
 .fk{
   position: relative;
@@ -35,16 +33,18 @@ Polymer('widget-folksonomy-chart', {
     var index = 1;
     for (var i in data.folksonomy) {
       var sentence = data.folksonomy[i];
-      if(i < 3){
-        this.$.list.innerHTML += "<div class='fk' style='color: rgba(255,255,255,"+index+")'>"+sentence+"</div>";
-      }else {
-        this.$.list.innerHTML += "<div class='fk' style='color: rgba(255,255,255,"+index+"); display: none;'>"+sentence+"</div>";
-      }
+      this.$.list.innerHTML += "<div class='fk' style='color: rgba(255,255,255,"+index+")'>"+sentence+"</div>";
       index = index*.75;
     }
   },
   tapHandler: function() {
-    //  alert("asd"); Folksonomy below
+    var animation = new CoreAnimation();
+    animation.duration = 5000;
+    animation.iterations = "Infinity";
+    animation.direction = "alternate";
+    animation.keyframes = [ {transform: "translate(0px,0px)", opacity: 1}, {transform: "translate(0px,-100px)", opacity: 1}];
+    animation.target = this;
+    animation.play();
   }
 });
 </script>
