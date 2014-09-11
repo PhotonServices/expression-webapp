@@ -32,8 +32,8 @@ A widget bar
     z-index: 1;
     position: absolute;
     top: -5px;
-    left: -5px;
-    transform: scale(0.45);
+    left: -8px;
+    transform: scale(0.5);
     background: #107FC9;
   }
   paper-fab::shadow svg {
@@ -65,6 +65,7 @@ Polymer('widget-sentiment-chart', {
       self.metadata.appendChild(newNode);
       self.sentimentBar.children[i].style.transform  = "translate("+(i+2)*20+"px, 0px)";
       self.sentimentBar.children[i].style.transition = "all .7s";
+      self.sentimentBar.children[i].setAttribute("expand","true");
     }
     for(j=0; j <5; j++){
       self.metadata.children[j].style.transform ="translate("+(j+1)*42+"px, 0px)";
@@ -76,6 +77,7 @@ Polymer('widget-sentiment-chart', {
     self.backButton.style.display = "none";
     self.metadata.style.display = "none";
     for(i=0; i <5; i++){
+      self.sentimentBar.children[i].setAttribute("expand","");
       var newNode = document.createElement('div');
       newNode.innerHTML = self.sentimentBar.children[i].getAttribute("value") + "%";
       newNode.className = "subtitle";

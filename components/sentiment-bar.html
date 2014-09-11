@@ -6,7 +6,7 @@
 A widget bar
 -->
 <polymer-element name="sentiment-bar"
-attributes="value sentiment heart emoticon"
+attributes="value sentiment heart emoticon expand"
 vertical layout center on-click="{{clickHandler}}">
 <template>
 <style>
@@ -68,13 +68,13 @@ Polymer('sentiment-bar', {
         case "very-negative":self.emoticon.innerHTML = "D:"; break;
       }
     }
+  },
+  clickHandler: function() {
+    // var self = this.$;
+    // if(this.expand == "true"){
+    //   this.innerHTML += ""
+    //}
   }
-  // ...
-  // clickHandler: function() {
-  //   var self = this.$;
-  //   self.myShadow.setAttribute("z","5");
-  //   setTimeout(function(){self.myShadow.setAttribute("z","1");}, 75);
-  // }
 });
 </script>
 </polymer-element>
