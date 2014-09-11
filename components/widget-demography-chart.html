@@ -1,0 +1,47 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/core-icon/core-icon.html">
+<link rel="import" href="../bower_components/core-icons/social-icons.html">
+<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="widget-folksonomy-chart.html">
+<!--
+@author Francisco Gutiérrez - fsalvador23@gmail.com
+-->
+<polymer-element name="widget-demography-chart" vertical layout center on-tap="{{tapHandler}}">
+  <template>
+  <style>
+  :host{
+    cursor: pointer;
+    /*background: blue;*/
+  }
+  core-icon > svg{
+    fill: white;
+    transform:scale(3);
+  }
+  #button {
+    font-size:12px;
+    background: #107FC9;
+    color: #fff;
+    width: 90px;
+    height: 28px;
+  }
+  </style>
+  <core-icon icon="social:people"></core-icon>
+  <paper-button id="button" label="1,000" raisedButton></paper-button>
+  <widget-folksonomy-chart folksonomy='{"folksonomy": [
+  "consectetur",
+  "dolor",
+  "ut",
+  "voluptate",
+  "ullamco",
+  "labore",
+  "aliqua"
+  ]}'></widget-folksonomy-chart>
+</template>
+<script>
+Polymer('widget-demography-chart', {
+  tapHandler: function() {
+  }
+});
+</script>
+</polymer-element>

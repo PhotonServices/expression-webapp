@@ -1,0 +1,51 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<!--
+@author Francisco Gutiérrez - fsalvador23@gmail.com
+-->
+<polymer-element name="widget-folksonomy-chart"
+attributes="folksonomy"
+on-tap="{{tapHandler}}"
+vertical layout center>
+<template>
+<style>
+:host{
+  height: 70px;
+}
+#list{
+  overflow: visible;
+}
+.fk{
+  position: relative;
+  font-family: 'Roboto','Helvetica', sans-serif;
+  color: white;
+  font-size: 14px;
+  padding: 2px;
+  font-weight: 100;
+  overflow: visible;
+  text-overflow:ellipsis;
+  text-align: center;
+}
+</style>
+<div id="list"></div>
+</template>
+<script>
+Polymer('widget-folksonomy-chart', {
+  attached: function() {
+    var data = JSON.parse(this.folksonomy);
+    var index = 1;
+    for (var i in data.folksonomy) {
+      var sentence = data.folksonomy[i];
+      if(i < 3){
+        this.$.list.innerHTML += "<div class='fk' style='color: rgba(255,255,255,"+index+")'>"+sentence+"</div>";
+      }else {
+        this.$.list.innerHTML += "<div class='fk' style='color: rgba(255,255,255,"+index+"); display: none;'>"+sentence+"</div>";
+      }
+      index = index*.75;
+    }
+  },
+  tapHandler: function() {
+    //  alert("asd"); Folksonomy below
+  }
+});
+</script>
+</polymer-element>

@@ -13,6 +13,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="action-container.html">
 <link rel="import" href="widget-container.html">
+<link rel="import" href="../bower_components/paper-shadow/paper-shadow.html">
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,100' rel='stylesheet' type='text/css'>
 <polymer-element name="sentiment-card" attributes="sentiment title image">
   <template>
@@ -34,9 +35,6 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     -moz-transform-style: preserve-3d;
     -o-transform-style: preserve-3d;
     transform-style: preserve-3d;
-    -webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.51);
-    -moz-box-shadow:    0px 2px 4px 0px rgba(0,0,0,0.51);
-    box-shadow:         0px 2px 4px 0px rgba(0,0,0,0.51);
   }
 
   #card.flipped {
@@ -104,7 +102,8 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
         <h1 class='content'></h1>
         <a href=""><h1 class='title'>{{title}}</h1></a>
       </div>
-    </div>  
+      <paper-shadow z="1" id="myShadow" animated></paper-shadow>
+    </div>
 </template>
 <script>
 Polymer("sentiment-card", {

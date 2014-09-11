@@ -1,16 +1,13 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="widget-sentiment-chart.html">
+<link rel="import" href="widget-demography-chart.html">
 <!--
 A widget bar
 -->
-<polymer-element name="widget-container">
+<polymer-element name="widget-container" layout horizontal center end>
   <template>
-  <style>
-  :host{
-    position: absolute;
-  }
-  </style>
   <widget-sentiment-chart></widget-sentiment-chart>
+  <widget-demography-chart></widget-demography-chart>
 </template>
 <script>
 Polymer('widget-container', {
