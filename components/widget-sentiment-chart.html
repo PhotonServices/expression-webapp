@@ -1,7 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="sentiment-bar.html">
-
 <!--
 A widget bar
 -->
@@ -9,44 +8,39 @@ A widget bar
   <template>
   <style>
   :host {
-    position: relative;
     cursor: pointer;
-    overflow:hidden;
   }
-  .subtitle{
-    position: absolute;
+  :host .subtitle{
+    font-size:13px;
     font-family: Roboto-Light;
-    font-size: 13px;
     color: rgba(255,255,255,0.75);
   }
-  #metadata{
-    display:none;
-    position: absolute;
+  :host  #metadata{
     left:0;
     bottom: 0;
   }
-  paper-fab {
-    display: none;
-    z-index: 1;
-    position: absolute;
+  :host paper-fab {
+    z-index:1;
     top: -5px;
-    left: -8px;
+    left:-8px;
+    background:#107FC9;
     transform: scale(0.5);
-    background: #107FC9;
   }
-  paper-fab::shadow svg {
-    transform: scale(1.25);
+  :host paper-fab::shadow svg {
+    transform:      scale(2);
+    -moz-transform: scale(2);
+    -webkit-transform: scale(2);
     fill: white;
   }
   </style>
   <paper-fab icon="chevron-left" id="backButton" on-tap="{{backHandler}}"></paper-fab>
-  <div horizontal layout end id="sentimentBar" on-click="{{clickHandler}}">
-    <sentiment-bar value="100"  sentiment="very-negative"></sentiment-bar>
-    <sentiment-bar value="15"  sentiment="negative" emoticon="true"></sentiment-bar>
-    <sentiment-bar value="25"  sentiment="neutral"  heart="true"   ></sentiment-bar>
-    <sentiment-bar value="100" sentiment="positive" emoticon="true"></sentiment-bar>
-    <sentiment-bar value="15"  sentiment="very-positive"></sentiment-bar>
-    <div id="metadata" horizontal layout center></div>
+  <div id="sentimentBar" on-tap="{{clickHandler}}" layout horizontal end>
+    <sentiment-bar val="100" sentiment="very-negative"></sentiment-bar>
+    <sentiment-bar val="15"  sentiment="negative" emoticon="true"></sentiment-bar>
+    <sentiment-bar val="25"  sentiment="neutral"  heart="true"   ></sentiment-bar>
+    <sentiment-bar val="100" sentiment="positive" emoticon="true"></sentiment-bar>
+    <sentiment-bar val="15"  sentiment="very-positive"></sentiment-bar>
+    <div id="metadata"></div>
   </div>
 </template>
 <script>
@@ -58,10 +52,11 @@ Polymer('widget-sentiment-chart', {
     self.metadata.innerHTML="";
     for(i=0; i <5; i++){
       var newNode = document.createElement('div');
-      newNode.innerHTML = self.sentimentBar.children[i].getAttribute("value") + "%";
+      newNode.innerHTML = self.sentimentBar.children[i].getAttribute("val") + "%";
       newNode.className = "subtitle";
       self.metadata.appendChild(newNode);
       self.sentimentBar.children[i].style.transform  = "translate("+(i+2)*20+"px, 0px)";
+      self.sentimentBar.children[i].style.webkitTransform = "translate("+(i+2)*20+"px, 0px)";
       self.sentimentBar.children[i].style.transition = "all .7s";
       self.sentimentBar.children[i].setAttribute("expand","true");
     }
@@ -77,10 +72,11 @@ Polymer('widget-sentiment-chart', {
     for(i=0; i <5; i++){
       self.sentimentBar.children[i].setAttribute("expand","");
       var newNode = document.createElement('div');
-      newNode.innerHTML = self.sentimentBar.children[i].getAttribute("value") + "%";
+      newNode.innerHTML = self.sentimentBar.children[i].getAttribute("val") + "%";
       newNode.className = "subtitle";
       self.metadata.appendChild(newNode);
       self.sentimentBar.children[i].style.transform  = "translate("+(i-2)/20+"px, 0px)";
+      self.sentimentBar.children[i].style.webkitTransform = "translate("+(i-2)/20+"px, 0px)";
       self.sentimentBar.children[i].style.transition = "all .7s";
       self.metadata.innerHTML="";
     }

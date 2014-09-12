@@ -6,30 +6,26 @@
 <!--
 action-bar: A bar which holds a set of action items.
 -->
-<polymer-element name="action-container">
+<polymer-element name="action-container" vertical layout end>
   <template>
   <style>
-  paper-fab{
+  :host paper-fab{
     margin: 0px;
-    transform: scale(0.75);
+    transform: scale(.8);
+    -moz-transform: scale(.8);
+    -webkit-transform: scale(.8);
     background: #107FC9;
   }
-  paper-fab::shadow svg {
-    transform: scale(1.25);
+  :host paper-fab::shadow svg{
+    transform: scale(1.5);
     fill: white;
   }
   </style>
-  <div vertical layout center id="bar">
-    <paper-fab icon="keep"></paper-fab>
-    <paper-fab icon="social:share-alt"></paper-fab>
-    <paper-fab icon="communication:comment"></paper-fab>
-    <!-- <action-button name="keep"   tooltip="" icon="keep"                 onAction=""></action-button>
-    <action-button name="share"  tooltip="" icon="social:share-alt"     onAction=""></action-button>
-    <action-button name="create" tooltip="" icon="communication:comment"onAction=""></action-button> -->
-  </div>
+  <paper-fab icon="keep"></paper-fab>
+  <paper-fab icon="social:share-alt"></paper-fab>
+  <paper-fab icon="communication:comment"></paper-fab>
 </template>
 <script>
-Polymer('action-container', {
-});
+Polymer('action-container', {});
 </script>
 </polymer-element>

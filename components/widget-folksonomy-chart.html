@@ -4,22 +4,23 @@
 @author Francisco Gutiérrez - fsalvador23@gmail.com
 -->
 <polymer-element name="widget-folksonomy-chart"
-attributes="folksonomy"
+attributes="folksonomy scrolling"
 on-tap="{{tapHandler}}"
 vertical layout center>
 <template>
 <style>
 :host{
-  height: 70px;
+  /*position: absolute*/
+  height: 50px;
+  overflow: hidden;
 }
-.fk{
+#fk{
   position: relative;
   font-family: 'Roboto','Helvetica', sans-serif;
   color: white;
   font-size: 14px;
   padding: 2px;
   font-weight: 100;
-  overflow: visible;
   text-overflow:ellipsis;
   text-align: center;
 }
@@ -33,18 +34,18 @@ Polymer('widget-folksonomy-chart', {
     var index = 1;
     for (var i in data.folksonomy) {
       var sentence = data.folksonomy[i];
-      this.$.list.innerHTML += "<div class='fk' style='color: rgba(255,255,255,"+index+")'>"+sentence+"</div>";
-      index = index*.75;
+      this.$.list.innerHTML += "<div id='fk' style='color:rgba(255,255,255,"+index+")'>"+sentence+"</div>";
+      // index = index*.75;
     }
-  },
-  tapHandler: function() {
-    var animation = new CoreAnimation();
-    animation.duration = 5000;
-    animation.iterations = "Infinity";
-    animation.direction = "alternate";
-    animation.keyframes = [ {transform: "translate(0px,0px)", opacity: 1}, {transform: "translate(0px,-100px)", opacity: 1}];
-    animation.target = this;
-    animation.play();
+    if(this.scrolling == "true") {
+      var animation = new CoreAnimation();
+      animation.duration = 22000;
+      animation.iterations = "Infinity";
+      animation.direction = "alternate";
+      animation.keyframes = [ {transform: "translate(0px,0px)"},{transform: "translate(0px,-200px)"}];
+      animation.target = this.$.list;
+      animation.play();
+    }
   }
 });
 </script>

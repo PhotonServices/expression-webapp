@@ -25,22 +25,37 @@
     width: 90px;
     height: 28px;
   }
+  #fkchart{
+    /*display: none;*/
+  }
   </style>
   <core-icon icon="social:people"></core-icon>
   <paper-button id="button" label="1,000" raisedButton></paper-button>
-  <widget-folksonomy-chart folksonomy='{"folksonomy": [
-  "consectetur",
-  "dolor",
-  "ut",
-  "voluptate",
-  "ullamco",
-  "labore",
-  "aliqua"
-  ]}'></widget-folksonomy-chart>
+  <widget-folksonomy-chart id="fkchart" folksonomy='{"folksonomy": [
+  "Peña Nieto",
+  "Reforma",
+  "Gasolina",
+  "Capital",
+  "Precio",
+  "Familia",
+  "Reforma",
+  "Gasolina",
+  "Capital",
+  "Precio",
+  "Familia",
+  "Reforma",
+  "Gasolina",
+  "Capital",
+  "Precio",
+  "Familia",
+  "Ice Bucket Challenge"
+  ]}' scrolling="true"></widget-folksonomy-chart>
 </template>
 <script>
 Polymer('widget-demography-chart', {
   tapHandler: function() {
+  // this.$.fkchart.setAttribute("scrolling","true");
+  // this.$.fkchart.display = "block";
   }
 });
 </script>

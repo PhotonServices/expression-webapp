@@ -5,70 +5,72 @@
 <!--
 A widget bar
 -->
-<polymer-element name="sentiment-bar"
-attributes="value sentiment heart emoticon expand"
-vertical layout center on-click="{{clickHandler}}">
+<polymer-element
+name= "sentiment-bar"
+attributes= "val sentiment heart emoticon expand"
+on-click= "{{clickHandler}}">
 <template>
 <style>
-:host{
+:host #bar{
   width: 23px;
-  height: 100px;
   cursor: pointer;
+  text-align: center;
 }
-#emoticon{
-  font-family: HelveticaNeue-Medium;
+:host #emoticon{
+  font-family: HelveticaNeue-Medium, Arial;
   font-size: 12px;
   color: rgba(255,255,255,0.75);
 }
-core-icon > svg{
+:host core-icon > svg {
   fill: rgba(255,255,255,0.5);
   transform:scale(0.75);
+  -moz-transform:scale(0.75);
+  -webkit-transform:scale(0.75);
 }
-#ripple{
+:host #ripple{
   overflow: hidden;
-  width: 23px;
-  height: 100px;
 }
 </style>
-<div id="emoticon"></div>
-<core-icon icon='' size='24' id="favorite"></core-icon>
-<paper-ripple id="ripple" fit></paper-ripple>
-<paper-shadow z="1" id="myShadow" animated></paper-shadow>
+<div id="bar">
+  <!-- <div id="emoticon"></div> -->
+  <!-- <core-icon icon='' size='24' id="favorite"></core-icon> -->
+  <paper-ripple id="ripple" fit></paper-ripple>
+  <paper-shadow z="1" id="myShadow" animated></paper-shadow>
+</div>
 </template>
 <script>
 Polymer('sentiment-bar', {
   attached: function() {
     var self = this.$;
-    this.style.height = this.value+"px";
-    self.ripple.style.height = this.value+"px";
+    self.bar.style.height = this.val+"px";
     if(this.sentiment == "very-positive"){
-      this.style.background = "#00C273";
+      self.bar.style.background = "#00C273";
       self.ripple.style.color = "#29ffa8";
     } else if(this.sentiment == "positive"){
-      this.style.background = "#86C300";
+      self.bar.style.background = "#86C300";
       self.ripple.style.color = "#bcff2a";
     } else if(this.sentiment == "negative"){
-      this.style.background = "#FF8A00";
+      self.bar.style.background = "#FF8A00";
       self.ripple.style.color = "#fff";
     } else if(this.sentiment == "very-negative"){
-      this.style.background = "#FF0035";
+      self.bar.style.background = "#FF0035";
       self.ripple.style.color = "#ffd9e1";
     } else if(this.sentiment == "neutral"){
-      this.style.background = "#FBBF00";
+      self.bar.style.background = "#FBBF00";
       self.ripple.style.color = "#fff";
     }
-    if(this.heart == "true"){
-      self.favorite.setAttribute("icon","favorite");
-    }
-    if(this.emoticon == "true"){
-      switch(this.sentiment) {
-        case "neutral":      self.emoticon.innerHTML = ":|"; break;
-        case "positive":     self.emoticon.innerHTML = ":)"; break;
-        case "negative":     self.emoticon.innerHTML = ":("; break;
-        case "very-positive":self.emoticon.innerHTML = ":D"; break;
-        case "very-negative":self.emoticon.innerHTML = "D:"; break;
-      }
-    }
+    // if(this.heart == "true"){
+    //   self.favorite.setAttribute("icon","favorite");
+    // }
+    // if(this.emoticon == "true"){
+    //   switch(this.sentiment) {
+    //     case "neutral":      self.emoticon.innerHTML = ":|"; break;
+    //     case "positive":     self.emoticon.innerHTML = ":)"; break;
+    //     case "negative":     self.emoticon.innerHTML = ":("; break;
+    //     case "very-positive":self.emoticon.innerHTML = ":D"; break;
+    //     case "very-negative":self.emoticon.innerHTML = "D:"; break;
+    //   }
+    // }
   },
   clickHandler: function() {
     // var self = this.$;

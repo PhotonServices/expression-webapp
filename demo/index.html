@@ -14,13 +14,23 @@ found at http://opensource.org/licenses/MIT
   <!-- Import sentiment-card Component  -->
   <link rel="import" href="../components/sentiment-card.html">
   <link rel="import" href="../components/sentiment-bar.html">
+  <link rel="import" href="../components/widget-sentiment-chart.html">
+  <link rel="import" href="../components/action-container.html">
+  <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+  <style>
+  body{
+    margin: 0px;
+  }
+  </style>
 </head>
 <body unresolved>
   <!-- Use sentiment-card Component  -->
-  <sentiment-card
+  <!-- <sentiment-card
   sentiment="-2"
-  title="La reforma energética."
+  label="La reforma energética."
   image="http://cl.ly/image/003q1X1w2B0o/oil_industry-512.png">
-  </sentiment-card>
+</sentiment-card> -->
+<!-- <sentiment-bar val="100"  sentiment="negative" emoticon="true"></sentiment-bar> -->
+<widget-sentiment-chart></widget-sentiment-chart>
 </body>
 </html>
