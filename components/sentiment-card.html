@@ -27,10 +27,10 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
   #card {
     width:  100%;
     height: 100%;
-    transition: transform 0.5s;
-    -o-transition: -o-transform 0.5s;
-    -moz-transition: -moz-transform 0.5s;
-    -webkit-transition: -webkit-transform 0.5s;
+    transition:        transform 0.5s;
+    -o-transition:     -o-transform 0.5s;
+    -moz-transition:   -moz-transform 0.5s;
+    -webkit-transition:-webkit-transform 0.5s;
     /* ---- */
     transform-style:         preserve-3d;
     -o-transform-style:      preserve-3d;
@@ -43,14 +43,24 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     -moz-transform:    rotateY(180deg);
     -webkit-transform: rotateY(180deg);
   }
-  #card div {
+  #card #front {
     position: absolute;
     display: block;
     /* ---- */
     height: 100%;
     width:  100%;
-    margin: 0px;
-    padding:0px;
+    /* ---- */
+    backface-visibility:        hidden;
+    -o-backface-visibility:     hidden;
+    -moz-backface-visibility:   hidden;
+    -webkit-backface-visibility:hidden;
+  }
+  #card #back {
+    position: absolute;
+    display: block;
+    /* ---- */
+    height: 100%;
+    width:  100%;
     /* ---- */
     backface-visibility:        hidden;
     -o-backface-visibility:     hidden;
@@ -84,6 +94,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     color: white;
   }
   widget-container{
+    z-index: 1;
     position:absolute;
     top:  40px;
     left: 20px;
@@ -100,8 +111,8 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
       <a href=""><h1 class='title'>{{label}}</h1></a>
     </div>
     <div id="back">
-      <action-container></action-container>
       <widget-container></widget-container>
+      <action-container></action-container>
       <h1 class='content'></h1>
       <a href=""><h1 class='title'>{{label}}</h1></a>
     </div>

@@ -5,26 +5,27 @@
 A widget bar
 -->
 <polymer-element name="widget-sentiment-chart">
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,100' rel='stylesheet' type='text/css'>
   <template>
   <style>
   :host {
     cursor: pointer;
   }
   :host .subtitle{
+    width: 0px;
+    height: 0px;
     font-size:13px;
-    font-family: Roboto-Light;
+    font-family: Roboto-Light, Helvetica, Arial;
+    line-height: 140%;
     color: rgba(255,255,255,0.75);
   }
-  :host  #metadata{
-    left:0;
-    bottom: 0;
-  }
   :host paper-fab {
-    z-index:1;
-    top: -5px;
-    left:-8px;
+    position: absolute;
+    top: 0px;
+    left:-10px;
     background:#107FC9;
     transform: scale(0.5);
+    display: none;
   }
   :host paper-fab::shadow svg {
     transform:      scale(2);
@@ -40,8 +41,8 @@ A widget bar
     <sentiment-bar val="25"  sentiment="neutral"  heart="true"   ></sentiment-bar>
     <sentiment-bar val="100" sentiment="positive" emoticon="true"></sentiment-bar>
     <sentiment-bar val="15"  sentiment="very-positive"></sentiment-bar>
-    <div id="metadata"></div>
   </div>
+  <div id="metadata" layout horizontal></div>
 </template>
 <script>
 Polymer('widget-sentiment-chart', {
@@ -78,6 +79,7 @@ Polymer('widget-sentiment-chart', {
       self.sentimentBar.children[i].style.transform  = "translate("+(i-2)/20+"px, 0px)";
       self.sentimentBar.children[i].style.webkitTransform = "translate("+(i-2)/20+"px, 0px)";
       self.sentimentBar.children[i].style.transition = "all .7s";
+      self.sentimentBar.children[i].style.webkitTransition = "all .7s";
       self.metadata.innerHTML="";
     }
   }
