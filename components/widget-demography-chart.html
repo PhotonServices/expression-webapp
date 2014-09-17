@@ -3,35 +3,54 @@
 <link rel="import" href="../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../bower_components/core-icons/social-icons.html">
 <link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
-<link rel="import" href="widget-folksonomy-chart.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="widget-folksonomy-list.html">
 <!--
 @author Francisco Gutiérrez - fsalvador23@gmail.com
 -->
-<polymer-element name="widget-demography-chart" vertical layout center on-tap="{{tapHandler}}">
+<polymer-element name="widget-demography-chart" vertical layout center>
   <template>
   <style>
   :host{
     cursor: pointer;
-    /*background: blue;*/
   }
   core-icon > svg{
     fill: white;
     transform:scale(3);
   }
   #button {
-    font-size:12px;
+    font-size:  12px;
     background: #107FC9;
-    color: #fff;
-    width: 90px;
+    color:  #fff;
+    width:  90px;
     height: 28px;
   }
-  #fkchart{
-    /*display: none;*/
+  #folkchart{
+    position: absolute;
+    display: none;
+    left: 0;
+  }
+  #backButton {
+    position: absolute;
+    left: -50px;
+    top:  10px;
+    background:#107FC9;
+    transform: scale(0.5);
+    display: none;
+    z-index: 1;
+  }
+  #backButton::shadow svg {
+    transform:         scale(2);
+    -moz-transform:    scale(2);
+    -webkit-transform: scale(2);
+    fill: white;
   }
   </style>
+  <div id="widget" vertical layout center>
+  <paper-fab icon="chevron-left" id="backButton" on-tap="{{backHandler}}"></paper-fab>
   <core-icon icon="social:people"></core-icon>
-  <paper-button id="button" label="1,000" raisedButton></paper-button>
-  <widget-folksonomy-chart id="fkchart" folksonomy='{"folksonomy": [
+  <paper-button id="button" label="1,000" raisedButton  on-tap="{{tapHandler}}"></paper-button>
+  <widget-folksonomy-list id="folkchart" folksonomy='{"folksonomy": [
   "Peña Nieto",
   "Reforma",
   "Gasolina",
@@ -50,12 +69,23 @@
   "Familia",
   "Ice Bucket Challenge"
   ]}' scrolling="true"></widget-folksonomy-chart>
+  </div>
 </template>
 <script>
 Polymer('widget-demography-chart', {
   tapHandler: function() {
-  // this.$.fkchart.setAttribute("scrolling","true");
-  // this.$.fkchart.display = "block";
+      var self = this.$;
+      self.backButton.style.display = "block";
+      self.folkchart.style.display  = "block";
+      self.widget.style.transform  = "translate(0px, -50px)";
+      self.widget.style.transition = "all .7s";
+  },
+  backHandler: function() {
+    var self = this.$;
+    self.backButton.style.display = "none";
+    self.folkchart.style.display  = "none";
+    self.widget.style.transform  = "translate(0px, 0px)";
+    self.widget.style.transition = "all .7s";
   }
 });
 </script>

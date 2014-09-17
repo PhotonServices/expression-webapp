@@ -1,9 +1,10 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/core-animation/core-animation.html">
+<link href='http://fonts.googleapis.com/css?family=Roboto:100' rel='stylesheet' type='text/css'>
 <!--
 @author Francisco Gutiérrez - fsalvador23@gmail.com
 -->
-<polymer-element name="widget-folksonomy-chart"
+<polymer-element name="widget-folksonomy-list"
 attributes="folksonomy scrolling"
 on-tap="{{tapHandler}}"
 vertical layout center>
@@ -28,7 +29,7 @@ vertical layout center>
 <div id="list"></div>
 </template>
 <script>
-Polymer('widget-folksonomy-chart', {
+Polymer('widget-folksonomy-list', {
   attached: function() {
     var data = JSON.parse(this.folksonomy);
     var index = 1;

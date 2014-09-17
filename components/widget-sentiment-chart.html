@@ -4,7 +4,7 @@
 <!--
 A widget bar
 -->
-<polymer-element name="widget-sentiment-chart">
+<polymer-element name="widget-sentiment-chart" attributes="onBack">
   <link href='http://fonts.googleapis.com/css?family=Roboto:400,100' rel='stylesheet' type='text/css'>
   <template>
   <style>
@@ -15,14 +15,15 @@ A widget bar
     width: 0px;
     height: 0px;
     font-size:13px;
-    font-family: Roboto-Light, Helvetica, Arial;
+    font-family: Roboto, Helvetica, Arial;
+    font-weight: 100;
     line-height: 140%;
     color: rgba(255,255,255,0.75);
   }
-  :host paper-fab {
+  :host #backButton {
     position: absolute;
-    top: 0px;
-    left:-10px;
+    top: 25px;
+    left:-5px;
     background:#107FC9;
     transform: scale(0.5);
     display: none;
@@ -56,13 +57,13 @@ Polymer('widget-sentiment-chart', {
       newNode.innerHTML = self.sentimentBar.children[i].getAttribute("val") + "%";
       newNode.className = "subtitle";
       self.metadata.appendChild(newNode);
-      self.sentimentBar.children[i].style.transform  = "translate("+(i+2)*20+"px, 0px)";
-      self.sentimentBar.children[i].style.webkitTransform = "translate("+(i+2)*20+"px, 0px)";
+      self.sentimentBar.children[i].style.transform  = "translate("+(i+1.5)*20+"px, 0px)";
+      self.sentimentBar.children[i].style.webkitTransform = "translate("+(i+1.5)*20+"px, 0px)";
       self.sentimentBar.children[i].style.transition = "all .7s";
       self.sentimentBar.children[i].setAttribute("expand","true");
     }
     for(j=0; j <5; j++){
-      self.metadata.children[j].style.transform ="translate("+(j+1)*42+"px, 0px)";
+      self.metadata.children[j].style.transform ="translate("+(j+.75)*42+"px, 0px)";
       self.metadata.children[j].style.transition = "all .7s";
     }
   },
@@ -76,12 +77,13 @@ Polymer('widget-sentiment-chart', {
       newNode.innerHTML = self.sentimentBar.children[i].getAttribute("val") + "%";
       newNode.className = "subtitle";
       self.metadata.appendChild(newNode);
-      self.sentimentBar.children[i].style.transform  = "translate("+(i-2)/20+"px, 0px)";
-      self.sentimentBar.children[i].style.webkitTransform = "translate("+(i-2)/20+"px, 0px)";
+      self.sentimentBar.children[i].style.transform  = "translate("+(i-1.5)/20+"px, 0px)";
+      self.sentimentBar.children[i].style.webkitTransform = "translate("+(i-1.5)/20+"px, 0px)";
       self.sentimentBar.children[i].style.transition = "all .7s";
       self.sentimentBar.children[i].style.webkitTransition = "all .7s";
       self.metadata.innerHTML="";
     }
+    self.onBack = "hello";
   }
 });
 </script>

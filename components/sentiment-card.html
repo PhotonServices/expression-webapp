@@ -13,7 +13,8 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-shadow/paper-shadow.html">
 <link rel="import" href="action-container.html">
-<link rel="import" href="widget-container.html">
+<link rel="import" href="widget-sentiment-chart.html">
+<link rel="import" href="widget-demography-chart.html">
 <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:400,100' rel='stylesheet' type='text/css'> -->
 <polymer-element name="sentiment-card" attributes="sentiment label image">
   <template>
@@ -104,14 +105,40 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     right:  -25px;
     top:    -13px;
   }
+  #widgetContainer {
+    height: 65%;
+  }
+  widget-sentiment-chart{
+  }
+  widget-demography-chart {
+  }
   </style>
   <div id="card">
     <div id="front" select="front">
-      <img src={{image}} height="120px" width="120px" alt="Item" align="center"/>
+      <img src={{image}} height="120px" width="120px" alt="" align="center"/>
       <a href=""><h1 class='title'>{{label}}</h1></a>
     </div>
     <div id="back">
-      <widget-container></widget-container>
+      <div id="widgetContainer" horizontal layout end>
+        <div flex></div>
+
+
+        <widget-sentiment-chart id="sentimentChart"
+        on-tap  = "{{sentimentTap}}"
+        on-back = "console.log('asdas');"
+        ></widget-sentiment-chart>
+
+
+
+        <div flex></div>
+        <widget-demography-chart
+        id="demographyChart"
+        on-tap="{{demographyTap}}"
+        on-back=""
+        ></widget-demography-chart>
+        <div flex></div>
+        <div flex></div>
+      </div>
       <action-container></action-container>
       <h1 class='content'></h1>
       <a href=""><h1 class='title'>{{label}}</h1></a>
@@ -139,6 +166,14 @@ Polymer("sentiment-card", {
       self.card.className = "flipped";
       self.front.style.display = "none";
     });
+  },
+  sentimentTap: function(){
+    var self = this.$;
+    self.demographyChart.style.display = "none";
+  },
+  demographyTap: function(){
+    var self = this.$;
+    self.sentimentChart.style.display = "none";
   }
 });
 </script>
