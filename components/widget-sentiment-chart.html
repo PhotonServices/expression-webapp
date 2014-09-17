@@ -41,7 +41,7 @@ A widget bar
   <div id="sentimentBar" on-tap="{{clickHandler}}" layout horizontal end>
     <sentiment-bar val="100" sentiment="very-negative"></sentiment-bar>
     <sentiment-bar val="15"  sentiment="negative" emoticon="true"></sentiment-bar>
-    <sentiment-bar val="25"  sentiment="neutral"  heart="true"   ></sentiment-bar>
+    <sentiment-bar val="25"  sentiment="neutral"  heart="true"></sentiment-bar>
     <sentiment-bar val="100" sentiment="positive" emoticon="true"></sentiment-bar>
     <sentiment-bar val="15"  sentiment="very-positive"></sentiment-bar>
   </div>
@@ -85,9 +85,9 @@ Polymer('widget-sentiment-chart', {
       self.sentimentBar.children[i].style.webkitTransform = "translate("+(i-1.5)/20+"px, 0px)";
       self.sentimentBar.children[i].style.transition = "all .4s";
       self.sentimentBar.children[i].style.webkitTransition = "all .4s";
+      self.sentimentBar.children[i].setAttribute("expand","false");
       self.metadata.innerHTML="";
     }
-    // this.fire('back-sentiment-chart-handler');
     this.asyncFire('back-sentiment-chart-handler');
   }
 });

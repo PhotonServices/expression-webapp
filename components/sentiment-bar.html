@@ -8,7 +8,7 @@ A widget bar
 <polymer-element
 name= "sentiment-bar"
 attributes= "val sentiment heart emoticon expand"
-on-click= "{{clickHandler}}">
+on-tap= "{{tapHandler}}">
 <template>
 <style>
 :host #bar{
@@ -32,8 +32,8 @@ on-click= "{{clickHandler}}">
 }
 </style>
 <div id="bar">
-  <!-- <div id="emoticon"></div> -->
-  <!-- <core-icon icon='' size='24' id="favorite"></core-icon> -->
+  <div id="emoticon"></div>
+  <core-icon icon='' size='24' id="favorite"></core-icon>
   <paper-ripple id="ripple" fit></paper-ripple>
   <paper-shadow z="1" id="myShadow" animated></paper-shadow>
 </div>
@@ -59,24 +59,23 @@ Polymer('sentiment-bar', {
       self.bar.style.background = "#FBBF00";
       self.ripple.style.color = "#fff";
     }
-    // if(this.heart == "true"){
-    //   self.favorite.setAttribute("icon","favorite");
-    // }
-    // if(this.emoticon == "true"){
-    //   switch(this.sentiment) {
-    //     case "neutral":      self.emoticon.innerHTML = ":|"; break;
-    //     case "positive":     self.emoticon.innerHTML = ":)"; break;
-    //     case "negative":     self.emoticon.innerHTML = ":("; break;
-    //     case "very-positive":self.emoticon.innerHTML = ":D"; break;
-    //     case "very-negative":self.emoticon.innerHTML = "D:"; break;
-    //   }
-    // }
+    if(this.heart == "true"){
+      self.favorite.setAttribute("icon","favorite");
+    }
+    if(this.emoticon == "true"){
+      switch(this.sentiment) {
+        case "neutral":      self.emoticon.innerHTML = ":|"; break;
+        case "positive":     self.emoticon.innerHTML = ":)"; break;
+        case "negative":     self.emoticon.innerHTML = ":("; break;
+        case "very-positive":self.emoticon.innerHTML = ":D"; break;
+        case "very-negative":self.emoticon.innerHTML = "D:"; break;
+      }
+    }
   },
-  clickHandler: function() {
-    // var self = this.$;
-    // if(this.expand == "true"){
-    //   this.innerHTML += ""
-    //}
+  tapHandler: function() {
+    if(this.expand == "true") {
+      this.asyncFire('sentiment-bar-expanded');
+    }
   }
 });
 </script>
