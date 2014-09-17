@@ -166,6 +166,12 @@ Polymer("sentiment-card", {
       self.card.className = "flipped";
       self.front.style.display = "none";
     });
+
+    self.sentimentChart.addEventListener('back-sentiment-chart-handler', function(e) {
+      self.demographyChart.style.display = "block";
+      console.log("backPressed");
+    });
+
   },
   sentimentTap: function(){
     var self = this.$;

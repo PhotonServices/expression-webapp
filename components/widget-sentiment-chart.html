@@ -12,9 +12,9 @@ A widget bar
     cursor: pointer;
   }
   :host .subtitle{
-    width: 0px;
+    width:  0px;
     height: 0px;
-    font-size:13px;
+    font-size: 13px;
     font-family: Roboto, Helvetica, Arial;
     font-weight: 100;
     line-height: 140%;
@@ -22,15 +22,15 @@ A widget bar
   }
   :host #backButton {
     position: absolute;
-    top: 25px;
-    left:-5px;
-    background:#107FC9;
-    transform: scale(0.5);
+    top:  25px;
+    left: -5px;
+    background: #107FC9;
+    transform:  scale(0.5);
     display: none;
   }
   :host paper-fab::shadow svg {
-    transform:      scale(2);
-    -moz-transform: scale(2);
+    transform:         scale(2);
+    -moz-transform:    scale(2);
     -webkit-transform: scale(2);
     fill: white;
   }
@@ -83,7 +83,7 @@ Polymer('widget-sentiment-chart', {
       self.sentimentBar.children[i].style.webkitTransition = "all .7s";
       self.metadata.innerHTML="";
     }
-    self.onBack = "hello";
+    this.fire('back-sentiment-chart-handler');
   }
 });
 </script>
