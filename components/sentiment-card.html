@@ -108,10 +108,6 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
   #widgetContainer {
     height: 65%;
   }
-  widget-sentiment-chart{
-  }
-  widget-demography-chart {
-  }
   </style>
   <div id="card">
     <div id="front" select="front">
@@ -121,15 +117,10 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     <div id="back">
       <div id="widgetContainer" horizontal layout end>
         <div flex></div>
-
-
         <widget-sentiment-chart id="sentimentChart"
         on-tap  = "{{sentimentTap}}"
         on-back = "console.log('asdas');"
         ></widget-sentiment-chart>
-
-
-
         <div flex></div>
         <widget-demography-chart
         id="demographyChart"
@@ -166,20 +157,56 @@ Polymer("sentiment-card", {
       self.card.className = "flipped";
       self.front.style.display = "none";
     });
-
+  },
+  ready: function() {
+    var self = this.$;
     self.sentimentChart.addEventListener('back-sentiment-chart-handler', function(e) {
-      self.demographyChart.style.display = "block";
-      console.log("backPressed");
+      var animation = new CoreAnimation();
+      animation.duration = 200;
+      animation.fill = "forwards"
+      animation.keyframes = [ {opacity: "0"},{opacity: "1"}];
+      animation.target = self.demographyChart;
+      animation.play();
+      animation.addEventListener('core-animation-finish', function(e) {
+        self.demographyChart.style.visibility = "visible";
+      });
     });
 
+    self.demographyChart.addEventListener('back-demography-chart-handler', function(e) {
+      var animation = new CoreAnimation();
+      animation.duration = 200;
+      animation.fill = "forwards"
+      animation.keyframes = [ {opacity: "0"},{opacity: "1"}];
+      animation.target = self.sentimentChart;
+      animation.play();
+      animation.addEventListener('core-animation-finish', function(e) {
+        self.sentimentChart.style.visibility = "visible";
+      });
+    });
   },
   sentimentTap: function(){
     var self = this.$;
-    self.demographyChart.style.display = "none";
+    var animation = new CoreAnimation();
+    animation.duration = 200;
+    animation.fill = "forwards"
+    animation.keyframes = [ {opacity: "1"}, {opacity: "0"}];
+    animation.target = self.demographyChart;
+    animation.play();
+    animation.addEventListener('core-animation-finish', function(e) {
+      self.demographyChart.style.visibility = "hidden";
+    });
   },
   demographyTap: function(){
     var self = this.$;
-    self.sentimentChart.style.display = "none";
+    var animation = new CoreAnimation();
+    animation.duration = 200;
+    animation.fill = "forwards"
+    animation.keyframes = [ {opacity: "1"},{opacity: "0"}];
+    animation.target = self.sentimentChart;
+    animation.play();
+    animation.addEventListener('core-animation-finish', function(e) {
+      self.sentimentChart.style.visibility = "hidden";
+    });
   }
 });
 </script>

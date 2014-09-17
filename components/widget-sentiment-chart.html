@@ -4,7 +4,7 @@
 <!--
 A widget bar
 -->
-<polymer-element name="widget-sentiment-chart" attributes="onBack">
+<polymer-element name="widget-sentiment-chart">
   <link href='http://fonts.googleapis.com/css?family=Roboto:400,100' rel='stylesheet' type='text/css'>
   <template>
   <style>
@@ -26,6 +26,8 @@ A widget bar
     left: -5px;
     background: #107FC9;
     transform:  scale(0.5);
+    -moz-transform:  scale(0.5);
+    -webkit-transform:  scale(0.5);
     display: none;
   }
   :host paper-fab::shadow svg {
@@ -59,12 +61,14 @@ Polymer('widget-sentiment-chart', {
       self.metadata.appendChild(newNode);
       self.sentimentBar.children[i].style.transform  = "translate("+(i+1.5)*20+"px, 0px)";
       self.sentimentBar.children[i].style.webkitTransform = "translate("+(i+1.5)*20+"px, 0px)";
-      self.sentimentBar.children[i].style.transition = "all .7s";
+      self.sentimentBar.children[i].style.transition = "all .4s";
       self.sentimentBar.children[i].setAttribute("expand","true");
     }
     for(j=0; j <5; j++){
       self.metadata.children[j].style.transform ="translate("+(j+.75)*42+"px, 0px)";
-      self.metadata.children[j].style.transition = "all .7s";
+      self.metadata.children[j].style.webkitTransform ="translate("+(j+.75)*42+"px, 0px)";
+      self.metadata.children[j].style.transition = "all .4s";
+      self.metadata.children[j].style.webkitTransition = "all .4s";
     }
   },
   backHandler: function(){
@@ -79,11 +83,12 @@ Polymer('widget-sentiment-chart', {
       self.metadata.appendChild(newNode);
       self.sentimentBar.children[i].style.transform  = "translate("+(i-1.5)/20+"px, 0px)";
       self.sentimentBar.children[i].style.webkitTransform = "translate("+(i-1.5)/20+"px, 0px)";
-      self.sentimentBar.children[i].style.transition = "all .7s";
-      self.sentimentBar.children[i].style.webkitTransition = "all .7s";
+      self.sentimentBar.children[i].style.transition = "all .4s";
+      self.sentimentBar.children[i].style.webkitTransition = "all .4s";
       self.metadata.innerHTML="";
     }
-    this.fire('back-sentiment-chart-handler');
+    // this.fire('back-sentiment-chart-handler');
+    this.asyncFire('back-sentiment-chart-handler');
   }
 });
 </script>
