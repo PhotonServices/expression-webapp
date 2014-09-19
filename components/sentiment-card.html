@@ -205,23 +205,26 @@ Polymer("sentiment-card", {
   },
   demographyTap: function(){
     var self = this.$;
-    /*
-    * The next animation vanishes the sentiment chart.
-    * Sets its visibility to hidden.
-    */
-    var animation = new CoreAnimation();
-    animation.duration = 200;
-    animation.fill = "forwards"
-    animation.keyframes = [ {opacity: "1"},{opacity: "0"}];
-    animation.target = self.sentimentChart;
-    animation.play();
-    animation.addEventListener('core-animation-finish', function(e) {
-      self.sentimentChart.style.visibility = "hidden";
-    });
-    /*
-    * The next animation centers the demography chart.
-    */
-    self.demographyChart.addEventListener('animation-demography-chart-finish', function(e) {
+    self.demographyChart.addEventListener('tapped-demography-chart-button', function(e) {
+      /*
+      * The next animation vanishes the sentiment chart.
+      * Sets its visibility to hidden.
+      */
+      var animation = new CoreAnimation();
+      animation.duration = 200;
+      animation.fill = "forwards"
+      animation.keyframes = [ {opacity: "1"},{opacity: "0"}];
+      animation.target = self.sentimentChart;
+      animation.play();
+      animation.addEventListener('core-animation-finish', function(e) {
+        self.sentimentChart.style.visibility = "hidden";
+      });
+      /*
+      * The next animation centers the demography chart.
+      */
+      self.demographyChart.addEventListener('animation-demography-chart-finish', function(e) {
+        
+      });
     });
   }
 });
