@@ -11,121 +11,133 @@
 -->
 <polymer-element name="widget-demography-chart" vertical layout center attributes="active">
   <template>
-  <style>
-  :host{
-    cursor: pointer;
-  }
-  core-icon > svg{
-    fill: white;
-    transform: scale(3);
-    -moz-transform: scale(3);
-    -webkit-transform: scale(3);
-  }
-  #button {
-    font-size:  12px;
-    background: #107FC9;
-    color:  #fff;
-    width:  90px;
-    height: 28px;
-  }
-  #folkchart{
-    position: absolute;
-    visibility: hidden;
-    left: 0;
-  }
-  #backButton {
-    position: absolute;
-    left: -50px;
-    top:  10px;
-    background:#107FC9;
-    transform: scale(0.5);
-    -webkit-transform: scale(0.5);
-    visibility: hidden;
-    z-index: 1;
-  }
-  #backButton::shadow svg {
-    transform:         scale(2);
-    -moz-transform:    scale(2);
-    -webkit-transform: scale(2);
-    fill: white;
-  }
-  </style>
-  <div id="widget" vertical layout center>
-    <paper-fab icon="chevron-left" id="backButton" on-tap="{{backHandler}}"></paper-fab>
-    <core-icon icon="social:people"></core-icon>
-    <paper-button id="button" label="1,000" raisedButton  on-tap="{{tapHandler}}"></paper-button>
-    <widget-folksonomy-list id="folkchart" folksonomy='{"folksonomy": [
-    "Peña Nieto",
-    "Reforma",
-    "Gasolina",
-    "Capital",
-    "Precio",
-    "Familia",
-    "Reforma",
-    "Gasolina",
-    "Capital",
-    "Precio",
-    "Familia",
-    "Reforma",
-    "Gasolina",
-    "Capital",
-    "Precio",
-    "Familia",
-    "Ice Bucket Challenge"
-    ]}' scrolling="true"></widget-folksonomy-chart>
-  </div>
-</template>
-<script>
-Polymer('widget-demography-chart', {
-  attached: function() {
-    if(this.active == "false") {
-      var self = this.$;
-      self.button.setAttribute("raisedButton","false");
-      // self.button.style.background = "grey";
+    <link rel="stylesheet" href="../bower_components/animate/animate.css">
+    <style>
+    :host{
+      cursor: pointer;
     }
-  },
-  tapHandler: function() {
-    var self = this.$;
-    if(this.active == "true") {
-      self.backButton.style.visibility = "visible";
-      self.folkchart.style.visibility  = "visible";
+    core-icon > svg{
+      fill: white;
+      transform: scale(3);
+      -moz-transform: scale(3);
+      -webkit-transform: scale(3);
+    }
+    #button {
+      font-size:  12px;
+      background: #107FC9;
+      color:  #fff;
+      width:  90px;
+      height: 28px;
+    }
+    #folkchart{
+      position: absolute;
+      visibility: hidden;
+      left: 0;
+    }
+    #backButton {
+      position: absolute;
+      left: -100px;
+      top:  10px;
+      background:#107FC9;
+      transform: scale(0.5);
+      -webkit-transform: scale(0.5);
+      visibility: hidden;
+      z-index: 1;
+    }
+    #backButtonContainer{
+      position: absolute;
+      left: 45px;
+      top:  0px;
+    }
+    #backButton::shadow svg {
+      transform:         scale(2);
+      -moz-transform:    scale(2);
+      -webkit-transform: scale(2);
+      fill: white;
+    }
+    </style>
+    <div id="widget" vertical layout center>
+      <div id="backButtonContainer">
+        <paper-fab icon="chevron-left" id="backButton" on-tap="{{backHandler}}"></paper-fab>
+      </div>
+      <core-icon icon="social:people"></core-icon>
+      <paper-button id="button" label="1,000" raisedButton  on-tap="{{tapHandler}}"></paper-button>
+      <widget-folksonomy-list id="folkchart" folksonomy='{"folksonomy": [
+      "Peña Nieto",
+      "Reforma",
+      "Gasolina",
+      "Capital",
+      "Precio",
+      "Familia",
+      "Reforma",
+      "Gasolina",
+      "Capital",
+      "Precio",
+      "Familia",
+      "Reforma",
+      "Gasolina",
+      "Capital",
+      "Precio",
+      "Familia",
+      "Ice Bucket Challenge"
+      ]}' scrolling="true"></widget-folksonomy-chart>
+    </div>
+  </template>
+  <script>
+  Polymer('widget-demography-chart', {
+    attached: function() {
+      if(this.active == "false") {
+        var self = this.$;
+        self.button.setAttribute("raisedButton","false");
+        // self.button.style.background = "grey";
+      }
+    },
+    tapHandler: function() {
+      var self = this.$;
+      if(this.active == "true") {
+        self.folkchart.style.visibility  = "visible";
+        self.folkchart.className = "animated fadeIn";
+        var anmTranslate = new CoreAnimation();
+        anmTranslate.duration = 250;
+        anmTranslate.fill = "forwards"
+        anmTranslate.keyframes = [{transform: "translate(0px,0px)"},{transform: "translate(-50px,0px)"}];
+        anmTranslate.target = self.widget;
+        anmTranslate.play();
+        anmTranslate.addEventListener('core-animation-finish', function(e) {
+          var anmTranslate = new CoreAnimation();
+          anmTranslate.duration = 300;
+          anmTranslate.fill = "forwards"
+          anmTranslate.keyframes = [{transform: "translate(-50px,0px)"},{transform: "translate(-50px,-50px)"}];
+          anmTranslate.target = self.widget;
+          anmTranslate.play();
+          anmTranslate.addEventListener('core-animation-finish', function(e) {
+            self.backButton.style.visibility = "visible";
+            self.backButtonContainer.className = "animated fadeInRight";
+          });
+        });
+      }
+    },
+    backHandler: function() {
+      var self = this.$;
+      self.backButtonContainer.className = "";
+      self.backButtonContainer.className = "animated fadeOut";
       var anmTranslate = new CoreAnimation();
-      anmTranslate.duration = 250;
+      anmTranslate.duration = 400;
       anmTranslate.fill = "forwards"
-      anmTranslate.keyframes = [{transform: "translate(0px,0px)"},{transform: "translate(-50px,0px)"}];
+      anmTranslate.keyframes = [{transform: "translate(-50px,-50px)"},{transform: "translate(0px,-50px)"}];
       anmTranslate.target = self.widget;
       anmTranslate.play();
       anmTranslate.addEventListener('core-animation-finish', function(e) {
         var anmTranslate = new CoreAnimation();
-        anmTranslate.duration = 300;
+        anmTranslate.duration = 250;
         anmTranslate.fill = "forwards"
-        anmTranslate.keyframes = [{transform: "translate(-50px,0px)"},{transform: "translate(-50px,-50px)"}];
+        anmTranslate.keyframes = [{transform: "translate(0px,-50px)"},{transform: "translate(0px,0px)"}];
         anmTranslate.target = self.widget;
         anmTranslate.play();
+        self.folkchart.className = "animated fadeOut";
       });
+      this.asyncFire('back-demography-chart-handler');
     }
-  },
-  backHandler: function() {
-    var self = this.$;
-    self.backButton.style.visibility = "hidden";
-    self.folkchart.style.visibility  = "hidden";
-
-    var anmTranslate = new CoreAnimation();
-    anmTranslate.duration = 250;
-    anmTranslate.fill = "forwards"
-    anmTranslate.keyframes = [{transform: "translate(-50px,-50px)"},{transform: "translate(0px,-50px)"}];
-    anmTranslate.target = self.widget;
-    anmTranslate.play();
-    anmTranslate.addEventListener('core-animation-finish', function(e) {
-      var anmTranslate = new CoreAnimation();
-      anmTranslate.duration = 300;
-      anmTranslate.fill = "forwards"
-      anmTranslate.keyframes = [{transform: "translate(0px,-50px)"},{transform: "translate(0px,0px)"}];
-      anmTranslate.target = self.widget;
-      anmTranslate.play();
-    });
-    this.asyncFire('back-demography-chart-handler');
-  }
-});
-</script>
+  });
+  </script>
 </polymer-element>
