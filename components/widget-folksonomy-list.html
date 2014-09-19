@@ -31,14 +31,16 @@ vertical layout center>
 <script>
 Polymer('widget-folksonomy-list', {
   attached: function() {
-    var data = JSON.parse(this.folksonomy);
+    var folk = '{"folksonomy": ["Peña Nieto","Reforma","Gasolina","Capital","Precio","Familia","Reforma","Gasolina","Capital","Precio","Familia","Reforma","Gasolina","Capital","Precio","Familia","Ice Bucket Challenge"]}';
+    // var data = JSON.parse(this.folksonomy);
+    var data = JSON.parse(folk);
     var index = 1;
     for (var i in data.folksonomy) {
       var sentence = data.folksonomy[i];
       this.$.list.innerHTML += "<div id='fk' style='color:rgba(255,255,255,"+index+")'>"+sentence+"</div>";
       // index = index*.75;
     }
-    if(this.scrolling == "true") {
+    // if(this.scrolling == "true") {
       var animation = new CoreAnimation();
       animation.duration = 22000;
       animation.iterations = "Infinity";
@@ -46,7 +48,7 @@ Polymer('widget-folksonomy-list', {
       animation.keyframes = [ {transform: "translate(0px,0px)"},{transform: "translate(0px,-200px)"}];
       animation.target = this.$.list;
       animation.play();
-    }
+    // }
   }
 });
 </script>

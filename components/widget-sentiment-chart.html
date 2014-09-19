@@ -102,12 +102,12 @@ A widget bar
             var demographyChart = document.createElement('widget-demography-chart');
             demographyChart.setAttribute("active","false");
             self.metadata.appendChild(demographyChart);
-            // var folksonomyList  = document.createElement('widget-folksonomy-list');
-            // self.metadata.appendChild(folksonomyList);
-            // demographyChart.className += "animated bounceInLeft";
-            // demographyChart.style.position  = "absolute";
-            // demographyChart.style.transform = "translate(10px,10px)";
-            // demographyChart.style.transform = "scale(0.45)";
+            var folksonomyList  = document.createElement('widget-folksonomy-list');
+            self.metadata.appendChild(folksonomyList);
+            folksonomyList.setAttribute("scrolling","true");
+            /*
+            * Animate, insert widget-demography-chart.
+            */
             var animation = new CoreAnimation();
             animation.duration = 500;
             animation.fill = "forwards"
@@ -115,6 +115,17 @@ A widget bar
             {transform: "translate(-100px,12px) scale(0.45)"},
             {transform: "translate(5px,12px) scale(.45)"}];
             animation.target = demographyChart;
+            animation.play();
+            /*
+            * Animate, insert widget-demography-chart.
+            */
+            var animation = new CoreAnimation();
+            animation.duration = 500;
+            animation.fill = "forwards"
+            animation.keyframes = [
+            {transform: "translate(100px,0px) scale(0.65)"},
+            {transform: "translate(40px,0px) scale(.65)"}];
+            animation.target = folksonomyList;
             animation.play();
           });
         });
