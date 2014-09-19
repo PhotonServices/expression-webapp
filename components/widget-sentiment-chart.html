@@ -130,22 +130,24 @@ A widget bar
             * Animate, insert widget-demography-chart.
             */
             var animation = new CoreAnimation();
-            animation.duration = 300;
+            animation.duration = 500;
             animation.fill = "forwards"
             animation.keyframes = [
-            {transform: "translate(-100px,12px) scale(0.45)"},
-            {transform: "translate(5px,12px) scale(.45)"}];
+            // {transform: "translate(-100px,12px) scale(0.45)"},
+            // {transform: "translate(5px,12px) scale(.45)"}];
+            {transform: "translate(5px,12px) scale(.45)",opacity:"0"},
+            {transform: "translate(5px,12px) scale(.45)",opacity:"1"}];
             animation.target = demographyChart;
             animation.play();
             /*
             * Animate, insert widget-demography-chart.
             */
             var animation = new CoreAnimation();
-            animation.duration = 300;
+            animation.duration = 500;
             animation.fill = "forwards"
             animation.keyframes = [
-            {transform: "translate(100px,0px) scale(0.65)"},
-            {transform: "translate(40px,0px) scale(.65)"}];
+            {transform: "translate(40px,0px) scale(.65)",opacity:"0"},
+            {transform: "translate(40px,0px) scale(.65)",opacity:"1"}];
             animation.target = folksonomyList;
             animation.play();
           });
@@ -314,6 +316,9 @@ A widget bar
           });
         });
       });
+      /*
+       *  Missing sentiment bar 4???
+       */
       self.bar5.addEventListener('sentiment-bar-expanded', function(e) {
         self.backButton.style.display = "none";
         self.backButtonExpand.style.display = "block";
