@@ -126,7 +126,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
         <widget-demography-chart
         id="demographyChart"
         on-tap="{{demographyTap}}"
-        on-back=""
+        active= "true"
         ></widget-demography-chart>
         <div flex></div>
         <div flex></div>
@@ -182,6 +182,13 @@ Polymer("sentiment-card", {
       animation.addEventListener('core-animation-finish', function(e) {
         self.sentimentChart.style.visibility = "visible";
       });
+
+      var anmTranslate = new CoreAnimation();
+      anmTranslate.duration = 500;
+      anmTranslate.fill = "forwards"
+      anmTranslate.keyframes = [{transform: "translate(-50px,0px)"},{transform: "translate(0px,0px)"}];
+      anmTranslate.target = self.demographyChart;
+      anmTranslate.play();
     });
   },
   sentimentTap: function(){
@@ -198,6 +205,10 @@ Polymer("sentiment-card", {
   },
   demographyTap: function(){
     var self = this.$;
+    /*
+    * The next animation vanishes the sentiment chart.
+    * Sets its visibility to hidden.
+    */
     var animation = new CoreAnimation();
     animation.duration = 200;
     animation.fill = "forwards"
@@ -206,6 +217,11 @@ Polymer("sentiment-card", {
     animation.play();
     animation.addEventListener('core-animation-finish', function(e) {
       self.sentimentChart.style.visibility = "hidden";
+    });
+    /*
+    * The next animation centers the demography chart.
+    */
+    self.demographyChart.addEventListener('animation-demography-chart-finish', function(e) {
     });
   }
 });
