@@ -1,0 +1,82 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../bower_components/paper-shadow/paper-shadow.html">
+<!--
+A widget bar
+-->
+<polymer-element
+name= "sentiment-bar"
+attributes= "val sentiment heart emoticon expand"
+on-tap= "{{tapHandler}}">
+<template>
+<style>
+:host #bar{
+  width: 23px;
+  cursor: pointer;
+  text-align: center;
+}
+:host #emoticon{
+  font-family: HelveticaNeue-Medium, Arial;
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+}
+:host core-icon > svg {
+  fill: rgba(255,255,255,0.5);
+  transform:scale(0.75);
+  -moz-transform:scale(0.75);
+  -webkit-transform:scale(0.75);
+}
+:host #ripple{
+  overflow: hidden;
+}
+</style>
+<div id="bar">
+  <div id="emoticon"></div>
+  <core-icon icon='' size='24' id="favorite"></core-icon>
+  <paper-ripple id="ripple" fit></paper-ripple>
+  <paper-shadow z="1" id="myShadow" animated></paper-shadow>
+</div>
+</template>
+<script>
+Polymer('sentiment-bar', {
+  attached: function() {
+    var self = this.$;
+    self.bar.style.height = this.val+"px";
+    if(this.sentiment == "very-positive"){
+      self.bar.style.background = "#00C273";
+      self.ripple.style.color = "#29ffa8";
+    } else if(this.sentiment == "positive"){
+      self.bar.style.background = "#86C300";
+      self.ripple.style.color = "#bcff2a";
+    } else if(this.sentiment == "negative"){
+      self.bar.style.background = "#FF8A00";
+      self.ripple.style.color = "#fff";
+    } else if(this.sentiment == "very-negative"){
+      self.bar.style.background = "#FF0035";
+      self.ripple.style.color = "#ffd9e1";
+    } else if(this.sentiment == "neutral"){
+      self.bar.style.background = "#FBBF00";
+      self.ripple.style.color = "#fff";
+    }
+    if(this.heart == "true"){
+      self.favorite.setAttribute("icon","favorite");
+    }
+    if(this.emoticon == "true"){
+      switch(this.sentiment) {
+        case "neutral":      self.emoticon.innerHTML = ":|"; break;
+        case "positive":     self.emoticon.innerHTML = ":)"; break;
+        case "negative":     self.emoticon.innerHTML = ":("; break;
+        case "very-positive":self.emoticon.innerHTML = ":D"; break;
+        case "very-negative":self.emoticon.innerHTML = "D:"; break;
+      }
+    }
+  },
+  tapHandler: function() {
+    if(this.expand == "true") {
+      this.asyncFire('sentiment-bar-expanded');
+    }
+  }
+});
+</script>
+</polymer-element>
