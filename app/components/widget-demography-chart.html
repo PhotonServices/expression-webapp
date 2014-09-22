@@ -17,9 +17,9 @@
   }
   core-icon > svg{
     fill: white;
-    transform: scale(3);
-    -moz-transform: scale(3);
-    -webkit-transform: scale(3);
+    transform:        scale(3);
+    -moz-transform:   scale(3);
+    -webkit-transform:scale(3);
   }
   #button {
     font-size:  12px;
@@ -28,7 +28,7 @@
     width:  90px;
     height: 28px;
   }
-  #folkchart{
+  #folkChart{
     position: absolute;
     visibility: hidden;
     left: 0;
@@ -53,7 +53,7 @@
     <paper-fab icon="chevron-left" id="backButton" on-tap="{{backHandler}}"></paper-fab>
     <core-icon icon="social:people"></core-icon>
     <paper-button id="button" label="1,000" raisedButton  on-tap="{{tapHandler}}"></paper-button>
-    <widget-folksonomy-list id="folkchart" folksonomy='{"folksonomy": [
+    <widget-folksonomy-list id="folkChart" folksonomy='{"folksonomy": [
     "Peña Nieto",
     "Reforma",
     "Gasolina",
@@ -86,7 +86,7 @@ Polymer('widget-demography-chart', {
   tapHandler: function() {
     var self = this.$;
     if(this.active == "true") {
-      self.folkchart.style.visibility  = "visible";
+      self.folkChart.style.visibility  = "visible";
       var anmTranslate = new CoreAnimation();
       anmTranslate.duration = 250;
       anmTranslate.fill = "forwards"
@@ -109,7 +109,8 @@ Polymer('widget-demography-chart', {
   },
   backHandler: function() {
     var self = this.$;
-    self.backButton.style.visibility  = "hidden";
+    self.backButton.style.visibility = "hidden";
+    self.folkChart.style.visibility  = "hidden";
     var anmTranslate = new CoreAnimation();
     anmTranslate.duration = 400;
     anmTranslate.fill = "forwards"
