@@ -27,7 +27,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     height:210px;
     font-family: 'Roboto','Helvetica', sans-serif;
   }
-  #card {
+  :host #card {
     width:  100%;
     height: 100%;
     transition:        transform  0.5s;
@@ -40,13 +40,13 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     -moz-transform-style:    preserve-3d;
     -webkit-transform-style: preserve-3d;
   }
-  #card.flipped {
+  :host #card.flipped {
     transform:         rotateY(180deg);
     -o-transform:      rotateY(180deg);
     -moz-transform:    rotateY(180deg);
     -webkit-transform: rotateY(180deg);
   }
-  #card #front {
+  :host #card #front {
     position: absolute;
     display: block;
     /* ---- */
@@ -58,7 +58,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     -moz-backface-visibility:   hidden;
     -webkit-backface-visibility:hidden;
   }
-  #card #back {
+  :host #card #back {
     position: absolute;
     display: block;
     /* ---- */
@@ -72,20 +72,20 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
   }
   /*#card #front {
   }*/
-  #card #back {
+  :host #card #back {
     transform:         rotateY(180deg);
     -o-transform:      rotateY(180deg);
     -moz-transform:    rotateY(180deg);
     -webkit-transform: rotateY(180deg);
   }
-  #front #img {
+  :host #front #img {
     fill: white;
     width: 85%;
     height: 85%;
     display: block;
     margin: auto;
   }
-  .title {
+  :host .title {
     position: absolute;
     bottom: 0px;
     margin: 10px;
@@ -95,17 +95,17 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     width: 280px;
     color: white;
   }
-  widget-container{
+  :host widget-container{
     position:absolute;
     top:  40px;
     left: 20px;
   }
-  action-container {
+  :host action-container {
     position: absolute;
     right:  -25px;
     top:    -13px;
   }
-  #widgetContainer {
+  :host #widgetContainer {
     height: 65%;
   }
   </style>

@@ -15,25 +15,25 @@
   :host{
     cursor: pointer;
   }
-  core-icon > svg{
+  :host core-icon > svg{
     fill: white;
     transform:        scale(3);
     -moz-transform:   scale(3);
     -webkit-transform:scale(3);
   }
-  #button {
+  :host #button {
     font-size:  12px;
     background: #107FC9;
     color:  #fff;
     width:  90px;
     height: 28px;
   }
-  #folkChart{
+  :host #folkChart{
     position: absolute;
     visibility: hidden;
     left: 0;
   }
-  #backButton {
+  :host #backButton {
     position: absolute;
     left: -50px;
     top:  10px;
@@ -42,7 +42,7 @@
     -webkit-transform: scale(0.5);
     visibility: hidden;
   }
-  #backButton::shadow svg {
+  :host #backButton::shadow svg {
     transform:         scale(2);
     -moz-transform:    scale(2);
     -webkit-transform: scale(2);
