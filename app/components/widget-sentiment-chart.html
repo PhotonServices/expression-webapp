@@ -24,27 +24,18 @@ A widget bar
     display: none;
     position: absolute;
     top:  20px;
-    left: -5px;
+    left: 5px;
     background: #107FC9;
-    transform:  scale(0.5);
-    -moz-transform:  scale(0.5);
-    -webkit-transform:  scale(0.5);
   }
   :host #backButtonExpand {
     display: none;
     position: absolute;
     top:  20px;
-    left: -5px;
+    left: 5px;
     background: #107FC9;
     display: none;
-    transform:  scale(0.5);
-    -moz-transform:  scale(0.5);
-    -webkit-transform:  scale(0.5);
   }
   :host paper-fab::shadow svg {
-    transform:         scale(2);
-    -moz-transform:    scale(2);
-    -webkit-transform: scale(2);
     fill: white;
   }
   widget-demography-chart{
@@ -54,8 +45,8 @@ A widget bar
     position: absolute;
   }
   </style>
-  <paper-fab icon="chevron-left" id="backButton"       on-tap="{{backHandler}}"></paper-fab>
-  <paper-fab icon="undo"         id="backButtonExpand" on-tap="{{backExpandHandler}}"></paper-fab>
+  <paper-fab icon="chevron-left" class="mini" id="backButton"       on-tap="{{backHandler}}"></paper-fab>
+  <paper-fab icon="undo"         class="mini" id="backButtonExpand" on-tap="{{backExpandHandler}}"></paper-fab>
   <div id="sentimentBar" on-tap="{{clickHandler}}" layout horizontal end>
     <sentiment-bar id="bar1" val="100" sentiment="very-negative"></sentiment-bar>
     <sentiment-bar id="bar2" val="15"  sentiment="negative" emoticon="true"></sentiment-bar>

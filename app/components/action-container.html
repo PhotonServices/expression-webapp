@@ -10,21 +10,16 @@ action-bar: A bar which holds a set of action items.
   <template>
   <style>
   :host paper-fab{
-    transform: scale(.8);
-    -moz-transform: scale(.8);
-    -webkit-transform: scale(.8);
     background: #107FC9;
+    margin: 5px;
   }
   :host paper-fab::shadow svg{
-    transform: scale(1.5);
-    -webkit-transform: scale(1.5);
-    -moz-transform: scale(1.5);
     fill: white;
   }
   </style>
-  <paper-fab icon="keep"></paper-fab>
-  <paper-fab icon="social:share-alt"></paper-fab>
-  <paper-fab icon="communication:comment"></paper-fab>
+  <paper-fab class="mini" icon="keep"></paper-fab>
+  <paper-fab class="mini" icon="social:share-alt"></paper-fab>
+  <paper-fab class="mini" icon="communication:comment"></paper-fab>
 </template>
 <script>
 Polymer('action-container', {});

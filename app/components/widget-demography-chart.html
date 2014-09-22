@@ -36,21 +36,16 @@
   :host #backButton {
     position: absolute;
     left: -50px;
-    top:  10px;
+    top:  18px;
     background:#107FC9;
-    transform: scale(0.5);
-    -webkit-transform: scale(0.5);
     visibility: hidden;
   }
   :host #backButton::shadow svg {
-    transform:         scale(2);
-    -moz-transform:    scale(2);
-    -webkit-transform: scale(2);
     fill: white;
   }
   </style>
   <div id="widget" vertical layout center>
-    <paper-fab icon="chevron-left" id="backButton" on-tap="{{backHandler}}"></paper-fab>
+    <paper-fab icon="chevron-left" class="mini" id="backButton" on-tap="{{backHandler}}"></paper-fab>
     <core-icon icon="social:people"></core-icon>
     <paper-button id="button" label="1,000" raisedButton  on-tap="{{tapHandler}}"></paper-button>
     <widget-folksonomy-list id="folkChart" folksonomy='{"folksonomy": [
