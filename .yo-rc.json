@@ -1,0 +1,6 @@
+{
+  "generator-mocha": {},
+  "generator-polymer": {
+    "includeSass": true
+  }
+}
