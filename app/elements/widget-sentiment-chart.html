@@ -60,6 +60,9 @@ A widget bar
 Polymer('widget-sentiment-chart', {
   ready: function(){
     var self = this.$;
+    /*
+    *  Sentiment Bar 1  *** Event Animations ***
+    */
     self.bar1.addEventListener('sentiment-bar-expanded', function(e) {
       self.backButton.style.display = "none";
       self.backButtonExpand.style.display = "block";
@@ -113,7 +116,7 @@ Polymer('widget-sentiment-chart', {
           * Animate, insert widget-demography-chart.
           */
           var animation = new CoreAnimation();
-          animation.duration = 500;
+          animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
           {transform: "translate(5px,12px) scale(.45)",opacity:"0"},
@@ -124,7 +127,7 @@ Polymer('widget-sentiment-chart', {
           * Animate, insert widget-demography-chart.
           */
           var animation = new CoreAnimation();
-          animation.duration = 500;
+          animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
           {transform: "translate(40px,0px) scale(.65)",opacity:"0"},
@@ -135,7 +138,7 @@ Polymer('widget-sentiment-chart', {
       });
     });
     /*
-    * Bar 2 Event Listener
+    *  Sentiment Bar 2 *** Event Animations ***
     */
     self.bar2.addEventListener('sentiment-bar-expanded', function(e) {
       self.backButton.style.display = "none";
@@ -195,35 +198,36 @@ Polymer('widget-sentiment-chart', {
           * Animate, insert widget-demography-chart.
           */
           var animation = new CoreAnimation();
-          animation.duration = 300;
+          animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(-100px,12px) scale(0.45)"},
-          {transform: "translate(48px,12px) scale(.45)"}];
+          {transform: "translate(48px,12px) scale(0.45)",opacity:"0"},
+          {transform: "translate(48px,12px) scale(0.45)",opacity:"1"}];
           animation.target = demographyChart;
           animation.play();
           /*
           * Animate, insert widget-demography-chart.
           */
           var animation = new CoreAnimation();
-          animation.duration = 300;
+          animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(200px,0px) scale(0.65)"},
-          {transform: "translate(85px,0px) scale(.65)"}];
+          {transform: "translate(85px,0px) scale(0.65)",opacity:"0"},
+          {transform: "translate(85px,0px) scale(0.65)",opacity:"1"}];
           animation.target = folksonomyList;
           animation.play();
         });
       });
     });
+    /*
+    *  Sentiment Bar 3 *** Event Animations ***
+    */
     self.bar3.addEventListener('sentiment-bar-expanded', function(e) {
       self.backButton.style.display = "none";
       self.backButtonExpand.style.display = "block";
-
       self.bar3.style.transform  = "translate(-15px, 0px)";
       self.bar3.style.webkitTransform = "translate(-15px, 0px)";
       self.bar3.style.transition = "all .4s";
-
       var animation = new CoreAnimation();
       animation.duration = 100;
       animation.fill = "forwards"
@@ -274,65 +278,68 @@ Polymer('widget-sentiment-chart', {
           * Animate, insert widget-demography-chart.
           */
           var animation = new CoreAnimation();
-          animation.duration = 300;
+          animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(-100px,12px) scale(0.45)"},
-          {transform: "translate(90px,12px) scale(.45)"}];
+          {transform: "translate(90px,12px) scale(0.45)",opacity:"0"},
+          {transform: "translate(90px,12px) scale(0.45)",opacity:"1"}];
           animation.target = demographyChart;
           animation.play();
           /*
           * Animate, insert widget-demography-chart.
           */
           var animation = new CoreAnimation();
-          animation.duration = 300;
+          animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(200px,0px) scale(0.65)"},
-          {transform: "translate(125px,0px) scale(.65)"}];
+          {transform: "translate(125px,0px) scale(0.65)",opacity:"0"},
+          {transform: "translate(125px,0px) scale(0.65)",opacity:"1"}];
           animation.target = folksonomyList;
           animation.play();
         });
       });
     });
     /*
-    *  Missing sentiment bar 4???
+    *  Sentiment Bar 4 *** Event Animations ***
     */
-    self.bar5.addEventListener('sentiment-bar-expanded', function(e) {
+    self.bar4.addEventListener('sentiment-bar-expanded', function(e) {
       self.backButton.style.display = "none";
       self.backButtonExpand.style.display = "block";
+      self.bar4.style.transform  = "translate(-38px, 0px)";
+      self.bar4.style.webkitTransform = "translate(-38px, 0px)";
+      self.bar4.style.transition = "all .4s";
       var animation = new CoreAnimation();
       animation.duration = 100;
       animation.fill = "forwards"
       animation.keyframes = [{opacity: "1.0"},{opacity: "0.0"}];
       animation.target = [
+      self.bar1,
       self.bar2,
       self.bar3,
-      self.bar4,
       self.bar5,
+      self.metadata.children[0],
       self.metadata.children[1],
       self.metadata.children[2],
-      self.metadata.children[3],
       self.metadata.children[4]];
       animation.play();
       animation.addEventListener('core-animation-finish', function(e) {
+        self.metadata.children[0].style.visibility = "hidden";
         self.metadata.children[1].style.visibility = "hidden";
         self.metadata.children[2].style.visibility = "hidden";
-        self.metadata.children[3].style.visibility = "hidden";
         self.metadata.children[4].style.visibility = "hidden";
+        self.bar1.style.visibility = "hidden";
         self.bar2.style.visibility = "hidden";
         self.bar3.style.visibility = "hidden";
-        self.bar4.style.visibility = "hidden";
         self.bar5.style.visibility = "hidden";
         /*
         * Animate metadata move text and make it bigger.
         */
         var animation = new CoreAnimation();
-        animation.duration = 300;
+        animation.duration = 200;
         animation.fill = "forwards"
         animation.keyframes = [
         {transform: "translate(0px,0px) scale(1)"},
-        {transform: "translate(55px,-100px) scale(2)"}];
+        {transform: "translate(-190px,-100px) scale(2)"}];
         animation.target = self.metadata;
         animation.play();
         /*
@@ -351,22 +358,102 @@ Polymer('widget-sentiment-chart', {
           * Animate, insert widget-demography-chart.
           */
           var animation = new CoreAnimation();
-          animation.duration = 200;
+          animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(-100px,12px) scale(0.45)"},
-          {transform: "translate(5px,12px) scale(.45)"}];
+          {transform: "translate(130px,12px) scale(0.45)",opacity:"0"},
+          {transform: "translate(130px,12px) scale(0.45)",opacity:"1"}];
           animation.target = demographyChart;
           animation.play();
           /*
           * Animate, insert widget-demography-chart.
           */
           var animation = new CoreAnimation();
-          animation.duration = 200;
+          animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(100px,0px) scale(0.65)"},
-          {transform: "translate(40px,0px) scale(.65)"}];
+          {transform: "translate(165px,0px) scale(0.65)",opacity:"0"},
+          {transform: "translate(165px,0px) scale(0.65)",opacity:"1"}];
+          animation.target = folksonomyList;
+          animation.play();
+        });
+      });
+    });
+    /*
+    *  Sentiment Bar 5 *** Event Animations ***
+    */
+    self.bar5.addEventListener('sentiment-bar-expanded', function(e) {
+      self.backButton.style.display = "none";
+      self.backButtonExpand.style.display = "block";
+      self.bar5.style.transform  = "translate(-65px, 0px)";
+      self.bar5.style.webkitTransform = "translate(-65px, 0px)";
+      self.bar5.style.transition = "all .4s";
+      var animation = new CoreAnimation();
+      animation.duration = 100;
+      animation.fill = "forwards"
+      animation.keyframes = [{opacity: "1.0"},{opacity: "0.0"}];
+      animation.target = [
+      self.bar1,
+      self.bar2,
+      self.bar3,
+      self.bar4,
+      self.metadata.children[0],
+      self.metadata.children[1],
+      self.metadata.children[2],
+      self.metadata.children[3]];
+      animation.play();
+      animation.addEventListener('core-animation-finish', function(e) {
+        self.metadata.children[0].style.visibility = "hidden";
+        self.metadata.children[1].style.visibility = "hidden";
+        self.metadata.children[2].style.visibility = "hidden";
+        self.metadata.children[3].style.visibility = "hidden";
+        self.bar1.style.visibility = "hidden";
+        self.bar2.style.visibility = "hidden";
+        self.bar3.style.visibility = "hidden";
+        self.bar4.style.visibility = "hidden";
+        /*
+        * Animate metadata move text and make it bigger.
+        */
+        var animation = new CoreAnimation();
+        animation.duration = 200;
+        animation.fill = "forwards"
+        animation.keyframes = [
+        {transform: "translate(0px,0px) scale(1)"},
+        {transform: "translate(-280px,-100px) scale(2)"}];
+        animation.target = self.metadata;
+        animation.play();
+        /*
+        * Animate, insert widget-demography-chart.
+        */
+        animation.addEventListener('core-animation-finish', function(e) {
+          var demographyChart = document.createElement('widget-demography-chart');
+          demographyChart.setAttribute("active","false");
+          demographyChart.setAttribute("id","demochart");
+          self.metadata.appendChild(demographyChart);
+          var folksonomyList  = document.createElement('widget-folksonomy-list');
+          self.metadata.appendChild(folksonomyList);
+          folksonomyList.setAttribute("scrolling","true");
+          folksonomyList.setAttribute("id","folksonomylist");
+          /*
+          * Animate, insert widget-demography-chart.
+          */
+          var animation = new CoreAnimation();
+          animation.duration = 800;
+          animation.fill = "forwards"
+          animation.keyframes = [
+          {transform: "translate(175px,12px) scale(0.45)",opacity:"0"},
+          {transform: "translate(175px,12px) scale(0.45)",opacity:"1"}];
+          animation.target = demographyChart;
+          animation.play();
+          /*
+          * Animate, insert widget-demography-chart.
+          */
+          var animation = new CoreAnimation();
+          animation.duration = 800;
+          animation.fill = "forwards"
+          animation.keyframes = [
+          {transform: "translate(210px,0px) scale(0.65)",opacity:"0"},
+          {transform: "translate(210px,0px) scale(0.65)",opacity:"1"}];
           animation.target = folksonomyList;
           animation.play();
         });
