@@ -22,7 +22,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
   <template>
   <style>
   :host {
-    position:fixed;
+    padding: 10px;
     width: 300px;
     height:210px;
     font-family: 'Roboto','Helvetica', sans-serif;
@@ -34,6 +34,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     -o-transition:     -o-transform 0.5s;
     -moz-transition:   -moz-transform 0.5s;
     -webkit-transition:-webkit-transform 0.5s;
+    z-index: -1;
     /* ---- */
     transform-style:         preserve-3d;
     -o-transform-style:      preserve-3d;
@@ -112,7 +113,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
   <div id="card">
     <div id="front" select="front">
       <core-icon id="img" icon="maps:local-florist"></core-icon>
-      <a href=""><h1 class='title'>{{label}}</h1></a>
+      <h1 class='title'>{{label}}</h1>
     </div>
     <div id="back">
       <div id="widgetContainer" horizontal layout end>
@@ -132,7 +133,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
       </div>
       <action-container></action-container>
       <h1 class='content'></h1>
-      <a href=""><h1 class='title'>{{label}}</h1></a>
+      <h1 class='title'>{{label}}</h1>
     </div>
     <paper-shadow z="1" id="myShadow" animated></paper-shadow>
   </div>
@@ -146,12 +147,15 @@ Polymer("sentiment-card", {
     if(sentiment > 1) {
       self.front.style.backgroundColor = "#2ECC71";
       self.back.style.backgroundColor = "#2ECC71";
+      self.card.style.backgroundColor = "#2ECC71";
     } else if (sentiment < -1) {
       self.front.style.backgroundColor = "#EA6153";
       self.back.style.backgroundColor = "#EA6153";
+      self.card.style.backgroundColor = "#EA6153";
     } else {
       self.front.style.backgroundColor = "#F39C12";
       self.back.style.backgroundColor = "#F39C12";
+      self.card.style.backgroundColor = "#F39C12";
     }
     this.addEventListener("click", function() {
       self.card.className = "flipped";
@@ -222,7 +226,6 @@ Polymer("sentiment-card", {
       * The next animation centers the demography chart.
       */
       self.demographyChart.addEventListener('animation-demography-chart-finish', function(e) {
-
       });
     });
   }
