@@ -24,5 +24,19 @@
   <!-- build:js scripts/app.js -->
   <script src="scripts/app.js"></script>
   <!-- endbuild-->
+  <x-websocket url="ws://localhost:8080/ws" ></x-websocket>
+  <script>
+  window.addEventListener('polymer-ready', function(e) {
+    var xws = document.querySelector("x-websocket");
+    console.log("xws:", xws);
+    xws.addEventListener("open", function() {
+      console.log("Connection is: Open");
+      xws.send('{"path": "echo", "message": "interval", "content": "5000"}');
+    });
+    xws.addEventListener("message", function(event) {
+      console.log("Recieved Message:", event.detail.data);
+    });
+  });
+  </script>
 </body>
 </html>
