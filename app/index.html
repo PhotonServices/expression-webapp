@@ -17,26 +17,40 @@
   <!-- endbuild-->
 </head>
 <body unresolved>
-  <div id="content" horizontal layout>
-    <sentiment-card sentiment="2" label="Reforma energética" icon=""></sentiment-card>
-    <sentiment-card sentiment="1" label="Ice Bucket Challenge" icon=""></sentiment-card>
+  <div id="content" horizontal layout wrap>
+    <sentiment-card sentiment ="2"
+                    cardname  ="Reforma energética"
+                    cardicon  ="maps:local-florist"
+                    socket="ws://localhost:8080/ws"></sentiment-card>
+    <!-- <sentiment-card sentiment="1"
+                    cardname="#ItsFallBecause"
+                    cardicon="content-cut"
+                    socket="ws://localhost:8080/ws"></sentiment-card>
+    <sentiment-card sentiment="2" cardname="iOS 8.0.1"          cardicon="drive"></sentiment-card>
+    <sentiment-card sentiment="1" cardname="Nick Cannon"        cardicon="drive-chart"></sentiment-card>
+    <sentiment-card sentiment="2" cardname="Wiz and Amber"cardicon="drive-image"></sentiment-card>
+    <sentiment-card sentiment="1" cardname="iPhone 6"     cardicon="extension"></sentiment-card>
+    <sentiment-card sentiment="-2"cardname="Ronaldinho"   cardicon="explore"></sentiment-card>
+    <sentiment-card sentiment="1" cardname="Puebla"       cardicon="flag"></sentiment-card>
+    <sentiment-card sentiment="1" cardname="Ice Bucket Challenge" cardicon="device:airplanemode-on"></sentiment-card>
+    <sentiment-card sentiment="-1"cardname="#CongratulationsOn6MillionZoe" cardicon="hardware:gamepad"></sentiment-card>
+    <sentiment-card sentiment="1" cardname="#BamNewVideo" cardicon="image:color-lens"></sentiment-card>
+    <sentiment-card sentiment="-2"cardname="Veracruz" cardicon="image:camera-alt"></sentiment-card> -->
   </div>
   <!-- build:js scripts/app.js -->
   <script src="scripts/app.js"></script>
   <!-- endbuild-->
-  <x-websocket url="ws://localhost:8080/ws" ></x-websocket>
+  <!-- <x-websocket url="ws://localhost:8080/ws" ></x-websocket> -->
   <script>
-  window.addEventListener('polymer-ready', function(e) {
-    var xws = document.querySelector("x-websocket");
-    console.log("xws:", xws);
-    xws.addEventListener("open", function() {
-      console.log("Connection is: Open");
-      xws.send('{"path": "echo", "message": "interval", "content": "5000"}');
-    });
-    xws.addEventListener("message", function(event) {
-      console.log("Recieved Message:", event.detail.data);
-    });
-  });
+  // window.addEventListener('polymer-ready', function(e) {
+  //   var xws = document.querySelector("x-websocket");
+  //   xws.addEventListener("open", function() {
+  //     xws.send('{"path": "cards-manager", "message": "card-new", "content": "Tarjeta Prueba"}');
+  //   });
+  //   xws.addEventListener("message", function(event) {
+  //     console.log("Recieved Message:", event.detail.data);
+  //   });
+  // });
   </script>
 </body>
 </html>

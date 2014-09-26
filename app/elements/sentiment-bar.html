@@ -42,6 +42,7 @@ on-tap= "{{tapHandler}}">
 Polymer('sentiment-bar', {
   attached: function() {
     var self = this.$;
+    // if(this.val < 20) {console.log("123");}
     self.bar.style.height = this.val+"px";
     if(this.sentiment == "very-positive"){
       self.bar.style.background = "#00C273";

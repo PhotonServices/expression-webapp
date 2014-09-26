@@ -14,136 +14,158 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
 <link rel="import" href="../bower_components/paper-shadow/paper-shadow.html">
 <link rel="import" href="../bower_components/core-icons/core-icons.html">
 <link rel="import" href="../bower_components/core-icons/maps-icons.html">
+<link rel="import" href="../bower_components/core-icons/av-icons.html">
+<link rel="import" href="../bower_components/core-icons/device-icons.html">
+<link rel="import" href="../bower_components/core-icons/image-icons.html">
+<link rel="import" href="../bower_components/core-icons/hardware-icons.html">
+<link rel="import" href="../bower_components/x-websocket/dist/x-websocket.html">
+
 <link rel="import" href="action-container.html">
 <link rel="import" href="widget-sentiment-chart.html">
 <link rel="import" href="widget-demography-chart.html">
 <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:400,100' rel='stylesheet' type='text/css'> -->
-<polymer-element name="sentiment-card" attributes="sentiment label image">
-  <template>
-  <style>
-  :host {
-    padding: 20px;
-    width: 300px;
-    height:210px;
-    font-family: 'Roboto','Helvetica', sans-serif;
-  }
-  :host #card {
-    width:  300px;
-    height: 210px;
-    transition:        transform  0.5s;
-    -o-transition:     -o-transform 0.5s;
-    -moz-transition:   -moz-transform 0.5s;
-    -webkit-transition:-webkit-transform 0.5s;
-    transform-style:         preserve-3d;
-    -o-transform-style:      preserve-3d;
-    -moz-transform-style:    preserve-3d;
-    -webkit-transform-style: preserve-3d;
-    transform:translateZ(1px);
-    /** Make the backside clickable **/
-    -webkit-transform:translateZ(1px);
-    -moz-transform:translateZ(1px);
-  }
-  :host #card.flipped {
-    transform:         rotateY(180deg);
-    -moz-transform:    rotateY(180deg);
-    -webkit-transform: rotateY(180deg);
-  }
-  :host #card #front {
-    width:  300px;
-    height: 210px;
-    backface-visibility:        hidden;
-    -moz-backface-visibility:   hidden;
-    -webkit-backface-visibility:hidden;
-  }
-  :host #card #back {
-    width:  300px;
-    height: 210px;
-    backface-visibility:        hidden;
-    -moz-backface-visibility:   hidden;
-    -webkit-backface-visibility:hidden;
-  }
-  :host #card #back {
-    transform:         rotateY(180deg);
-    -moz-transform:    rotateY(180deg);
-    -webkit-transform: rotateY(180deg);
-  }
-  /*
-  * Polymer's Core-icon definition.
-  */
-  :host #front #img {
-    fill: white;
-    width: 85%;
-    height: 85%;
-    display: block;
-    margin: auto;
-  }
-  :host .title {
-    position: absolute;
-    bottom: 0px;
-    margin: 10px;
-    font-weight: 100;
-    font-size: 24px;
-    width: 280px;
-    color: white;
-  }
-  :host widget-container{
-    position:absolute;
-    top:  40px;
-    left: 20px;
-  }
-  :host action-container {
-    position: absolute;
-    right:  -25px;
-    top:    -13px;
-  }
-  :host #widgetContainer {
-    height: 65%;
-  }
-  </style>
-  <div id="card">
-    <div id="front" select="front">
-      <core-icon id="img" icon="maps:local-florist"></core-icon>
-      <h1 class='title'>{{label}}</h1>
-    </div>
-    <div id="back">
-      <div id="widgetContainer" horizontal layout end>
-        <div flex></div>
-        <widget-sentiment-chart id="sentimentChart"
-        on-tap  = "{{sentimentTap}}"
-        ></widget-sentiment-chart>
-        <div flex></div>
-        <widget-demography-chart
-        id="demographyChart"
-        on-tap="{{demographyTap}}"
-        active= "true"
-        ></widget-demography-chart>
-        <div flex></div>
-        <div flex></div>
-      </div>
-      <action-container></action-container>
-      <h1 class='title'>{{label}}</h1>
-    </div>
-    <paper-shadow z="1" id="myShadow" animated></paper-shadow>
+<polymer-element
+name="sentiment-card"
+attributes="sentiment cardIcon cardId cardName socket">
+<template>
+<style>
+:host {
+  padding: 20px;
+  width: 300px;
+  height:210px;
+  font-family: 'Roboto','Helvetica', sans-serif;
+}
+:host #card {
+  width:  300px;
+  height: 210px;
+  /** Make the backside clickable **/
+  transform:translateZ(1px);
+  -webkit-transform:translateZ(1px);
+  -moz-transform:translateZ(1px);
+  /*Animation setup*/
+  transition:        transform  0.5s;
+  -o-transition:     -o-transform 0.5s;
+  -moz-transition:   -moz-transform 0.5s;
+  -webkit-transition:-webkit-transform 0.5s;
+  transform-style:         preserve-3d;
+  -o-transform-style:      preserve-3d;
+  -moz-transform-style:    preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+:host #card.flipped {
+  transform:         rotateY(180deg);
+  -moz-transform:    rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
+:host #card #front {
+  width:  300px;
+  height: 210px;
+  backface-visibility:        hidden;
+  -moz-backface-visibility:   hidden;
+  -webkit-backface-visibility:hidden;
+}
+:host #card #back {
+  width:  300px;
+  height: 210px;
+  backface-visibility:        hidden;
+  -moz-backface-visibility:   hidden;
+  -webkit-backface-visibility:hidden;
+}
+:host #card #back {
+  transform:         rotateY(180deg);
+  -moz-transform:    rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
+/*
+* Polymer's Core-icon definition.
+*/
+:host #front #img {
+  fill: white;
+  width: 85%;
+  height: 85%;
+  display: block;
+  margin: auto;
+}
+:host .title {
+  position: absolute;
+  bottom: 0px;
+  margin: 10px;
+  font-weight: 100;
+  font-size: 24px;
+  width: 280px;
+  color: white;
+  overflow: hidden;
+  white-space: nowrap; /* Don't forget this one */
+  text-overflow: ellipsis;
+}
+:host widget-container{
+  position:absolute;
+  top:  40px;
+  left: 20px;
+}
+:host action-container {
+  position: absolute;
+  right:  -25px;
+  top:    -13px;
+}
+:host #widgetContainer {
+  height: 65%;
+}
+</style>
+<div id="card">
+  <div id="front" select="front">
+    <core-icon id="img" icon="{{cardIcon}}"></core-icon>
+    <h1 id="frontTitle" class='title'>{{cardName}}</h1>
   </div>
+  <div id="back">
+    <div id="widgetContainer" horizontal layout end>
+      <div flex></div>
+      <widget-sentiment-chart id="sentimentChart"
+      on-tap  = "{{sentimentTap}}"
+      ></widget-sentiment-chart>
+      <div flex></div>
+      <widget-demography-chart
+      id="demographyChart"
+      on-tap="{{demographyTap}}"
+      active= "true"
+      ></widget-demography-chart>
+      <div flex></div>
+      <div flex></div>
+    </div>
+    <action-container></action-container>
+    <h1 id="backTitle" class='title'>{{cardName}}</h1>
+  </div>
+  <paper-shadow z="1" id="myShadow" animated></paper-shadow>
+</div>
+<x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
 </template>
 <script>
 Polymer("sentiment-card", {
   attached: function(){
     var self = this.$;
-    var label = this.label;
+    var cardName = this.cardName;
     var sentiment = this.sentiment;
     if(sentiment > 1) {
       self.front.style.backgroundColor = "#2ECC71";
       self.back.style.backgroundColor = "#2ECC71";
-      self.card.style.backgroundColor = "#2ECC71";
+      /*
+      * Causes a random bug when flip.
+      */
+      // self.card.style.backgroundColor = "#2ECC71";
     } else if (sentiment < -1) {
       self.front.style.backgroundColor = "#EA6153";
       self.back.style.backgroundColor = "#EA6153";
-      self.card.style.backgroundColor = "#EA6153";
+      /*
+      * Causes a random bug when flip.
+      */
+      // self.card.style.backgroundColor = "#EA6153";
     } else {
       self.front.style.backgroundColor = "#F39C12";
       self.back.style.backgroundColor = "#F39C12";
-      self.card .style.backgroundColor = "#F39C12";
+      /*
+      * Causes a random bug when flip.
+      */
+      //self.card .style.backgroundColor = "#F39C12";
     }
     this.addEventListener("click", function() {
       self.card.className = "flipped";
@@ -152,6 +174,21 @@ Polymer("sentiment-card", {
   },
   ready: function() {
     var self = this.$;
+    /*
+     * WebSocket event handler.
+     */
+    self.cardSocket.addEventListener("open", function() {
+      /*** commented for testing purposes ***/
+      //self.cardSocket.send('{"path":"cards-manager","message":"card-new","content":"Tarjeta Prueba"}');
+      self.cardSocket.send('{"path": "echo", "message": "interval", "content": "1000"}');
+    });
+    self.cardSocket.addEventListener("message", function(event) {
+      self.frontTitle.innerHTML = JSON.parse(event.detail.data).data;
+      self.backTitle.innerHTML  = JSON.parse(event.detail.data).data;
+    });
+    /*
+     * Sentiment visualization listeners.
+     */
     self.sentimentChart.addEventListener('back-sentiment-chart-handler', function(e) {
       var animation = new CoreAnimation();
       animation.duration = 200;
