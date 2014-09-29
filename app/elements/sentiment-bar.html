@@ -99,11 +99,12 @@ Polymer('sentiment-bar', {
     });
     self.cardSocket.addEventListener("message", function(event) {
       // self.frontTitle.innerHTML = JSON.parse(event.detail.data).data;
-      var randomNumber = getRandomInt(0,100)*1.20; //Must dissapear after testing
-      self.bar.style.height = randomNumber+"px";
-      if(randomNumber <= 10){
+      var socketData = getRandomInt(0,100)*1.20; //Must dissapear after testing
+      if(socketData <= 15){
+        self.bar.style.height = "15px";
         self.emoticon.style.visibility = "hidden";
       } else {
+        self.bar.style.height = socketData+"px";
         self.emoticon.style.visibility = "visible";
       }
     });
