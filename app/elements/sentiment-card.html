@@ -19,11 +19,10 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
 <link rel="import" href="../bower_components/core-icons/image-icons.html">
 <link rel="import" href="../bower_components/core-icons/hardware-icons.html">
 <link rel="import" href="../bower_components/x-websocket/dist/x-websocket.html">
-
 <link rel="import" href="action-container.html">
 <link rel="import" href="widget-sentiment-chart.html">
 <link rel="import" href="widget-demography-chart.html">
-<!-- <link href='http://fonts.googleapis.com/css?family=Roboto:400,100' rel='stylesheet' type='text/css'> -->
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,100' rel='stylesheet' type='text/css'>
 <polymer-element
 name="sentiment-card"
 attributes="sentiment cardIcon cardId cardName socket" flex auto>
@@ -131,13 +130,17 @@ attributes="sentiment cardIcon cardId cardName socket" flex auto>
     <div id="widgetContainer" horizontal layout end>
       <div flex></div>
       <widget-sentiment-chart id="sentimentChart"
-      on-tap  = "{{sentimentTap}}"
+      on-tap = "{{sentimentTap}}"
+      cardId = "{{cardId}}"
+      socket = "{{socket}}"
       ></widget-sentiment-chart>
       <div flex></div>
       <widget-demography-chart
       id="demographyChart"
       on-tap="{{demographyTap}}"
       active= "true"
+      cardId = "{{cardId}}"
+      socket = "{{socket}}"
       ></widget-demography-chart>
       <div flex></div>
       <div flex></div>
@@ -186,6 +189,7 @@ Polymer("sentiment-card", {
     this.addEventListener("click", function() {
       self.card.className = "flipped";
       self.front.style.display = "none";
+
     });
   },
   ready: function() {

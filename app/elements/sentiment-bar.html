@@ -7,7 +7,7 @@ A widget bar
 -->
 <polymer-element
 name= "sentiment-bar"
-attributes= "val sentiment heart emoticon expand"
+attributes= "val sentiment heart emoticon expand cardId socket"
 on-tap= "{{tapHandler}}">
 <template>
 <style>
@@ -37,6 +37,7 @@ on-tap= "{{tapHandler}}">
   <paper-ripple id="ripple" fit></paper-ripple>
   <paper-shadow z="1" id="myShadow" animated></paper-shadow>
 </div>
+<x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
 </template>
 <script>
 Polymer('sentiment-bar', {
@@ -77,6 +78,21 @@ Polymer('sentiment-bar', {
     if(this.expand == "true") {
       this.asyncFire('sentiment-bar-expanded');
     }
+  },
+  ready: function(){
+    var self = this.$;
+    /*
+    * WebSocket event handler.
+    */
+    self.cardSocket.addEventListener("open", function() {
+      /*** commented for testing purposes ***/
+      //self.cardSocket.send('{"path":"cards-manager","message":"card-new","content":"Tarjeta Prueba"}');
+      self.cardSocket.send('{"path": "echo", "message": "interval", "content": "1000"}');
+    });
+    self.cardSocket.addEventListener("message", function(event) {
+      // self.frontTitle.innerHTML = JSON.parse(event.detail.data).data;
+      // self.backTitle.innerHTML  = JSON.parse(event.detail.data).data;
+    });
   }
 });
 </script>

@@ -1,15 +1,29 @@
+<!--
+@license
+The MIT License (MIT)
+
+Copyright (c) 2014 The Photon Services Authors. All rights reserved.
+This code may only be used under the BSD style license
+found at http://opensource.org/licenses/MIT
+
+-->
+<!-- Widget demography-chart element
+Author: Francisco Gutiérrez (fsalvador23@gmail.com)
+-->
+
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/core-icon/core-icon.html">
-<link rel="import" href="../bower_components/core-icons/social-icons.html">
-<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/core-icons/social-icons.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../bower_components/x-websocket/dist/x-websocket.html">
 <link rel="import" href="../bower_components/core-animation/core-animation.html">
 <link rel="import" href="widget-folksonomy-list.html">
-<!--
-@author Francisco Gutiérrez - fsalvador23@gmail.com
--->
-<polymer-element name="widget-demography-chart" vertical layout center attributes="active">
+
+<polymer-element name="widget-demography-chart"
+  attributes="active cardId socket"
+  vertical layout center>
   <template>
   <style>
   :host{
@@ -71,6 +85,7 @@
     "Ice Bucket Challenge"
     ]}' scrolling="true"></widget-folksonomy-chart>
   </div>
+  <x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
 </template>
 <script>
 Polymer('widget-demography-chart', {

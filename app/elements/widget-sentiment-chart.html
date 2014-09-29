@@ -1,10 +1,11 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/x-websocket/dist/x-websocket.html">
 <link rel="import" href="sentiment-bar.html">
 <!--
 A widget bar
 -->
-<polymer-element name="widget-sentiment-chart">
+<polymer-element name="widget-sentiment-chart" attributes="cardId socket">
   <link href='http://fonts.googleapis.com/css?family=Roboto:400,100' rel='stylesheet' type='text/css'>
   <template>
   <style>
@@ -45,8 +46,13 @@ A widget bar
     position: absolute;
   }
   </style>
-  <paper-fab icon="chevron-left" class="mini" id="backButton"       on-tap="{{backHandler}}"></paper-fab>
-  <paper-fab icon="undo"         class="mini" id="backButtonExpand" on-tap="{{backExpandHandler}}"></paper-fab>
+  <paper-fab icon="chevron-left"
+  class="mini"
+  id="backButton"
+  on-tap="{{backHandler}}"></paper-fab>
+  <paper-fab icon="undo"
+  class="mini" id="backButtonExpand"
+  on-tap="{{backExpandHandler}}"></paper-fab>
   <div id="sentimentBar" on-tap="{{clickHandler}}" layout horizontal end>
     <sentiment-bar id="bar1" val="100" sentiment="very-negative"></sentiment-bar>
     <sentiment-bar id="bar2" val="15"  sentiment="negative" emoticon="true"></sentiment-bar>
@@ -55,11 +61,25 @@ A widget bar
     <sentiment-bar id="bar5" val="15"  sentiment="very-positive"></sentiment-bar>
   </div>
   <div id="metadata" layout horizontal></div>
+  <x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
 </template>
 <script>
 Polymer('widget-sentiment-chart', {
   ready: function(){
     var self = this.$;
+    /*
+    * WebSocket event handler.
+    */
+    self.cardSocket.addEventListener("open", function() {
+      /*** commented for testing purposes ***/
+      //self.cardSocket.send('{"path":"cards-manager","message":"card-new","content":"Tarjeta Prueba"}');
+      self.cardSocket.send('{"path": "echo", "message": "interval", "content": "1000"}');
+    });
+    self.cardSocket.addEventListener("message", function(event) {
+      // self.frontTitle.innerHTML = JSON.parse(event.detail.data).data;
+      // self.backTitle.innerHTML  = JSON.parse(event.detail.data).data;
+      console.log(JSON.parse(event.detail.data).data);
+    });
     /*
     *  Sentiment Bar 1  *** Event Animations ***
     */
@@ -507,7 +527,7 @@ Polymer('widget-sentiment-chart', {
     var self = this.$;
 
     for(i=0; i <5; i++){
-      self.sentimentBar.children[i].style.transform  = "translate("+(i+1.5)*20+"px, 0px)";
+      self.sentimentBar.children[i].style.transform = "translate("+(i+1.5)*20+"px, 0px)";
       self.sentimentBar.children[i].style.webkitTransform = "translate("+(i+1.5)*20+"px, 0px)";
       self.sentimentBar.children[i].style.transition = "all .4s";
       self.sentimentBar.children[i].setAttribute("expand","true");
