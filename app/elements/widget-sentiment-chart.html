@@ -54,11 +54,11 @@ A widget bar
   class="mini" id="backButtonExpand"
   on-tap="{{backExpandHandler}}"></paper-fab>
   <div id="sentimentBar" on-tap="{{clickHandler}}" layout horizontal end>
-    <sentiment-bar id="bar1" val="100" sentiment="very-negative"></sentiment-bar>
-    <sentiment-bar id="bar2" val="15"  sentiment="negative" emoticon="true"></sentiment-bar>
-    <sentiment-bar id="bar3" val="25"  sentiment="neutral"  heart="true"></sentiment-bar>
-    <sentiment-bar id="bar4" val="100" sentiment="positive" emoticon="true"></sentiment-bar>
-    <sentiment-bar id="bar5" val="15"  sentiment="very-positive"></sentiment-bar>
+    <sentiment-bar id="bar1" val="10" sentiment="very-negative" emoticon="true"></sentiment-bar>
+    <sentiment-bar id="bar2" val="80" sentiment="negative" emoticon="true"></sentiment-bar>
+    <sentiment-bar id="bar3" val="20" sentiment="neutral"  emoticon="true"></sentiment-bar>
+    <sentiment-bar id="bar4" val="20" sentiment="positive"  emoticon="true"></sentiment-bar>
+    <sentiment-bar id="bar5" val="20" sentiment="very-positive" emoticon="true"></sentiment-bar>
   </div>
   <div id="metadata" layout horizontal></div>
   <x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
@@ -78,7 +78,6 @@ Polymer('widget-sentiment-chart', {
     self.cardSocket.addEventListener("message", function(event) {
       // self.frontTitle.innerHTML = JSON.parse(event.detail.data).data;
       // self.backTitle.innerHTML  = JSON.parse(event.detail.data).data;
-      console.log(JSON.parse(event.detail.data).data);
     });
     /*
     *  Sentiment Bar 1  *** Event Animations ***

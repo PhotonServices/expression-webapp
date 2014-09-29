@@ -43,8 +43,7 @@ on-tap= "{{tapHandler}}">
 Polymer('sentiment-bar', {
   attached: function() {
     var self = this.$;
-    // if(this.val < 20) {console.log("123");}
-    self.bar.style.height = this.val+"px";
+    self.bar.style.height = this.val*1.20+"px";
     if(this.sentiment == "very-positive"){
       self.bar.style.background = "#00C273";
       self.ripple.style.color = "#29ffa8";
@@ -64,7 +63,7 @@ Polymer('sentiment-bar', {
     if(this.heart == "true"){
       self.favorite.setAttribute("icon","favorite");
     }
-    if(this.emoticon == "true"){
+    if(this.emoticon == "true" && parseInt(this.val) > 10){
       switch(this.sentiment) {
         case "neutral":      self.emoticon.innerHTML = ":|"; break;
         case "positive":     self.emoticon.innerHTML = ":)"; break;
@@ -87,7 +86,7 @@ Polymer('sentiment-bar', {
     self.cardSocket.addEventListener("open", function() {
       /*** commented for testing purposes ***/
       //self.cardSocket.send('{"path":"cards-manager","message":"card-new","content":"Tarjeta Prueba"}');
-      self.cardSocket.send('{"path": "echo", "message": "interval", "content": "1000"}');
+      self.cardSocket.send('{"path":"echo","message":"interval","content":"1000"}');
     });
     self.cardSocket.addEventListener("message", function(event) {
       // self.frontTitle.innerHTML = JSON.parse(event.detail.data).data;
