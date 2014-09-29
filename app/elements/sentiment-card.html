@@ -29,19 +29,22 @@ name="sentiment-card"
 attributes="sentiment cardIcon cardId cardName socket">
 <template>
 <style>
+/* Template CSS -
+* Moving it into a separated SASS file when scaffolding into separate
+* repositories.
+*/
 :host {
   padding: 20px;
   width: 300px;
   height:210px;
   font-family: 'Roboto','Helvetica', sans-serif;
+  transform:translateZ(1px);
+  -webkit-transform:translateZ(1px);
+  -moz-transform:translateZ(1px);
 }
 :host #card {
   width:  300px;
   height: 210px;
-  /** Make the backside clickable **/
-  transform:translateZ(1px);
-  -webkit-transform:translateZ(1px);
-  -moz-transform:translateZ(1px);
   /*Animation setup*/
   transition:        transform  0.5s;
   -o-transition:     -o-transform 0.5s;
@@ -51,6 +54,10 @@ attributes="sentiment cardIcon cardId cardName socket">
   -o-transform-style:      preserve-3d;
   -moz-transform-style:    preserve-3d;
   -webkit-transform-style: preserve-3d;
+  /** Make the backside clickable **/
+  transform:translateZ(1px);
+  -webkit-transform:translateZ(1px);
+  -moz-transform:translateZ(1px);
 }
 :host #card.flipped {
   transform:         rotateY(180deg);
@@ -142,6 +149,9 @@ attributes="sentiment cardIcon cardId cardName socket">
 <script>
 Polymer("sentiment-card", {
   attached: function(){
+    /*
+    * Attached, DOM lifecycle: check for the sentiment overall:
+    */
     var self = this.$;
     var cardName = this.cardName;
     var sentiment = this.sentiment;
@@ -149,21 +159,24 @@ Polymer("sentiment-card", {
       self.front.style.backgroundColor = "#2ECC71";
       self.back.style.backgroundColor = "#2ECC71";
       /*
-      * Causes a random bug when flip.
+      * Next line causes a rendering bug when flipping the card in Chrome.
+      * Version 37.0.2062.124
       */
       // self.card.style.backgroundColor = "#2ECC71";
     } else if (sentiment < -1) {
       self.front.style.backgroundColor = "#EA6153";
       self.back.style.backgroundColor = "#EA6153";
       /*
-      * Causes a random bug when flip.
+      * Next line causes a rendering bug when flipping the card in Chrome.
+      * Version 37.0.2062.124
       */
       // self.card.style.backgroundColor = "#EA6153";
     } else {
       self.front.style.backgroundColor = "#F39C12";
       self.back.style.backgroundColor = "#F39C12";
       /*
-      * Causes a random bug when flip.
+      * Next line causes a rendering bug when flipping the card in Chrome.
+      * Version 37.0.2062.124
       */
       //self.card .style.backgroundColor = "#F39C12";
     }
@@ -175,8 +188,8 @@ Polymer("sentiment-card", {
   ready: function() {
     var self = this.$;
     /*
-     * WebSocket event handler.
-     */
+    * WebSocket event handler.
+    */
     self.cardSocket.addEventListener("open", function() {
       /*** commented for testing purposes ***/
       //self.cardSocket.send('{"path":"cards-manager","message":"card-new","content":"Tarjeta Prueba"}');
@@ -187,8 +200,8 @@ Polymer("sentiment-card", {
       self.backTitle.innerHTML  = JSON.parse(event.detail.data).data;
     });
     /*
-     * Sentiment visualization listeners.
-     */
+    * Sentiment visualization listeners.
+    */
     self.sentimentChart.addEventListener('back-sentiment-chart-handler', function(e) {
       var animation = new CoreAnimation();
       animation.duration = 200;
@@ -220,6 +233,9 @@ Polymer("sentiment-card", {
     });
   },
   sentimentTap: function(){
+    /*
+     * When tapping the sentiment widget:
+     */
     var self = this.$;
     var animation = new CoreAnimation();
     animation.duration = 200;
@@ -232,6 +248,9 @@ Polymer("sentiment-card", {
     });
   },
   demographyTap: function(){
+    /*
+     * When tapping the demography widget:
+     */
     var self = this.$;
     self.demographyChart.addEventListener('tapped-demography-chart-button', function(e) {
       /*
