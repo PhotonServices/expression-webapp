@@ -26,7 +26,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
 <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:400,100' rel='stylesheet' type='text/css'> -->
 <polymer-element
 name="sentiment-card"
-attributes="sentiment cardIcon cardId cardName socket">
+attributes="sentiment cardIcon cardId cardName socket" flex auto>
 <template>
 <style>
 /* Template CSS -
@@ -34,7 +34,10 @@ attributes="sentiment cardIcon cardId cardName socket">
 * repositories.
 */
 :host {
-  padding: 20px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 6px;
+  padding-bottom: 6px;
   width: 300px;
   height:210px;
   font-family: 'Roboto','Helvetica', sans-serif;
@@ -43,7 +46,7 @@ attributes="sentiment cardIcon cardId cardName socket">
   -moz-transform:translateZ(1px);
 }
 :host #card {
-  width:  300px;
+  /*width:  300px;*/
   height: 210px;
   /*Animation setup*/
   transition:        transform  0.5s;
@@ -65,14 +68,14 @@ attributes="sentiment cardIcon cardId cardName socket">
   -webkit-transform: rotateY(180deg);
 }
 :host #card #front {
-  width:  300px;
+  /*width:  300px;*/
   height: 210px;
   backface-visibility:        hidden;
   -moz-backface-visibility:   hidden;
   -webkit-backface-visibility:hidden;
 }
 :host #card #back {
-  width:  300px;
+  /*width:  300px;*/
   height: 210px;
   backface-visibility:        hidden;
   -moz-backface-visibility:   hidden;
@@ -119,7 +122,7 @@ attributes="sentiment cardIcon cardId cardName socket">
   height: 65%;
 }
 </style>
-<div id="card">
+<div id="card" flex auto>
   <div id="front" select="front">
     <core-icon id="img" icon="{{cardIcon}}"></core-icon>
     <h1 id="frontTitle" class='title'>{{cardName}}</h1>
@@ -234,8 +237,8 @@ Polymer("sentiment-card", {
   },
   sentimentTap: function(){
     /*
-     * When tapping the sentiment widget:
-     */
+    * When tapping the sentiment widget:
+    */
     var self = this.$;
     var animation = new CoreAnimation();
     animation.duration = 200;
@@ -249,8 +252,8 @@ Polymer("sentiment-card", {
   },
   demographyTap: function(){
     /*
-     * When tapping the demography widget:
-     */
+    * When tapping the demography widget:
+    */
     var self = this.$;
     self.demographyChart.addEventListener('tapped-demography-chart-button', function(e) {
       /*
