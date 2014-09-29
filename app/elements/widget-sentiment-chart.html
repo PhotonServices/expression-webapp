@@ -54,11 +54,26 @@ A widget bar
   class="mini" id="backButtonExpand"
   on-tap="{{backExpandHandler}}"></paper-fab>
   <div id="sentimentBar" on-tap="{{clickHandler}}" layout horizontal end>
-    <sentiment-bar id="bar1" val="10" sentiment="very-negative" emoticon="true"></sentiment-bar>
-    <sentiment-bar id="bar2" val="80" sentiment="negative" emoticon="true"></sentiment-bar>
-    <sentiment-bar id="bar3" val="20" sentiment="neutral"  emoticon="true"></sentiment-bar>
-    <sentiment-bar id="bar4" val="20" sentiment="positive"  emoticon="true"></sentiment-bar>
-    <sentiment-bar id="bar5" val="20" sentiment="very-positive" emoticon="true"></sentiment-bar>
+    <sentiment-bar id="bar1" val="20"
+    sentiment="very-negative" emoticon="true"
+    cardId="{{cardId}}" socket="{{socket}}">
+    </sentiment-bar>
+    <sentiment-bar id="bar2" val="80"
+    sentiment="negative" emoticon="true"
+    cardId="{{cardId}}" socket="{{socket}}">
+    </sentiment-bar>
+    <sentiment-bar id="bar3" val="20"
+    sentiment="neutral"  emoticon="true"
+    cardId="{{cardId}}" socket="{{socket}}">
+    </sentiment-bar>
+    <sentiment-bar id="bar4" val="20"
+    sentiment="positive"  emoticon="true"
+    cardId="{{cardId}}" socket="{{socket}}">
+    </sentiment-bar>
+    <sentiment-bar id="bar5" val="20"
+    sentiment="very-positive" emoticon="true"
+    cardId="{{cardId}}" socket="{{socket}}">
+    </sentiment-bar>
   </div>
   <div id="metadata" layout horizontal></div>
   <x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>

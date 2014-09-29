@@ -15,6 +15,9 @@ on-tap= "{{tapHandler}}">
   width: 23px;
   cursor: pointer;
   text-align: center;
+  -webkit-transition: height 1s;
+  -moz-transition: height 1s;
+  transition: height 1s;
 }
 :host #emoticon{
   font-family: HelveticaNeue-Medium, Arial;
@@ -43,6 +46,9 @@ on-tap= "{{tapHandler}}">
 Polymer('sentiment-bar', {
   attached: function() {
     var self = this.$;
+    /*
+    * Set the bar height according to sentiment value
+    */
     self.bar.style.height = this.val*1.20+"px";
     if(this.sentiment == "very-positive"){
       self.bar.style.background = "#00C273";
@@ -63,13 +69,16 @@ Polymer('sentiment-bar', {
     if(this.heart == "true"){
       self.favorite.setAttribute("icon","favorite");
     }
+    /*
+    * Set the emoticon only if threshold is passed
+    */
     if(this.emoticon == "true" && parseInt(this.val) > 10){
       switch(this.sentiment) {
-        case "neutral":      self.emoticon.innerHTML = ":|"; break;
-        case "positive":     self.emoticon.innerHTML = ":)"; break;
-        case "negative":     self.emoticon.innerHTML = ":("; break;
-        case "very-positive":self.emoticon.innerHTML = ":D"; break;
-        case "very-negative":self.emoticon.innerHTML = "D:"; break;
+        case "neutral":      self.emoticon.innerHTML =":|"; break;
+        case "positive":     self.emoticon.innerHTML =":)"; break;
+        case "negative":     self.emoticon.innerHTML =":("; break;
+        case "very-positive":self.emoticon.innerHTML =":D"; break;
+        case "very-negative":self.emoticon.innerHTML ="D:"; break;
       }
     }
   },
@@ -86,13 +95,22 @@ Polymer('sentiment-bar', {
     self.cardSocket.addEventListener("open", function() {
       /*** commented for testing purposes ***/
       //self.cardSocket.send('{"path":"cards-manager","message":"card-new","content":"Tarjeta Prueba"}');
-      self.cardSocket.send('{"path":"echo","message":"interval","content":"1000"}');
+      self.cardSocket.send('{"path":"echo","message":"interval","content":"4000"}');
     });
     self.cardSocket.addEventListener("message", function(event) {
       // self.frontTitle.innerHTML = JSON.parse(event.detail.data).data;
-      // self.backTitle.innerHTML  = JSON.parse(event.detail.data).data;
+      var randomNumber = getRandomInt(0,100)*1.20; //Must dissapear after testing
+      self.bar.style.height = randomNumber+"px";
+      if(randomNumber <= 10){
+        self.emoticon.style.visibility = "hidden";
+      } else {
+        self.emoticon.style.visibility = "visible";
+      }
     });
   }
 });
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 </script>
 </polymer-element>
