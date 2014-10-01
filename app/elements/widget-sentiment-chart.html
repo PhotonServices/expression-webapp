@@ -57,26 +57,26 @@ A widget bar
     <sentiment-bar id="bar1" val="20"
     sentiment="very-negative" emoticon="true"
     cardId="{{cardId}}" socket="{{socket}}">
-    </sentiment-bar>
-    <sentiment-bar id="bar2" val="80"
-    sentiment="negative" emoticon="true"
-    cardId="{{cardId}}" socket="{{socket}}">
-    </sentiment-bar>
-    <sentiment-bar id="bar3" val="20"
-    sentiment="neutral"  emoticon="true"
-    cardId="{{cardId}}" socket="{{socket}}">
-    </sentiment-bar>
-    <sentiment-bar id="bar4" val="20"
-    sentiment="positive"  emoticon="true"
-    cardId="{{cardId}}" socket="{{socket}}">
-    </sentiment-bar>
-    <sentiment-bar id="bar5" val="20"
-    sentiment="very-positive" emoticon="true"
-    cardId="{{cardId}}" socket="{{socket}}">
-    </sentiment-bar>
-  </div>
-  <div id="metadata" layout horizontal></div>
-  <x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
+  </sentiment-bar>
+  <sentiment-bar id="bar2" val="80"
+  sentiment="negative" emoticon="true"
+  cardId="{{cardId}}" socket="{{socket}}">
+</sentiment-bar>
+<sentiment-bar id="bar3" val="20"
+sentiment="neutral"  emoticon="true"
+cardId="{{cardId}}" socket="{{socket}}">
+</sentiment-bar>
+<sentiment-bar id="bar4" val="20"
+sentiment="positive"  emoticon="true"
+cardId="{{cardId}}" socket="{{socket}}">
+</sentiment-bar>
+<sentiment-bar id="bar5" val="20"
+sentiment="very-positive" emoticon="true"
+cardId="{{cardId}}" socket="{{socket}}">
+</sentiment-bar>
+</div>
+<div id="metadata" layout horizontal></div>
+<x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
 </template>
 <script>
 Polymer('widget-sentiment-chart', {
@@ -93,6 +93,29 @@ Polymer('widget-sentiment-chart', {
     self.cardSocket.addEventListener("message", function(event) {
       // self.frontTitle.innerHTML = JSON.parse(event.detail.data).data;
       // self.backTitle.innerHTML  = JSON.parse(event.detail.data).data;
+    });
+    /*
+    * Event listeners for sentiment bar.
+    */
+    self.bar1.addEventListener('sentiment-bar-updated', function(e) {
+      if(self.metadata.children[0]){
+        self.metadata.children[0].innerHTML = e.detail.msg + "%";
+      }
+    });
+    self.bar2.addEventListener('sentiment-bar-updated', function(e) {
+      if(self.metadata.children[1]){
+        self.metadata.children[1].innerHTML = e.detail.msg + "%";
+      }
+    });
+    self.bar3.addEventListener('sentiment-bar-updated', function(e) {
+      if(self.metadata.children[2]){
+        self.metadata.children[2].innerHTML = e.detail.msg + "%";
+      }
+    });
+    self.bar4.addEventListener('sentiment-bar-updated', function(e) {
+      if(self.metadata.children[3]){
+        self.metadata.children[3].innerHTML = e.detail.msg + "%";
+      }
     });
     /*
     *  Sentiment Bar 1  *** Event Animations ***

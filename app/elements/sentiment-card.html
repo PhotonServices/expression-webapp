@@ -22,7 +22,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
 <link rel="import" href="action-container.html">
 <link rel="import" href="widget-sentiment-chart.html">
 <link rel="import" href="widget-demography-chart.html">
-<link href='http://fonts.googleapis.com/css?family=Roboto:400,100' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
 <polymer-element
 name="sentiment-card"
 attributes="sentiment cardIcon cardId cardName socket" flex auto>
@@ -35,11 +35,12 @@ attributes="sentiment cardIcon cardId cardName socket" flex auto>
 :host {
   padding-left: 12px;
   padding-right: 12px;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  padding-top: 9px;
+  padding-bottom: 9px;
   width: 300px;
   height:210px;
   font-family: 'Roboto','Helvetica', sans-serif;
+  /** Make the backside clickable **/
   transform:translateZ(1px);
   -webkit-transform:translateZ(1px);
   -moz-transform:translateZ(1px);
@@ -62,9 +63,9 @@ attributes="sentiment cardIcon cardId cardName socket" flex auto>
   -moz-transform:translateZ(1px);
 }
 :host #card.flipped {
-  transform:         rotateY(180deg);
-  -moz-transform:    rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
+  transform:         rotateY(180deg) translateZ(1px);
+  -moz-transform:    rotateY(180deg) translateZ(1px);
+  -webkit-transform: rotateY(180deg) translateZ(1px);;
 }
 :host #card #front {
   /*width:  300px;*/
@@ -99,7 +100,7 @@ attributes="sentiment cardIcon cardId cardName socket" flex auto>
   position: absolute;
   bottom: 0px;
   margin: 10px;
-  font-weight: 100;
+  font-weight: 300;
   font-size: 24px;
   width: 280px;
   color: white;
@@ -247,7 +248,7 @@ Polymer("sentiment-card", {
     var animation = new CoreAnimation();
     animation.duration = 200;
     animation.fill = "forwards"
-    animation.keyframes = [ {opacity: "1"}, {opacity: "0"}];
+    animation.keyframes = [{opacity: "1"}, {opacity: "0"}];
     animation.target = self.demographyChart;
     animation.play();
     animation.addEventListener('core-animation-finish', function(e) {

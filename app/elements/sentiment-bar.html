@@ -26,9 +26,9 @@ on-tap= "{{tapHandler}}">
 }
 :host core-icon > svg {
   fill: rgba(255,255,255,0.5);
-  transform:scale(0.75);
-  -moz-transform:scale(0.75);
-  -webkit-transform:scale(0.75);
+  transform:         scale(0.75);
+  -moz-transform:    scale(0.75);
+  -webkit-transform: scale(0.75);
 }
 :host #ripple{
   overflow: hidden;
@@ -49,7 +49,7 @@ Polymer('sentiment-bar', {
     /*
     * Set the bar height according to sentiment value
     */
-    self.bar.style.height = this.val*1.20+"px";
+    self.bar.style.height = this.val+"px";
     if(this.sentiment == "very-positive"){
       self.bar.style.background = "#00C273";
       self.ripple.style.color = "#29ffa8";
@@ -95,11 +95,12 @@ Polymer('sentiment-bar', {
     self.cardSocket.addEventListener("open", function() {
       /*** commented for testing purposes ***/
       //self.cardSocket.send('{"path":"cards-manager","message":"card-new","content":"Tarjeta Prueba"}');
-      self.cardSocket.send('{"path":"echo","message":"interval","content":"4000"}');
+      self.cardSocket.send('{"path":"echo","message":"interval","content":"2000"}');
     });
     self.cardSocket.addEventListener("message", function(event) {
       // self.frontTitle.innerHTML = JSON.parse(event.detail.data).data;
-      var socketData = getRandomInt(0,100)*1.20; //Must dissapear after testing
+      var socketData = getRandomInt(0,100); //Must dissapear after testing
+      this.asyncFire('sentiment-bar-updated', {msg: socketData});
       if(socketData <= 15){
         self.bar.style.height = "15px";
         self.emoticon.style.visibility = "hidden";

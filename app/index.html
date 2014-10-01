@@ -15,47 +15,120 @@
   <!-- build:vulcanized elements/elements.vulcanized.html -->
   <link rel="import" href="elements/elements.html">
   <!-- endbuild-->
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
+  <link rel="import" href="bower_components/core-header-panel/core-header-panel.html">
+  <link rel="import" href="bower_components/core-toolbar/core-toolbar.html">
   <style>
-   body{
-     background: #FCFEF5;
-   }
+  body {
+    background: #FCFEF5;
+    margin: 0px;
+    padding: 0px;
+  }
+  core-header-panel {
+    width: 100%;
+    height: 100%;
+  }
+  .core-header {
+    height: 80px;
+    padding: 0 10px;
+    background-color: #107FC9;
+    color: #FFF;
+    transition: height 0.2s;
+    border-bottom: 2px solid #0E71B3;
+  }
+  .core-header.tall {
+    height: 180px;
+    border-bottom: 10px solid #0E71B3;
+  }
+  .core-header.medium-tall {
+    height: 120px;
+    border-bottom: 10px solid #0E71B3;
+  }
+  .content {
+    background: linear-gradient(#FCFEF5,#FFF);
+  }
+  .badge {
+    float: left;
+    width: 60px;
+    height:60px;
+    margin:5px;
+    border-radius: 60px;
+    background: #EEEEEE;
+    -web-kit-box-shadow:0px 2px 4px 0px rgba(0,0,0,0.50);
+    -moz-box-shadow:    0px 2px 4px 0px rgba(0,0,0,0.50);
+    box-shadow:         0px 2px 4px 0px rgba(0,0,0,0.50);
+  }
+  .badge core-icon {
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin: auto;
+  }
+  .badge core-icon > svg {
+    fill: #515151;
+    transform:scale(.75);
+    -moz-transform:scale(.75);
+    -webkit-transform:scale(.75);
+  }
+  #text{
+    margin-left: 10px;
+  }
+  #title {
+    font-weight: 300;
+    font-family: 'Roboto','Helvetica', sans-serif;
+    font-size: 145%;
+    font-size: 3.5vmax;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #subtitle {
+    padding: 3px;
+    float: right;
+    font-size: 45%;
+    font-weight: 400;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-family: 'Roboto','Helvetica', sans-serif;
+  }
   </style>
 </head>
-<body unresolved>
-  <div id="content" horizontal layout wrap center>
+<body unresolved fullbleed>
+  <core-header-panel mode="waterfall-tall" tallclass="medium-tall">
+    <div class="core-header" horizontal layout center>
+      <div class="badge" horizontal layout center>
+        <core-icon id="img" icon="maps:local-florist"></core-icon>
+      </div>
+      <div id="text">
+        <div id="title">My Sentiment WebApp</div>
+        <div id="subtitle">powered by <u>Expression</u></div>
+      </div>
+    </div>
+  </div>
+  <div class="content" horizontal layout wrap center>
     <sentiment-card sentiment ="2"
-                    cardname  ="Reforma energética"
-                    cardicon  ="maps:local-florist"
-                    socket="ws://localhost:8080/ws"></sentiment-card>
+    cardname  ="Reforma energética"
+    cardicon  ="maps:local-florist"
+    socket="ws://localhost:8080/ws"></sentiment-card>
     <sentiment-card sentiment="1"
-                    cardname="#ItsFallBecause"
-                    cardicon="content-cut"
-                    socket="ws://localhost:8080/ws"></sentiment-card>
-    <sentiment-card sentiment="2" cardname="iOS 8.0.1"          cardicon="drive"></sentiment-card>
-    <sentiment-card sentiment="1" cardname="Nick Cannon"        cardicon="drive-chart"></sentiment-card>
-    <sentiment-card sentiment="2" cardname="Wiz and Amber"cardicon="drive-image"></sentiment-card>
-    <sentiment-card sentiment="1" cardname="iPhone 6"     cardicon="extension"></sentiment-card>
-    <sentiment-card sentiment="-2"cardname="Ronaldinho"   cardicon="explore"></sentiment-card>
-    <sentiment-card sentiment="1" cardname="Puebla"       cardicon="flag"></sentiment-card>
+    cardname="#ItsFallBecause"
+    cardicon="content-cut"
+    socket="ws://localhost:8080/ws"></sentiment-card>
+    <sentiment-card sentiment="2" cardname="iOS 8.0.1"     cardicon="drive"></sentiment-card>
+    <sentiment-card sentiment="1" cardname="Nick Cannon"   cardicon="drive-chart"></sentiment-card>
+    <sentiment-card sentiment="2" cardname="Wiz and Amber" cardicon="drive-image"></sentiment-card>
+    <sentiment-card sentiment="1" cardname="iPhone 6"      cardicon="extension"></sentiment-card>
+    <sentiment-card sentiment="-2"cardname="Ronaldinho"    cardicon="explore"></sentiment-card>
+    <sentiment-card sentiment="1" cardname="Puebla"        cardicon="flag"></sentiment-card>
     <sentiment-card sentiment="1" cardname="Ice Bucket Challenge" cardicon="device:airplanemode-on"></sentiment-card>
     <sentiment-card sentiment="-1"cardname="#CongratulationsOn6MillionZoe" cardicon="hardware:gamepad"></sentiment-card>
     <sentiment-card sentiment="1" cardname="#BamNewVideo" cardicon="image:color-lens"></sentiment-card>
-    <!-- <sentiment-card sentiment="-2"cardname="Veracruz" cardicon="image:camera-alt"></sentiment-card> -->
+    <sentiment-card sentiment="-2"cardname="Veracruz" cardicon="image:camera-alt"></sentiment-card>
   </div>
-  <!-- build:js scripts/app.js -->
-  <script src="scripts/app.js"></script>
-  <!-- endbuild-->
-  <!-- <x-websocket url="ws://localhost:8080/ws" ></x-websocket> -->
-  <script>
-  // window.addEventListener('polymer-ready', function(e) {
-  //   var xws = document.querySelector("x-websocket");
-  //   xws.addEventListener("open", function() {
-  //     xws.send('{"path": "cards-manager", "message": "card-new", "content": "Tarjeta Prueba"}');
-  //   });
-  //   xws.addEventListener("message", function(event) {
-  //     console.log("Recieved Message:", event.detail.data);
-  //   });
-  // });
-  </script>
+</core-header-panel>
+<!-- build:js scripts/app.js -->
+<script src="scripts/app.js"></script>
+<!-- endbuild-->
 </body>
 </html>
