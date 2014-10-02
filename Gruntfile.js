@@ -320,5 +320,5 @@ module.exports = function (grunt) {
     'build'
   ]);
 
-  grunt.registerTask('travis', 'vulcanize');
+  grunt.registerTask('travis', 'build');
 };
