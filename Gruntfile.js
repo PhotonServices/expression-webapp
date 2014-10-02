@@ -320,5 +320,5 @@ module.exports = function (grunt) {
     'build'
   ]);
 
-  grunt.registerTask('travis', 'jshint');
+  grunt.registerTask('travis', '');
 };
