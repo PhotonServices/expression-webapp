@@ -2,39 +2,45 @@
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../bower_components/x-websocket/dist/x-websocket.html">
 <link rel="import" href="sentiment-bar.html">
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
 <!--
 A widget bar
 -->
 <polymer-element name="widget-sentiment-chart" attributes="cardId socket">
-  <link href='http://fonts.googleapis.com/css?family=Roboto:400,100' rel='stylesheet' type='text/css'>
   <template>
   <style>
   :host {
     cursor: pointer;
+    -webkit-font-smoothing: antialiased;
   }
   :host .subtitle{
     width:  0px;
     height: 0px;
     font-size: 13px;
     font-family: Roboto, Helvetica, Arial;
-    font-weight: 100;
+    font-weight: 300;
     line-height: 140%;
     color: rgba(255,255,255,0.75);
+    -webkit-font-smoothing: antialiased;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
   :host #backButton {
     display: none;
     position: absolute;
-    top:  20px;
-    left: 5px;
+    top:  0px;
+    left: -25px;
     background: #107FC9;
+    z-index: 1;
   }
   :host #backButtonExpand {
     display: none;
     position: absolute;
-    top:  20px;
-    left: 5px;
+    top:  0px;
+    left: -25px;
     background: #107FC9;
     display: none;
+    z-index: 1;
   }
   :host paper-fab::shadow svg {
     fill: white;
