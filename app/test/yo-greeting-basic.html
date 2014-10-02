@@ -11,7 +11,7 @@
   </script>
 
   <!-- Step 1: import the element to test -->
-  <link rel="import" href="../elements/yo-greeting/yo-greeting.html">
+  <!-- <link rel="import" href="../elements/yo-greeting/yo-greeting.html"> -->
 
 </head>
 <body>
@@ -20,15 +20,15 @@
 
   <script>
 
-    document.addEventListener('polymer-ready', function() {
-      var el = document.querySelector('yo-greeting');
-      var header = el.shadowRoot.querySelector('h1');
-      assert.equal(header.textContent, '\'Allo, \'Allo!');
-
-      // IMPORTANT:
-      // Make sure to call done() at the end of every test suite!
-      done();
-    });
+    // document.addEventListener('polymer-ready', function() {
+    //   var el = document.querySelector('yo-greeting');
+    //   var header = el.shadowRoot.querySelector('h1');
+    //   assert.equal(header.textContent, '\'Allo, \'Allo!');
+    //
+    //   // IMPORTANT:
+    //   // Make sure to call done() at the end of every test suite!
+    //   done();
+    // });
 
   </script>
 

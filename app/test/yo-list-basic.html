@@ -11,7 +11,7 @@
   </script>
 
   <!-- Step 1: import the element to test -->
-  <link rel="import" href="../elements/yo-list/yo-list.html">
+  <!-- <link rel="import" href="../elements/yo-list/yo-list.html"> -->
 
 </head>
 <body>
@@ -20,23 +20,23 @@
 
   <script>
 
-    document.addEventListener('polymer-ready', function() {
-      // Test a property
-      var el = document.querySelector('yo-list');
-      el.items.push('Foo');
-
-      // Data bindings will stamp out new DOM asynchronously
-      // so wait to check for updates
-      setTimeout(function() {
-        var listItems = el.shadowRoot.querySelectorAll('li');
-        assert.equal(el.items.length, listItems.length);
-
-        // IMPORTANT:
-        // Make sure to call done() at the end of every test suite!
-        done();
-      });
-
-    });
+    // document.addEventListener('polymer-ready', function() {
+    //   // Test a property
+    //   var el = document.querySelector('yo-list');
+    //   el.items.push('Foo');
+    //
+    //   // Data bindings will stamp out new DOM asynchronously
+    //   // so wait to check for updates
+    //   setTimeout(function() {
+    //     var listItems = el.shadowRoot.querySelectorAll('li');
+    //     assert.equal(el.items.length, listItems.length);
+    //
+    //     // IMPORTANT:
+    //     // Make sure to call done() at the end of every test suite!
+    //     done();
+    //   });
+    //
+    // });
 
   </script>
 
