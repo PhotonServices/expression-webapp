@@ -22,7 +22,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
 <link rel="import" href="widget-folksonomy-list.html">
 
 <polymer-element name="widget-demography-chart"
-  attributes="active cardId socket"
+  attributes="active cardid socket"
   vertical layout center>
   <template>
   <style>
@@ -91,8 +91,22 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
 <script>
 Polymer('widget-demography-chart', {
   attached: function() {
+    var self = this.$;
+    var socket = this.socket;
+    var cardid = this.cardid;
+    /*
+    * Comment count: WebSocket event handler.
+    */
+    self.cardSocket.addEventListener("open", function() {
+      /*** commented for testing purposes ***/
+      self.cardSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':count-total"}');
+    });
+    self.cardSocket.addEventListener("message", function(event) {
+      if(!isNaN(JSON.parse(event.detail.data).data)) {
+      self.button.setAttribute("label",JSON.parse(event.detail.data).data);
+    }
+    });
     if(this.active == "false") {
-      var self = this.$;
       self.button.setAttribute("raisedButton","false");
       self.button.style.background = "grey";
     }

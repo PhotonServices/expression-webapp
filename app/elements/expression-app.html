@@ -109,31 +109,31 @@
     <sentiment-card sentiment="-2"cardname="Veracruz" cardicon="image:camera-alt"></sentiment-card> -->
   </div>
 </core-header-panel>
-<x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
+<x-websocket id="newCardSocket" url="{{socket}}" ></x-websocket>
 </template>
 <script>
 Polymer('expression-app', {
   ready: function() {
     var self = this.$;
+    var socket = this.socket;
     /*
-    * WebSocket event handler.
+    * New card WebSocket event handler.
     */
-    self.cardSocket.addEventListener("open", function() {
-      self.cardSocket.send('{"path": "events", "message": "subscribe", "content": "card-new"}');
+    self.newCardSocket.addEventListener("open", function() {
+      self.newCardSocket.send('{"path": "events", "message": "subscribe", "content": "card-new"}');
     });
-    self.cardSocket.addEventListener("message", function(event) {
-      console.log(event);
-      if(event.detail.data.data != ""){
+    self.newCardSocket.addEventListener("message", function(event) {
+      if(JSON.parse(event.detail.data).data.name){
+        console.log(JSON.parse(event.detail.data).data.id);
+        var myArray = ["extension", "image:color-lens", "image:camera-alt","flag","explore","extension","maps:local-florist","content-cut"];
         var card = document.createElement("sentiment-card");
         card.setAttribute("sentiment","0");
         card.setAttribute("cardname",JSON.parse(event.detail.data).data.name);
-        card.setAttribute("cardicon","flag");
+        card.setAttribute("cardicon",myArray[Math.floor(Math.random() * myArray.length)]);
         card.setAttribute("cardid",JSON.parse(event.detail.data).data.id);
+        card.setAttribute("socket",socket);
         self.content.appendChild(card);
-        card.scrollIntoView(true);
       }
-      // console.log(JSON.parse(event.detail.data).data.id);
-      // console.log(JSON.parse(event.detail.data).data.name);
     });
   }
 });

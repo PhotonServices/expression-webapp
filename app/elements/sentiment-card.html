@@ -80,6 +80,9 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   backface-visibility:        hidden;
   -moz-backface-visibility:   hidden;
   -webkit-backface-visibility:hidden;
+  transform:translateZ(1px);
+  -webkit-transform:translateZ(1px);
+  -moz-transform:translateZ(1px);
   cursor: pointer;
 }
 :host #card #back {
@@ -160,15 +163,54 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   </div>
   <paper-shadow z="1" id="myShadow" animated></paper-shadow>
 </div>
-<x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
+<x-websocket id="cardSocket" url="ws://localhost:8080/ws" ></x-websocket>
 </template>
 <script>
 Polymer("sentiment-card", {
   attached: function(){
+    var self = this.$;
+    var socket = this.socket;
+    var cardid = this.cardid;
+    /*
+    * WebSocket event handler.
+    */
+    self.cardSocket.addEventListener("open", function() {
+      /*** commented for testing purposes ***/
+      console.log(socket);
+      self.cardSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':sentiment-final"}');
+    });
+    self.cardSocket.addEventListener("message", function(event) {
+      var cardname  = this.cardname;
+      var sentiment = this.sentiment;
+      if(JSON.parse(event.detail.data).data > 1) {
+        self.front.style.backgroundColor = "#2ECC71";
+        self.back.style.backgroundColor = "#2ECC71";
+        /*
+        * Next line causes a rendering bug when flipping the card in Chrome.
+        * Version 37.0.2062.124 (Flickering)
+        */
+        // self.card.style.backgroundColor = "#2ECC71";
+      } else if (JSON.parse(event.detail.data).data < -1) {
+        self.front.style.backgroundColor = "#EA6153";
+        self.back.style.backgroundColor = "#EA6153";
+        /*
+        * Next line causes a rendering bug when flipping the card in Chrome.
+        * Version 37.0.2062.124 (Flickering)
+        */
+        // self.card.style.backgroundColor = "#EA6153";
+      } else {
+        self.front.style.backgroundColor = "#F39C12";
+        self.back.style.backgroundColor = "#F39C12";
+        /*
+        * Next line causes a rendering bug when flipping the card in Chrome.
+        * Version 37.0.2062.124 (Flickering)
+        */
+        // self.card .style.backgroundColor = "#F39C12";
+      }
+    });
     /*
     * Attached, DOM lifecycle: check for the sentiment overall:
     */
-    var self = this.$;
     var cardname = this.cardname;
     var sentiment = this.sentiment;
     if(sentiment > 1) {
@@ -208,18 +250,6 @@ Polymer("sentiment-card", {
   },
   ready: function() {
     var self = this.$;
-    /*
-    * WebSocket event handler.
-    */
-    self.cardSocket.addEventListener("open", function() {
-      /*** commented for testing purposes ***/
-      //self.cardSocket.send('{"path":"cards-manager","message":"card-new","content":"Tarjeta Prueba"}');
-      self.cardSocket.send('{"path": "echo", "message": "interval", "content": "1000"}');
-    });
-    self.cardSocket.addEventListener("message", function(event) {
-      self.frontTitle.innerHTML = JSON.parse(event.detail.data).data;
-      self.backTitle.innerHTML  = JSON.parse(event.detail.data).data;
-    });
     /*
     * Sentiment visualization listeners.
     */
