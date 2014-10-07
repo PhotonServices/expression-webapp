@@ -1,9 +1,10 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/core-header-panel/core-header-panel.html">
 <link rel="import" href="../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../bower_components/x-websocket/dist/x-websocket.html">
 <link rel="import" href="sentiment-card.html">
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
-<polymer-element name="expression-app">
+<polymer-element name="expression-app" attributes="socket">
   <template>
   <style>
   :host core-header-panel {
@@ -26,7 +27,7 @@
     height: 120px;
     border-bottom: 10px solid #0E71B3;
   }
-  :host .content {
+  :host #content {
     background: linear-gradient(#FCFEF5,#FFF);
     overflow: hidden;
   }
@@ -87,15 +88,15 @@
       </div>
     </div>
   </div>
-  <div class="content" horizontal layout wrap center>
-    <sentiment-card sentiment ="2"
+  <div id="content" horizontal layout wrap center>
+    <!-- <sentiment-card sentiment ="2"
     cardname  ="Reforma energética"
     cardicon  ="maps:local-florist"
     socket="ws://localhost:8080/ws"></sentiment-card>
     <sentiment-card sentiment="1"
     cardname="#ItsFallBecause"
     cardicon="content-cut"
-    socket="ws://localhost:8080/ws"></sentiment-card>
+    socket="ws://localhost:8080/ws"></sentiment-card> -->
     <!-- <sentiment-card sentiment="2" cardname="iOS 8.0.1"     cardicon="drive"></sentiment-card>
     <sentiment-card sentiment="1" cardname="Nick Cannon"   cardicon="drive-chart"></sentiment-card>
     <sentiment-card sentiment="2" cardname="Wiz and Amber" cardicon="drive-image"></sentiment-card>
@@ -108,13 +109,32 @@
     <sentiment-card sentiment="-2"cardname="Veracruz" cardicon="image:camera-alt"></sentiment-card> -->
   </div>
 </core-header-panel>
+<x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
 </template>
 <script>
 Polymer('expression-app', {
-  commentTap: function(){
+  ready: function() {
+    var self = this.$;
     /*
-    * Send event.
+    * WebSocket event handler.
     */
+    self.cardSocket.addEventListener("open", function() {
+      self.cardSocket.send('{"path": "events", "message": "subscribe", "content": "card-new"}');
+    });
+    self.cardSocket.addEventListener("message", function(event) {
+      console.log(event);
+      if(event.detail.data.data != ""){
+        var card = document.createElement("sentiment-card");
+        card.setAttribute("sentiment","0");
+        card.setAttribute("cardname",JSON.parse(event.detail.data).data.name);
+        card.setAttribute("cardicon","flag");
+        card.setAttribute("cardid",JSON.parse(event.detail.data).data.id);
+        self.content.appendChild(card);
+        card.scrollIntoView(true);
+      }
+      // console.log(JSON.parse(event.detail.data).data.id);
+      // console.log(JSON.parse(event.detail.data).data.name);
+    });
   }
 });
 </script>

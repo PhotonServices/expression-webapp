@@ -25,7 +25,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
 <polymer-element
 name="sentiment-card"
-attributes="sentiment cardIcon cardId cardName socket" flex auto>
+attributes="sentiment cardicon cardid cardname socket" flex auto>
 <template>
 <style>
 /* Template CSS -
@@ -133,15 +133,15 @@ attributes="sentiment cardIcon cardId cardName socket" flex auto>
 </style>
 <div id="card" flex auto>
   <div id="front" select="front">
-    <core-icon id="img" icon="{{cardIcon}}"></core-icon>
-    <h1 id="frontTitle" class='title'>{{cardName}}</h1>
+    <core-icon id="img" icon="{{cardicon}}"></core-icon>
+    <h1 id="frontTitle" class='title'>{{cardname}}</h1>
   </div>
   <div id="back">
     <div id="widgetContainer" horizontal layout end>
       <div flex></div>
       <widget-sentiment-chart id="sentimentChart"
       on-tap = "{{sentimentTap}}"
-      cardId = "{{cardId}}"
+      cardid = "{{cardid}}"
       socket = "{{socket}}"
       ></widget-sentiment-chart>
       <div flex></div>
@@ -149,14 +149,14 @@ attributes="sentiment cardIcon cardId cardName socket" flex auto>
       id="demographyChart"
       on-tap="{{demographyTap}}"
       active= "true"
-      cardId = "{{cardId}}"
+      cardid = "{{cardid}}"
       socket = "{{socket}}"
       ></widget-demography-chart>
       <div flex></div>
       <div flex></div>
     </div>
     <action-container></action-container>
-    <h1 id="backTitle" class='title' on-tap="{{titleTapped}}">{{cardName}}</h1>
+    <h1 id="backTitle" class='title' on-tap="{{titleTapped}}">{{cardname}}</h1>
   </div>
   <paper-shadow z="1" id="myShadow" animated></paper-shadow>
 </div>
@@ -169,7 +169,7 @@ Polymer("sentiment-card", {
     * Attached, DOM lifecycle: check for the sentiment overall:
     */
     var self = this.$;
-    var cardName = this.cardName;
+    var cardname = this.cardname;
     var sentiment = this.sentiment;
     if(sentiment > 1) {
       self.front.style.backgroundColor = "#2ECC71";
