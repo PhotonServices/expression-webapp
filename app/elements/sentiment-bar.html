@@ -7,7 +7,7 @@ A widget bar
 -->
 <polymer-element
 name= "sentiment-bar"
-attributes= "val sentiment heart emoticon expand cardId socket"
+attributes= "val sentiment heart emoticon expand cardid socket"
 on-tap= "{{tapHandler}}">
 <template>
 <style>
@@ -45,7 +45,37 @@ on-tap= "{{tapHandler}}">
 <script>
 Polymer('sentiment-bar', {
   attached: function() {
-    var self = this.$;
+    var self      = this.$;
+    var cardid    = this.cardid;
+    var sentiment = this.sentiment;
+    /*
+    * WebSocket event handler.
+    */
+    self.cardSocket.addEventListener("open", function() {
+      self.cardSocket.send('{"path": "events", "message": "subscribe", "content":"'+cardid+':sentiment-bars"}');
+    });
+    self.cardSocket.addEventListener("message", function(event) {
+        if(sentiment == "very-positive"){
+          self.bar.style.height = JSON.parse(event.detail.data).data.excellent+"px";
+        } else if(sentiment == "positive"){
+          self.bar.style.height = JSON.parse(event.detail.data).data.good+"px";
+        } else if(sentiment == "negative"){
+          self.bar.style.height = JSON.parse(event.detail.data).data.bad+"px";
+        } else if(sentiment == "very-negative"){
+          self.bar.style.height = JSON.parse(event.detail.data).data.terrible+"px";
+        } else if(sentiment == "neutral"){
+          self.bar.style.height = JSON.parse(event.detail.data).data.neutral+"px";
+        }
+        if(this.emoticon == "true" && JSON.parse(event.detail.data).data > 10){
+          switch(this.sentiment) {
+            case "neutral":      self.emoticon.innerHTML =":|"; break;
+            case "positive":     self.emoticon.innerHTML =":)"; break;
+            case "negative":     self.emoticon.innerHTML =":("; break;
+            case "very-positive":self.emoticon.innerHTML =":D"; break;
+            case "very-negative":self.emoticon.innerHTML ="D:"; break;
+          }
+        }
+    });
     /*
     * Set the bar height according to sentiment value
     */
@@ -86,33 +116,7 @@ Polymer('sentiment-bar', {
     if(this.expand == "true") {
       this.asyncFire('sentiment-bar-expanded');
     }
-  },
-  ready: function(){
-    var self = this.$;
-    /*
-    * WebSocket event handler.
-    */
-    self.cardSocket.addEventListener("open", function() {
-      /*** commented for testing purposes ***/
-      //self.cardSocket.send('{"path":"cards-manager","message":"card-new","content":"Tarjeta Prueba"}');
-      self.cardSocket.send('{"path":"echo","message":"interval","content":"2000"}');
-    });
-    self.cardSocket.addEventListener("message", function(event) {
-      // self.frontTitle.innerHTML = JSON.parse(event.detail.data).data;
-      var socketData = getRandomInt(0,100); //Must dissapear after testing
-      this.asyncFire('sentiment-bar-updated', {msg: socketData});
-      if(socketData <= 15){
-        self.bar.style.height = "15px";
-        self.emoticon.style.visibility = "hidden";
-      } else {
-        self.bar.style.height = socketData+"px";
-        self.emoticon.style.visibility = "visible";
-      }
-    });
   }
 });
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
 </script>
 </polymer-element>

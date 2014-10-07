@@ -60,9 +60,9 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   -moz-transform-style:    preserve-3d;
   -webkit-transform-style: preserve-3d;
   /* Make the backside clickable **/
-  transform:translateZ(1px);
-  -webkit-transform:translateZ(1px);
-  -moz-transform:translateZ(1px);
+  transform:translateZ(10px);
+  -webkit-transform:translateZ(10px);
+  -moz-transform:translateZ(10px);
 }
 :host #card.flipped {
   transform:         rotateY(180deg) translateZ(1px);
@@ -176,7 +176,6 @@ Polymer("sentiment-card", {
     */
     self.cardSocket.addEventListener("open", function() {
       /*** commented for testing purposes ***/
-      console.log(socket);
       self.cardSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':sentiment-final"}');
     });
     self.cardSocket.addEventListener("message", function(event) {
