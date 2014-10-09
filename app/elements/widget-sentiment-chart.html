@@ -57,6 +57,9 @@ A widget bar
     bottom: 0px;
     height: 100px;
   }
+  #metadata {
+    visibility: hidden;
+  }
   </style>
   <paper-fab icon="chevron-left"
   class="mini"
@@ -66,68 +69,62 @@ A widget bar
   class="mini" id="backButtonExpand"
   on-tap="{{backExpandHandler}}"></paper-fab>
   <div id="sentimentBar" on-tap="{{clickHandler}}" layout horizontal end>
-    <sentiment-bar id="bar1" val="20"
+    <sentiment-bar id="bar1" val="0"
     sentiment="very-negative" emoticon="true"
     cardId="{{cardId}}" socket="{{socket}}">
-    </sentiment-bar>
-    <sentiment-bar id="bar2" val="80"
-    sentiment="negative" emoticon="true"
-    cardId="{{cardId}}" socket="{{socket}}">
-    </sentiment-bar>
-    <sentiment-bar id="bar3" val="20"
-    sentiment="neutral"  emoticon="true"
-    cardId="{{cardId}}" socket="{{socket}}">
-    </sentiment-bar>
-    <sentiment-bar id="bar4" val="20"
-    sentiment="positive"  emoticon="true"
-    cardId="{{cardId}}" socket="{{socket}}">
-    </sentiment-bar>
-    <sentiment-bar id="bar5" val="20"
-    sentiment="very-positive" emoticon="true"
-    cardId="{{cardId}}" socket="{{socket}}">
-    </sentiment-bar>
-  </div>
-<div id="metadata" layout horizontal></div>
+  </sentiment-bar>
+  <sentiment-bar id="bar2" val="0"
+  sentiment="negative" emoticon="true"
+  cardId="{{cardId}}" socket="{{socket}}">
+</sentiment-bar>
+<sentiment-bar id="bar3" val="0"
+sentiment="neutral"  emoticon="true"
+cardId="{{cardId}}" socket="{{socket}}">
+</sentiment-bar>
+<sentiment-bar id="bar4" val="0"
+sentiment="positive"  emoticon="true"
+cardId="{{cardId}}" socket="{{socket}}">
+</sentiment-bar>
+<sentiment-bar id="bar5" val="0"
+sentiment="very-positive" emoticon="true"
+cardId="{{cardId}}" socket="{{socket}}">
+</sentiment-bar>
+</div>
+<div id="metadata" layout horizontal>
+  <div id="meta1" class="subtitle"></div>
+  <div id="meta2" class="subtitle"></div>
+  <div id="meta3" class="subtitle"></div>
+  <div id="meta4" class="subtitle"></div>
+  <div id="meta5" class="subtitle"></div>
+</div>
 <x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
 </template>
 <script>
 Polymer('widget-sentiment-chart', {
-  ready: function(){
+  attached: function(){
     var self = this.$;
-    /*
-    * WebSocket event handler.
-    */
-    // self.cardSocket.addEventListener("open", function() {
-    //   /*** commented for testing purposes ***/
-    //   //self.cardSocket.send('{"path":"cards-manager","message":"card-new","content":"Tarjeta Prueba"}');
-    //   self.cardSocket.send('{"path": "echo", "message": "interval", "content": "1000"}');
-    // });
-    // self.cardSocket.addEventListener("message", function(event) {
-    //   // self.frontTitle.innerHTML = JSON.parse(event.detail.data).data;
-    //   // self.backTitle.innerHTML  = JSON.parse(event.detail.data).data;
-    // });
     /*
     * Event listeners for sentiment bar.
     */
     self.bar1.addEventListener('sentiment-bar-updated', function(e) {
-      if(self.metadata.children[0]){
-        self.metadata.children[0].innerHTML = e.detail.msg + "%";
-      }
+      self.meta1.innerHTML = e.detail.msg + "%";
+      self.bar1.setAttribute("val",e.detail.msg);
     });
     self.bar2.addEventListener('sentiment-bar-updated', function(e) {
-      if(self.metadata.children[1]){
-        self.metadata.children[1].innerHTML = e.detail.msg + "%";
-      }
+      self.meta2.innerHTML = e.detail.msg + "%";
+      self.bar2.setAttribute("val",e.detail.msg);
     });
     self.bar3.addEventListener('sentiment-bar-updated', function(e) {
-      if(self.metadata.children[2]){
-        self.metadata.children[2].innerHTML = e.detail.msg + "%";
-      }
+      self.meta3.innerHTML = e.detail.msg + "%";
+      self.bar3.setAttribute("val",e.detail.msg);
     });
     self.bar4.addEventListener('sentiment-bar-updated', function(e) {
-      if(self.metadata.children[3]){
-        self.metadata.children[3].innerHTML = e.detail.msg + "%";
-      }
+      self.meta4.innerHTML = e.detail.msg + "%";
+      self.bar4.setAttribute("val",e.detail.msg);
+    });
+    self.bar5.addEventListener('sentiment-bar-updated', function(e) {
+      self.meta5.innerHTML = e.detail.msg + "%";
+      self.bar5.setAttribute("val",e.detail.msg);
     });
     /*
     *  Sentiment Bar 1  *** Event Animations ***
@@ -144,10 +141,10 @@ Polymer('widget-sentiment-chart', {
       self.bar3,
       self.bar4,
       self.bar5,
-      self.metadata.children[1],
-      self.metadata.children[2],
-      self.metadata.children[3],
-      self.metadata.children[4]];
+      self.meta2,
+      self.meta3,
+      self.meta4,
+      self.meta5];
       animation.play();
       animation.addEventListener('core-animation-finish', function(e) {
         self.metadata.children[1].style.visibility = "hidden";
@@ -529,24 +526,59 @@ Polymer('widget-sentiment-chart', {
       });
     });
   },
+  ready: function(){
+    var self = this.$;
+    /*
+    * Event listeners for sentiment bar.
+    */
+    self.bar1.addEventListener('sentiment-bar-updated', function(e) {
+      if(self.metadata.children[0]){
+        self.metadata.children[0].innerHTML = e.detail.msg + "%";
+        self.bar1.setAttribute("val",e.detail.msg);
+      }
+    });
+    self.bar2.addEventListener('sentiment-bar-updated', function(e) {
+      if(self.metadata.children[1]){
+        self.metadata.children[1].innerHTML = e.detail.msg + "%";
+        self.bar2.setAttribute("val",e.detail.msg);
+      }
+    });
+    self.bar3.addEventListener('sentiment-bar-updated', function(e) {
+      if(self.metadata.children[2]){
+        self.metadata.children[2].innerHTML = e.detail.msg + "%";
+        self.bar3.setAttribute("val",e.detail.msg);
+      }
+    });
+    self.bar4.addEventListener('sentiment-bar-updated', function(e) {
+      if(self.metadata.children[3]){
+        self.metadata.children[3].innerHTML = e.detail.msg + "%";
+        self.bar4.setAttribute("val",e.detail.msg);
+      }
+    });
+    self.bar5.addEventListener('sentiment-bar-updated', function(e) {
+      if(self.metadata.children[4]){
+        self.metadata.children[4].innerHTML = e.detail.msg + "%";
+        self.bar5.setAttribute("val",e.detail.msg);
+      }
+    });
+  },
   clickHandler: function(){
     var self = this.$;
     self.backButton.style.display = "block";
-    self.metadata.style.display = "block";
-    self.metadata.innerHTML="";
+    self.metadata.style.visibility = "visible";
     /*
     * Translate Sentiment Bars
     */
     for(i=0; i <5; i++){
-      var newNode = document.createElement('div');
-      newNode.innerHTML = self.sentimentBar.children[i].getAttribute("val") + "%";
-      newNode.className = "subtitle";
-      self.metadata.appendChild(newNode);
+
       self.sentimentBar.children[i].style.transform  = "translate("+(i+1.5)*20+"px, 0px)";
       self.sentimentBar.children[i].style.webkitTransform = "translate("+(i+1.5)*20+"px, 0px)";
       self.sentimentBar.children[i].style.transition = "all .4s";
       self.sentimentBar.children[i].setAttribute("expand","true");
     }
+    /*
+    * Translate metadata
+    */
     for(j=0; j <5; j++){
       self.metadata.children[j].style.transform ="translate("+(j+.75)*42+"px, 0px)";
       self.metadata.children[j].style.webkitTransform ="translate("+(j+.75)*42+"px, 0px)";
@@ -556,18 +588,21 @@ Polymer('widget-sentiment-chart', {
   },
   backHandler: function(){
     var self = this.$;
-    if(self.backButton.getAttribute("restorebars") == "true") {
-
-    } else {
-      self.backButton.style.display = "none";
-      self.metadata.style.display = "none";
+    self.backButton.style.display  ="none";
+    self.metadata.style.visibility = "hidden";
+    if(self.backButton.getAttribute("restorebars") != "true") {
       for(i=0; i <5; i++){
         self.sentimentBar.children[i].style.transform  = "translate("+(i-1.5)/20+"px, 0px)";
         self.sentimentBar.children[i].style.webkitTransform = "translate("+(i-1.5)/20+"px, 0px)";
         self.sentimentBar.children[i].style.transition = "all .4s";
         self.sentimentBar.children[i].style.webkitTransition = "all .4s";
         self.sentimentBar.children[i].setAttribute("expand","false");
-        self.metadata.innerHTML="";
+      }
+      for(j=0; j <5; j++){
+        self.metadata.children[j].style.transform ="translate("+(j-75)/42+"px, 0px)";
+        self.metadata.children[j].style.webkitTransform ="translate("+(j-.75)/42+"px, 0px)";
+        self.metadata.children[j].style.transition = "all .4s";
+        self.metadata.children[j].style.webkitTransition = "all .4s";
       }
       this.asyncFire('back-sentiment-chart-handler');
     }

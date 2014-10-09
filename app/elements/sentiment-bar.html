@@ -48,6 +48,7 @@ Polymer('sentiment-bar', {
     var self      = this.$;
     var cardid    = this.cardid;
     var sentiment = this.sentiment;
+    var scoope = this;
     /*
     * WebSocket event handler.
     */
@@ -55,26 +56,42 @@ Polymer('sentiment-bar', {
       self.cardSocket.send('{"path": "events", "message": "subscribe", "content":"'+cardid+':sentiment-bars"}');
     });
     self.cardSocket.addEventListener("message", function(event) {
-        if(sentiment == "very-positive"){
-          self.bar.style.height = JSON.parse(event.detail.data).data.excellent+"px";
-        } else if(sentiment == "positive"){
-          self.bar.style.height = JSON.parse(event.detail.data).data.good+"px";
-        } else if(sentiment == "negative"){
-          self.bar.style.height = JSON.parse(event.detail.data).data.bad+"px";
-        } else if(sentiment == "very-negative"){
-          self.bar.style.height = JSON.parse(event.detail.data).data.terrible+"px";
-        } else if(sentiment == "neutral"){
-          self.bar.style.height = JSON.parse(event.detail.data).data.neutral+"px";
+      var socketData = JSON.parse(event.detail.data).data;
+      if(sentiment == "very-positive"){
+        if(!isNaN(socketData.excellent)){
+          self.bar.style.height = socketData.excellent+"px";
+          scoope.asyncFire('sentiment-bar-updated', {msg: socketData.excellent.toFixed(0)});
         }
-        if(this.emoticon == "true" && JSON.parse(event.detail.data).data > 10){
-          switch(this.sentiment) {
-            case "neutral":      self.emoticon.innerHTML =":|"; break;
-            case "positive":     self.emoticon.innerHTML =":)"; break;
-            case "negative":     self.emoticon.innerHTML =":("; break;
-            case "very-positive":self.emoticon.innerHTML =":D"; break;
-            case "very-negative":self.emoticon.innerHTML ="D:"; break;
-          }
+      } else if(sentiment == "positive"){
+        if(!isNaN(socketData.good)){
+          self.bar.style.height = socketData.good+"px";
+          scoope.asyncFire('sentiment-bar-updated', {msg: socketData.good.toFixed(0)});
         }
+      } else if(sentiment == "negative"){
+        if(!isNaN(socketData.bad)){
+          self.bar.style.height = socketData.bad+"px";
+          scoope.asyncFire('sentiment-bar-updated', {msg: socketData.bad.toFixed(0)});
+        }
+      } else if(sentiment == "very-negative"){
+        if(!isNaN(socketData.terrible)){
+          self.bar.style.height = socketData.terrible+"px";
+          scoope.asyncFire('sentiment-bar-updated', {msg: socketData.terrible.toFixed(0)});
+        }
+      } else if(sentiment == "neutral"){
+        if(!isNaN(socketData.neutral)){
+          self.bar.style.height = socketData.neutral+"px";
+          scoope.asyncFire('sentiment-bar-updated', {msg: socketData.neutral.toFixed(0)})
+        }
+      }
+      if(this.emoticon == "true" && JSON.parse(event.detail.data).data.excellent > 10){
+        switch(this.sentiment) {
+          case "neutral":      self.emoticon.innerHTML =":|"; break;
+          case "positive":     self.emoticon.innerHTML =":)"; break;
+          case "negative":     self.emoticon.innerHTML =":("; break;
+          case "very-positive":self.emoticon.innerHTML =":D"; break;
+          case "very-negative":self.emoticon.innerHTML ="D:"; break;
+        }
+      }
     });
     /*
     * Set the bar height according to sentiment value
@@ -102,15 +119,15 @@ Polymer('sentiment-bar', {
     /*
     * Set the emoticon only if threshold is passed
     */
-    if(this.emoticon == "true" && parseInt(this.val) > 10){
-      switch(this.sentiment) {
-        case "neutral":      self.emoticon.innerHTML =":|"; break;
-        case "positive":     self.emoticon.innerHTML =":)"; break;
-        case "negative":     self.emoticon.innerHTML =":("; break;
-        case "very-positive":self.emoticon.innerHTML =":D"; break;
-        case "very-negative":self.emoticon.innerHTML ="D:"; break;
-      }
-    }
+    // if(this.emoticon == "true" && parseInt(this.val) > 10){
+    //   switch(this.sentiment) {
+    //     case "neutral":      self.emoticon.innerHTML =":|"; break;
+    //     case "positive":     self.emoticon.innerHTML =":)"; break;
+    //     case "negative":     self.emoticon.innerHTML =":("; break;
+    //     case "very-positive":self.emoticon.innerHTML =":D"; break;
+    //     case "very-negative":self.emoticon.innerHTML ="D:"; break;
+    //   }
+    // }
   },
   tapHandler: function() {
     if(this.expand == "true") {
