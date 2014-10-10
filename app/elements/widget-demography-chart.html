@@ -22,7 +22,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
 <link rel="import" href="widget-folksonomy-list.html">
 
 <polymer-element name="widget-demography-chart"
-  attributes="active cardid socket"
+  attributes="active cardid socket sentiment folksonomy"
   vertical layout center>
   <template>
   <style>
@@ -45,8 +45,9 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
   }
   :host #folkChart{
     position: absolute;
-    visibility: hidden;
-    left: 0;
+    /*visibility: hidden;*/
+    top: -60px;
+    left: -50px;
   }
   :host #backButton {
     position: absolute;
@@ -66,25 +67,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     <paper-fab icon="chevron-left" class="mini" id="backButton" on-tap="{{backHandler}}"></paper-fab>
     <core-icon icon="social:people"></core-icon>
     <paper-button id="button" label="1,000" raisedButton  on-tap="{{tapHandler}}"></paper-button>
-    <widget-folksonomy-list id="folkChart" folksonomy='{"folksonomy": [
-    "Peña Nieto",
-    "Reforma",
-    "Gasolina",
-    "Capital",
-    "Precio",
-    "Familia",
-    "Reforma",
-    "Gasolina",
-    "Capital",
-    "Precio",
-    "Familia",
-    "Reforma",
-    "Gasolina",
-    "Capital",
-    "Precio",
-    "Familia",
-    "Ice Bucket Challenge"
-    ]}' scrolling="true"></widget-folksonomy-chart>
+    <widget-folksonomy-list id="folkChart" cardid="{{cardid}}" socket="{{socket}}" sentiment="{{sentiment}}"></widget-folksonomy-chart>
   </div>
   <x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
 </template>
@@ -94,46 +77,64 @@ Polymer('widget-demography-chart', {
     var self = this.$;
     var socket = this.socket;
     var cardid = this.cardid;
+    var sentiment = this.sentiment;
     /*
     * Comment count: WebSocket event handler.
     */
     self.cardSocket.addEventListener("open", function() {
       /*** commented for testing purposes ***/
-      self.cardSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':count-total"}');
+      if(!sentiment){
+        self.cardSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':count-total"}');
+      } else if(sentiment == "very-positive"){
+        self.cardSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':count-excellent"}');
+        self.button.style.background = "#00c273";
+      } else if(sentiment == "positive"){
+        self.cardSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':count-good"}');
+        self.button.style.background = "#86c300";
+      } else if(sentiment == "neutral"){
+        self.cardSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':count-neutral"}');
+        self.button.style.background = "#fbbf00";
+      } else if(sentiment == "bad"){
+        self.cardSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':count-bad"}');
+        self.button.style.background = "#ff8a00";
+      } else if(sentiment == "very-bad"){
+        self.cardSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':count-terrible"}');
+        self.button.style.background = "#ff0035";
+      }
     });
     self.cardSocket.addEventListener("message", function(event) {
       if(!isNaN(JSON.parse(event.detail.data).data)) {
       self.button.setAttribute("label",JSON.parse(event.detail.data).data);
     }
     });
-    if(this.active == "false") {
+    if(this.folksonomy == "false") {
       self.button.setAttribute("raisedButton","false");
-      self.button.style.background = "grey";
+      self.folkChart.parentNode.removeChild(self.folkChart);
     }
   },
   tapHandler: function() {
-    var self = this.$;
-    if(this.active == "true") {
-      self.folkChart.style.visibility  = "visible";
-      var anmTranslate = new CoreAnimation();
-      anmTranslate.duration = 250;
-      anmTranslate.fill = "forwards"
-      anmTranslate.keyframes = [{transform: "translate(0px,0px)"},{transform: "translate(-50px,0px)"}];
-      anmTranslate.target = self.widget;
-      anmTranslate.play();
-      anmTranslate.addEventListener('core-animation-finish', function(e) {
-        var anmTranslate = new CoreAnimation();
-        anmTranslate.duration = 300;
-        anmTranslate.fill = "forwards"
-        anmTranslate.keyframes = [{transform: "translate(-50px,0px)"},{transform: "translate(-50px,-50px)"}];
-        anmTranslate.target = self.widget;
-        anmTranslate.play();
-        anmTranslate.addEventListener('core-animation-finish', function(e) {
-          self.backButton.style.visibility = "visible";
-        });
-      });
-      this.asyncFire('tapped-demography-chart-button');
-    }
+    // var self = this.$;
+    // if(this.active == "true") {
+    //   self.folkChart.style.visibility  = "visible";
+    //   var anmTranslate = new CoreAnimation();
+    //   anmTranslate.duration = 250;
+    //   anmTranslate.fill = "forwards"
+    //   anmTranslate.keyframes = [{transform: "translate(0px,0px)"},{transform: "translate(-50px,0px)"}];
+    //   anmTranslate.target = self.widget;
+    //   anmTranslate.play();
+    //   anmTranslate.addEventListener('core-animation-finish', function(e) {
+    //     var anmTranslate = new CoreAnimation();
+    //     anmTranslate.duration = 300;
+    //     anmTranslate.fill = "forwards"
+    //     anmTranslate.keyframes = [{transform: "translate(-50px,0px)"},{transform: "translate(-50px,-50px)"}];
+    //     anmTranslate.target = self.widget;
+    //     anmTranslate.play();
+    //     anmTranslate.addEventListener('core-animation-finish', function(e) {
+    //       self.backButton.style.visibility = "visible";
+    //     });
+    //   });
+    //   this.asyncFire('tapped-demography-chart-button');
+    // }
   },
   backHandler: function() {
     var self = this.$;

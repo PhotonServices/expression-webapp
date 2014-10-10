@@ -6,7 +6,7 @@
 <!--
 A widget bar
 -->
-<polymer-element name="widget-sentiment-chart" attributes="cardId socket">
+<polymer-element name="widget-sentiment-chart" attributes="cardid socket">
   <template>
   <style>
   :host {
@@ -58,7 +58,7 @@ A widget bar
     height: 100px;
   }
   #metadata {
-    visibility: hidden;
+    display: none;
   }
   </style>
   <paper-fab icon="chevron-left"
@@ -69,26 +69,26 @@ A widget bar
   class="mini" id="backButtonExpand"
   on-tap="{{backExpandHandler}}"></paper-fab>
   <div id="sentimentBar" on-tap="{{clickHandler}}" layout horizontal end>
-    <sentiment-bar id="bar1" val="0"
-    sentiment="very-negative" emoticon="true"
-    cardId="{{cardId}}" socket="{{socket}}">
+  <sentiment-bar id="bar1" val="0"
+  sentiment="very-negative" emoticon="true"
+  cardid="{{cardid}}" socket="{{socket}}">
   </sentiment-bar>
   <sentiment-bar id="bar2" val="0"
   sentiment="negative" emoticon="true"
-  cardId="{{cardId}}" socket="{{socket}}">
-</sentiment-bar>
-<sentiment-bar id="bar3" val="0"
-sentiment="neutral"  emoticon="true"
-cardId="{{cardId}}" socket="{{socket}}">
-</sentiment-bar>
-<sentiment-bar id="bar4" val="0"
-sentiment="positive"  emoticon="true"
-cardId="{{cardId}}" socket="{{socket}}">
+  cardid="{{cardid}}" socket="{{socket}}">
+  </sentiment-bar>
+  <sentiment-bar id="bar3" val="0"
+  sentiment="neutral"  emoticon="true"
+  cardid="{{cardid}}" socket="{{socket}}">
+  </sentiment-bar>
+  <sentiment-bar id="bar4" val="0"
+  sentiment="positive"  emoticon="true"
+  cardid="{{cardid}}" socket="{{socket}}">
 </sentiment-bar>
 <sentiment-bar id="bar5" val="0"
-sentiment="very-positive" emoticon="true"
-cardId="{{cardId}}" socket="{{socket}}">
-</sentiment-bar>
+  sentiment="very-positive" emoticon="true"
+  cardid="{{cardid}}" socket="{{socket}}">
+  </sentiment-bar>
 </div>
 <div id="metadata" layout horizontal>
   <div id="meta1" class="subtitle"></div>
@@ -103,6 +103,8 @@ cardId="{{cardId}}" socket="{{socket}}">
 Polymer('widget-sentiment-chart', {
   attached: function(){
     var self = this.$;
+    var socket = this.socket;
+    var cardid = this.cardid;
     /*
     * Event listeners for sentiment bar.
     */
@@ -173,11 +175,17 @@ Polymer('widget-sentiment-chart', {
           var demographyChart = document.createElement('widget-demography-chart');
           demographyChart.setAttribute("active","false");
           demographyChart.setAttribute("id","demochart");
+          demographyChart.setAttribute("sentiment","very-bad");
+          demographyChart.setAttribute("folksonomy","false");
+          demographyChart.setAttribute("socket",socket);
+          demographyChart.setAttribute("cardid",cardid);
           self.metadata.appendChild(demographyChart);
           var folksonomyList  = document.createElement('widget-folksonomy-list');
-          self.metadata.appendChild(folksonomyList);
-          folksonomyList.setAttribute("scrolling","true");
           folksonomyList.setAttribute("id","folksonomylist");
+          folksonomyList.setAttribute("sentiment","very-bad");
+          folksonomyList.setAttribute("socket",socket);
+          folksonomyList.setAttribute("cardid",cardid);
+          self.metadata.appendChild(folksonomyList);
           /*
           * Animate, insert widget-demography-chart.
           */
@@ -196,8 +204,8 @@ Polymer('widget-sentiment-chart', {
           animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(40px,0px) scale(.65)",opacity:"0"},
-          {transform: "translate(40px,0px) scale(.65)",opacity:"1"}];
+          {transform: "translate(10px,0px) scale(.65)",opacity:"0"},
+          {transform: "translate(10px,0px) scale(.65)",opacity:"1"}];
           animation.target = folksonomyList;
           animation.play();
         });
@@ -255,11 +263,17 @@ Polymer('widget-sentiment-chart', {
           var demographyChart = document.createElement('widget-demography-chart');
           demographyChart.setAttribute("active","false");
           demographyChart.setAttribute("id","demochart");
+          demographyChart.setAttribute("folksonomy","false");
+          demographyChart.setAttribute("sentiment","bad");
+          demographyChart.setAttribute("socket",socket);
+          demographyChart.setAttribute("cardid",cardid);
           self.metadata.appendChild(demographyChart);
           var folksonomyList  = document.createElement('widget-folksonomy-list');
-          self.metadata.appendChild(folksonomyList);
-          folksonomyList.setAttribute("scrolling","true");
           folksonomyList.setAttribute("id","folksonomylist");
+          folksonomyList.setAttribute("sentiment","bad");
+          folksonomyList.setAttribute("socket",socket);
+          folksonomyList.setAttribute("cardid",cardid);
+          self.metadata.appendChild(folksonomyList);
           /*
           * Animate, insert widget-demography-chart.
           */
@@ -278,8 +292,8 @@ Polymer('widget-sentiment-chart', {
           animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(85px,0px) scale(0.65)",opacity:"0"},
-          {transform: "translate(85px,0px) scale(0.65)",opacity:"1"}];
+          {transform: "translate(55px,0px) scale(0.65)",opacity:"0"},
+          {transform: "translate(55px,0px) scale(0.65)",opacity:"1"}];
           animation.target = folksonomyList;
           animation.play();
         });
@@ -335,11 +349,17 @@ Polymer('widget-sentiment-chart', {
           var demographyChart = document.createElement('widget-demography-chart');
           demographyChart.setAttribute("active","false");
           demographyChart.setAttribute("id","demochart");
+          demographyChart.setAttribute("folksonomy","false");
+          demographyChart.setAttribute("sentiment","neutral");
+          demographyChart.setAttribute("socket",socket);
+          demographyChart.setAttribute("cardid",cardid);
           self.metadata.appendChild(demographyChart);
           var folksonomyList  = document.createElement('widget-folksonomy-list');
-          self.metadata.appendChild(folksonomyList);
-          folksonomyList.setAttribute("scrolling","true");
           folksonomyList.setAttribute("id","folksonomylist");
+          folksonomyList.setAttribute("sentiment","neutral");
+          folksonomyList.setAttribute("socket",socket);
+          folksonomyList.setAttribute("cardid",cardid);
+          self.metadata.appendChild(folksonomyList);
           /*
           * Animate, insert widget-demography-chart.
           */
@@ -358,8 +378,8 @@ Polymer('widget-sentiment-chart', {
           animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(125px,0px) scale(0.65)",opacity:"0"},
-          {transform: "translate(125px,0px) scale(0.65)",opacity:"1"}];
+          {transform: "translate(95px,0px) scale(0.65)",opacity:"0"},
+          {transform: "translate(95px,0px) scale(0.65)",opacity:"1"}];
           animation.target = folksonomyList;
           animation.play();
         });
@@ -415,11 +435,17 @@ Polymer('widget-sentiment-chart', {
           var demographyChart = document.createElement('widget-demography-chart');
           demographyChart.setAttribute("active","false");
           demographyChart.setAttribute("id","demochart");
+          demographyChart.setAttribute("folksonomy","false");
+          demographyChart.setAttribute("sentiment","positive");
+          demographyChart.setAttribute("socket",socket);
+          demographyChart.setAttribute("cardid",cardid);
           self.metadata.appendChild(demographyChart);
           var folksonomyList  = document.createElement('widget-folksonomy-list');
-          self.metadata.appendChild(folksonomyList);
-          folksonomyList.setAttribute("scrolling","true");
           folksonomyList.setAttribute("id","folksonomylist");
+          folksonomyList.setAttribute("sentiment","positive");
+          folksonomyList.setAttribute("socket",socket);
+          folksonomyList.setAttribute("cardid",cardid);
+          self.metadata.appendChild(folksonomyList);
           /*
           * Animate, insert widget-demography-chart.
           */
@@ -438,8 +464,8 @@ Polymer('widget-sentiment-chart', {
           animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(165px,0px) scale(0.65)",opacity:"0"},
-          {transform: "translate(165px,0px) scale(0.65)",opacity:"1"}];
+          {transform: "translate(135px,0px) scale(0.65)",opacity:"0"},
+          {transform: "translate(135px,0px) scale(0.65)",opacity:"1"}];
           animation.target = folksonomyList;
           animation.play();
         });
@@ -495,11 +521,17 @@ Polymer('widget-sentiment-chart', {
           var demographyChart = document.createElement('widget-demography-chart');
           demographyChart.setAttribute("active","false");
           demographyChart.setAttribute("id","demochart");
+          demographyChart.setAttribute("folksonomy","false");
+          demographyChart.setAttribute("sentiment","very-positive");
+          demographyChart.setAttribute("socket",socket);
+          demographyChart.setAttribute("cardid",cardid);
           self.metadata.appendChild(demographyChart);
           var folksonomyList  = document.createElement('widget-folksonomy-list');
-          self.metadata.appendChild(folksonomyList);
-          folksonomyList.setAttribute("scrolling","true");
           folksonomyList.setAttribute("id","folksonomylist");
+          folksonomyList.setAttribute("sentiment","very-positive");
+          folksonomyList.setAttribute("socket",socket);
+          folksonomyList.setAttribute("cardid",cardid);
+          self.metadata.appendChild(folksonomyList);
           /*
           * Animate, insert widget-demography-chart.
           */
@@ -518,8 +550,8 @@ Polymer('widget-sentiment-chart', {
           animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(210px,0px) scale(0.65)",opacity:"0"},
-          {transform: "translate(210px,0px) scale(0.65)",opacity:"1"}];
+          {transform: "translate(180px,0px) scale(0.65)",opacity:"0"},
+          {transform: "translate(180px,0px) scale(0.65)",opacity:"1"}];
           animation.target = folksonomyList;
           animation.play();
         });
@@ -565,7 +597,7 @@ Polymer('widget-sentiment-chart', {
   clickHandler: function(){
     var self = this.$;
     self.backButton.style.display = "block";
-    self.metadata.style.visibility = "visible";
+    self.metadata.style.display = "block";
     /*
     * Translate Sentiment Bars
     */
@@ -588,8 +620,10 @@ Polymer('widget-sentiment-chart', {
   },
   backHandler: function(){
     var self = this.$;
+
     self.backButton.style.display  ="none";
-    self.metadata.style.visibility = "hidden";
+    self.metadata.style.display = "none";
+
     if(self.backButton.getAttribute("restorebars") != "true") {
       for(i=0; i <5; i++){
         self.sentimentBar.children[i].style.transform  = "translate("+(i-1.5)/20+"px, 0px)";
@@ -609,14 +643,12 @@ Polymer('widget-sentiment-chart', {
   },
   backExpandHandler: function (){
     var self = this.$;
-
     for(i=0; i <5; i++){
       self.sentimentBar.children[i].style.transform = "translate("+(i+1.5)*20+"px, 0px)";
       self.sentimentBar.children[i].style.webkitTransform = "translate("+(i+1.5)*20+"px, 0px)";
       self.sentimentBar.children[i].style.transition = "all .4s";
       self.sentimentBar.children[i].setAttribute("expand","true");
     }
-
     self.backButtonExpand.style.display = "none";
     self.backButton.style.display = "block";
     var animation = new CoreAnimation();

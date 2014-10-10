@@ -4,71 +4,133 @@
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
 <!--
 @author Francisco Gutiérrez - fsalvador23@gmail.com
+/* Folksonomy input demo:
+folksonomy='{"folksonomy": [
+"Peña Nieto",
+"Reforma",
+"Gasolina",
+"Capital",
+"Precio",
+"Familia",
+"Reforma",
+"Gasolina",
+"Capital",
+"Precio",
+"Familia",
+"Reforma",
+"Gasolina",
+"Capital",
+"Precio",
+"Familia",
+"Ice Bucket Challenge"
+]}'
+*/
 -->
 <polymer-element name="widget-folksonomy-list"
-attributes="folksonomy scrolling cardId socket"
-on-tap="{{tapHandler}}"
-vertical layout center>
+attributes="folksonomy scrolling cardid socket sentiment"
+on-tap="{{tapHandler}}" vertical layout center>
 <template>
 <style>
 :host{
   /*position: absolute*/
-  height: 50px;
   overflow: hidden;
-  -webkit-font-smoothing: antialiased;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis
 }
-#fk{
-  position: relative;
+#left{
   font-family: 'Roboto','Helvetica', sans-serif;
   color: white;
   font-size: 14px;
   padding: 2px;
   font-weight: 300;
-  text-overflow:ellipsis;
+
+  text-align: center;
+}
+#right{
+  font-family: 'Roboto','Helvetica', sans-serif;
+  color: white;
+  font-size: 14px;
+  padding: 2px;
+  font-weight: 300;
   text-align: center;
 }
 </style>
-<div id="list"></div>
+<div id="left"></div>
+<div id="right"></div>
 <x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
 </template>
 <script>
 Polymer('widget-folksonomy-list', {
   attached: function() {
-    var folk = '{"folksonomy": ["Peña Nieto","Reforma","Gasolina","Capital","Precio","Familia","Reforma","Gasolina","Capital","Precio","Familia","Reforma","Gasolina","Capital","Precio","Familia","Ice Bucket Challenge"]}';
-    // var data = JSON.parse(this.folksonomy);
-    var data = JSON.parse(folk);
-    var index = 1;
-    for (var i in data.folksonomy) {
-      var sentence = data.folksonomy[i];
-      this.$.list.innerHTML += "<div id='fk' style='color:rgba(255,255,255,"+index+")'>"+sentence+"</div>";
-      // index = index*.75;
-    }
-    // if(this.scrolling == "true") {
-    var animation = new CoreAnimation();
-    animation.duration = 22000;
-    animation.iterations = "Infinity";
-    animation.direction = "alternate";
-    animation.keyframes = [ {transform: "translate(0px,0px)"},{transform: "translate(0px,-200px)"}];
-    animation.target = this.$.list;
-    animation.play();
-    // }
-  },
-  ready: function(){
-    var self = this.$;
+    var self= this.$;
+    var socket = this.socket;
+    var cardid = this.cardid;
+    var sentiment = this.sentiment;
+    var folksonomy = [];
+    /*Define some fancy animations */
+    var anm1 = new CoreAnimation();
+    anm1.duration = 1000;
+    anm1.keyframes = [{opacity: 0},{opacity: 1}];
+    anm1.target = self.left;
+    var anm2 = new CoreAnimation();
+    anm2.duration = 1000;
+    anm2.keyframes = [{opacity: 0},{opacity: 1}];
+    anm2.target = self.right;
     /*
     * WebSocket event handler.
     */
     self.cardSocket.addEventListener("open", function() {
-      /*** commented for testing purposes ***/
-      //self.cardSocket.send('{"path":"cards-manager","message":"card-new","content":"Tarjeta Prueba"}');
-      self.cardSocket.send('{"path": "echo", "message": "interval", "content": "1000"}');
+      if(!sentiment){
+        self.cardSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':folksonomy-global:add"}');
+      } else if(sentiment == "very-positive"){
+        self.cardSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':folksonomy-excellent:add"}');
+      } else if(sentiment == "positive"){
+        self.cardSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':folksonomy-good:add"}');
+      } else if(sentiment == "neutral"){
+        self.cardSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':folksonomy-neutral:add"}');
+      } else if(sentiment == "bad"){
+        self.cardSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':folksonomy-bad:add"}');
+      } else if(sentiment == "very-bad"){
+        self.cardSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':folksonomy-terrible:add"}');
+      }
     });
     self.cardSocket.addEventListener("message", function(event) {
-      // self.frontTitle.innerHTML = JSON.parse(event.detail.data).data;
-      // self.backTitle.innerHTML  = JSON.parse(event.detail.data).data;
-      console.log(JSON.parse(event.detail.data).data);
+      var data = JSON.parse(event.detail.data).data;
+      if(data.substr(data.length-3) != "add") {
+        folksonomy[folksonomy.length] = data;
+        var left  = randomItem();
+        var right = randomItem();
+        anm1.play();
+        anm2.play();
+        if(left != right){
+          self.left.innerHTML  = left;
+          self.right.innerHTML = right;
+        } else {
+          self.left.innerHTML = "";
+          self.right.innerHTML= left;
+        }
+      }
     });
-  }
+    window.setInterval(function(){
+      var left  = randomItem();
+      var right = randomItem();
+      anm1.play();
+      anm2.play();
+      if(left != right){
+        self.left.innerHTML  = left;
+        self.right.innerHTML = right;
+      } else {
+        self.left.innerHTML = "";
+        self.right.innerHTML= left;
+      }
+    }, 5000);
+    function randomItem(){
+      return folksonomy[Math.floor(Math.random()*folksonomy.length)];
+    }
+  },
+  ready: function(){}
 });
 </script>
 </polymer-element>
