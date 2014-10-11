@@ -127,7 +127,7 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
 }
 :host action-container {
   position: absolute;
-  right:  -15px;
+  right:  -17px;
   top:    -13px;
 }
 :host #widgetContainer {
@@ -181,15 +181,15 @@ Polymer("sentiment-card", {
     self.cardSocket.addEventListener("message", function(event) {
       var cardname  = this.cardname;
       var sentiment = this.sentiment;
-      if(JSON.parse(event.detail.data).data > 1) {
+      if(JSON.parse(event.detail.data).data >= 1) {
         self.front.style.backgroundColor = "#2ECC71";
         self.back.style.backgroundColor = "#2ECC71";
         /*
         * Next line causes a rendering bug when flipping the card in Chrome.
         * Version 37.0.2062.124 (Flickering)
         */
-        // self.card.style.backgroundColor = "#2ECC71";
-      } else if (JSON.parse(event.detail.data).data < -1) {
+        //self.card.style.backgroundColor = "#2ECC71";
+      } else if (JSON.parse(event.detail.data).data <= -1) {
         self.front.style.backgroundColor = "#EA6153";
         self.back.style.backgroundColor = "#EA6153";
         /*

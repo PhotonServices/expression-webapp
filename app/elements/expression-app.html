@@ -37,10 +37,10 @@
     height:60px;
     margin:5px;
     border-radius: 60px;
-    background: #EEEEEE;
-    -web-kit-box-shadow:0px 2px 4px 0px rgba(0,0,0,0.50);
+    background: white;
+    /*-web-kit-box-shadow:0px 2px 4px 0px rgba(0,0,0,0.50);
     -moz-box-shadow:    0px 2px 4px 0px rgba(0,0,0,0.50);
-    box-shadow:         0px 2px 4px 0px rgba(0,0,0,0.50);
+    box-shadow:         0px 2px 4px 0px rgba(0,0,0,0.50);*/
   }
   :host .badge core-icon {
     width: 100%;
@@ -50,16 +50,16 @@
   }
   :host .badge core-icon > svg {
     fill: #515151;
-    transform:scale(.75);
-    -moz-transform:scale(.75);
-    -webkit-transform:scale(.75);
+    transform:scale(1.4);
+    -moz-transform:scale(1.4);
+    -webkit-transform:scale(1.4);
   }
   :host #text{
     margin-left: 10px;
   }
   :host #title {
     font-weight: 300;
-    font-family: 'Roboto','Helvetica', sans-serif;
+    font-family: 'Trebuchet', sans-serif;
     font-size: 145%;
     font-size: 3.5vmax;
     white-space: nowrap;
@@ -80,10 +80,10 @@
   <core-header-panel mode="waterfall-tall" tallclass="medium-tall">
     <div class="core-header" horizontal layout center>
       <div class="badge" horizontal layout center>
-        <core-icon id="img" icon="maps:local-florist"></core-icon>
+        <core-icon id="img" icon="social:post-twitter"></core-icon>
       </div>
       <div id="text">
-        <div id="title">¿Cuál es el Sentimiento?</div>
+        <div id="title">¿Cuál es el Sentimiento en <b>Twitter?</b></div>
         <div id="subtitle">powered by <u>Expression</u></div>
       </div>
     </div>
