@@ -62,42 +62,42 @@ Polymer('sentiment-bar', {
       var socketData = JSON.parse(event.detail.data).data;
       if(sentiment == "very-positive"){
         if(!isNaN(socketData.excellent)){
-          if(socketData.excellent> 20){
+          if(socketData.excellent > 15){
             self.emoticon.innerHTML =":D";
             self.bar.style.height = socketData.good+"px";
           } else {
-            self.bar.style.height = socketData.good*2.5+"px";
+            self.bar.style.height = socketData.good+"px";
           }
           self.bar.style.height = socketData.excellent+"px";
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.excellent.toFixed(0)});
         }
       } else if(sentiment == "positive"){
         if(!isNaN(socketData.good)){
-          if(socketData.good> 20){
+          if(socketData.good > 15){
             self.emoticon.innerHTML =":)";
             self.bar.style.height = socketData.good+"px";
           } else {
-            self.bar.style.height = socketData.good*3+"px";
+            self.bar.style.height = socketData.good+"px";
           }
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.good.toFixed(0)});
         }
       } else if(sentiment == "negative"){
         if(!isNaN(socketData.bad)){
-          if(socketData.bad> 20){
+          if(socketData.bad > 15){
             self.emoticon.innerHTML =":(";
             self.bar.style.height = socketData.bad+"px";
           } else {
-            self.bar.style.height = socketData.bad*3+"px";
+            self.bar.style.height = socketData.bad+"px";
           }
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.bad.toFixed(0)});
         }
       } else if(sentiment == "very-negative"){
         if(!isNaN(socketData.terrible)){
-          if(socketData.terrible> 20){
+          if(socketData.terrible > 15){
             self.emoticon.innerHTML ="D:";
             self.bar.style.height = socketData.terrible+"px";
           } else {
-              self.bar.style.height = socketData.terrible*3+"px";
+              self.bar.style.height = socketData.terrible+"px";
           }
           self.emoticon.style.transform = "rotate(-180deg)";
           self.emoticon.style.webkitTransform = "rotate(-180deg)";
