@@ -60,6 +60,9 @@ A widget bar
   #metadata {
     display: none;
   }
+  #meta3{
+    display: none;
+  }
   </style>
   <paper-fab icon="chevron-left"
   class="mini"
@@ -78,7 +81,7 @@ A widget bar
   cardid="{{cardid}}" socket="{{socket}}">
   </sentiment-bar>
   <sentiment-bar id="bar3" val="0"
-  sentiment="neutral"  emoticon="true"
+  sentiment="neutral"  emoticon="true" heart="true"
   cardid="{{cardid}}" socket="{{socket}}">
   </sentiment-bar>
   <sentiment-bar id="bar4" val="0"
@@ -204,8 +207,8 @@ Polymer('widget-sentiment-chart', {
           animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(10px,0px) scale(.65)",opacity:"0"},
-          {transform: "translate(10px,0px) scale(.65)",opacity:"1"}];
+          {transform: "translate(0px,0px) scale(.65)",opacity:"0"},
+          {transform: "translate(0px,0px) scale(.65)",opacity:"1"}];
           animation.target = folksonomyList;
           animation.play();
         });
@@ -292,8 +295,8 @@ Polymer('widget-sentiment-chart', {
           animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(55px,0px) scale(0.65)",opacity:"0"},
-          {transform: "translate(55px,0px) scale(0.65)",opacity:"1"}];
+          {transform: "translate(45px,0px) scale(0.65)",opacity:"0"},
+          {transform: "translate(45px,0px) scale(0.65)",opacity:"1"}];
           animation.target = folksonomyList;
           animation.play();
         });
@@ -378,8 +381,8 @@ Polymer('widget-sentiment-chart', {
           animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(95px,0px) scale(0.65)",opacity:"0"},
-          {transform: "translate(95px,0px) scale(0.65)",opacity:"1"}];
+          {transform: "translate(125px,0px) scale(0.65)",opacity:"0"},
+          {transform: "translate(125px,0px) scale(0.65)",opacity:"1"}];
           animation.target = folksonomyList;
           animation.play();
         });
@@ -464,8 +467,8 @@ Polymer('widget-sentiment-chart', {
           animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(135px,0px) scale(0.65)",opacity:"0"},
-          {transform: "translate(135px,0px) scale(0.65)",opacity:"1"}];
+          {transform: "translate(130px,0px) scale(0.65)",opacity:"0"},
+          {transform: "translate(130px,0px) scale(0.65)",opacity:"1"}];
           animation.target = folksonomyList;
           animation.play();
         });

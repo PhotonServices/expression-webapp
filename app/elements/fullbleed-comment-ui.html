@@ -1,0 +1,188 @@
+<link rel="stylesheet"  href="../bower_components/animate.css/animate.min.css">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
+<!--
+@license
+The MIT License (MIT)
+
+Copyright (c) 2014 The Photon Services Authors. All rights reserved.
+This code may only be used under the BSD style license
+found at http://opensource.org/licenses/MIT
+
+-->
+<!-- Sentiment Card View Component.
+Author: Francisco Gutiérrez (fsalvador23@gmail.com)
+-->
+<polymer-element name="fullbleed-comment-ui" fullbleed vertical layout attributes="cardid socket">
+  <template>
+  <style>
+  :host {
+    position: absolute;
+    top:0;
+    background: #107FC9;
+    width:  100%;
+    height: 100%;
+  }
+  :host .badge {
+    width: 60px;
+    height:60px;
+    min-width: 60px;
+    border-radius: 50%;
+  }
+  :host paper-fab{
+    background: #0D6FB0;
+  }
+  :host paper-fab::shadow svg{
+    fill: white;
+    transform: scale(1.2);
+  }
+  :host paper-input{
+    height: 140px;
+    padding: 10px;
+    font-weight: 300;
+    font-family: 'Roboto','Trebuchet', sans-serif;
+    border-radius: 3px;
+    /* Rectangle 71: */
+    background: #FCFEF5;
+    -moz-box-shadow:    inset 0px 0px 1px 0px rgba(0,0,0,0.50);
+    box-shadow:         inset 0px 0px 1px 0px rgba(0,0,0,0.50);
+    min-height: 60px;
+    font-size: 100%;
+  }
+  :host h1 {
+    padding-left: 10px;
+    min-height: 60px;
+    font-weight: 100;
+    color: white;
+    font-family: 'Roboto','Trebuchet', sans-serif;
+    font-size: 145%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 4.5vmax;
+  }
+  :host .textcount{
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'Roboto','Trebuchet', sans-serif;
+    font-size: 175%;
+    padding: 10px;
+    z-index: 1;
+  }
+  #top{
+    width: 100%;
+    padding: 0px;
+  }
+  #middle{
+    width: 100%;
+  }
+  #bottom{
+    margin-top: 3%;
+    width: 100%;
+  }
+  #container{
+    margin: 5%;
+  }
+  #toolbar{
+    margin-top: -6.2%;
+    min-height:45px;
+    width: 100%;
+    background: #0D6FB0;
+  }
+  paper-toast {
+    color: black;
+    background: white;
+    font-family: 'Roboto','Trebuchet', sans-serif;
+    font-weight: 300;
+    z-index: 1;
+  }
+  core-icon > svg {
+    fill: #ff0035;
+  }
+  </style>
+  <div id="container" vertical center layout>
+    <div id="top" horizontal start-justified layout>
+      <div class="badge">
+        <paper-fab id="close" icon="close" on-tap="{{closeTapped}}"></paper-fab>
+      </div>
+      <h1 id="title">Sentiment Card Title</h1>
+    </div>
+    <div id="middle" layout horizontal center>
+      <paper-input id="input" floatingLabel="true" inputValue="{{value}}" multiline label="Yo pienso que…" layout horizontal flex></paper-input>
+    </div>
+    <div id="bottom" horizontal end-justified layout>
+      <span id="count" class="textcount" self-center>0</span>
+      <paper-fab id="send" icon="communication:comment" on-tap="{{sendTapped}}"></paper-fab>
+    </div>
+  </div>
+  <div id="toolbar" flex>
+  </div>
+  <x-websocket id="cardSocket" url="ws://localhost:8080/ws" ></x-websocket>
+  <paper-toast id="toastLarge" text="Comentario demasiado largo." onclick="discardDraft(el)">
+    <core-icon icon="warning"></core-icon>
+  </paper-toast>
+  <paper-toast id="toastShort" text="Comentario demasiado corto." onclick="discardDraft(el)">
+    <core-icon icon="warning"></core-icon>
+  </paper-toast>
+</template>
+<script>
+Polymer('fullbleed-comment-ui', {
+  attached: function() {
+    var self   = this.$;
+    var cardid = this.cardid;
+    var socket = this.socket;
+    /*
+    * WebSocket event handler.
+    */
+    self.cardSocket.addEventListener("open", function() {});
+    self.cardSocket.addEventListener("message", function(event) {});
+  },
+  valueChanged: function() {
+    var self = this.$;
+    if(this.value.length <= 300) {
+      self.count.innerHTML = this.value.length;
+      self.count.style.color = "rgba(255, 255, 255, 0.5)";
+    } else {
+      self.count.innerHTML = (this.value.length - 300) * -1;
+      self.count.style.color = "#ff0035";
+    }
+  },
+  sendTapped: function() {
+    var self   = this.$;
+    var cardid = this.cardid;
+    var socket = this.socket;
+    /*
+    * WebSocket event handler.
+    */
+    if(this.value.length <= 300 && this.value.length != 0) {
+      self.cardSocket.send('{"path": "cards-manager/ff968898-8dc4-47a1-8277-ab7b0d6955b9", "message": "comment", "content": "'+this.value+'"}');
+      this.remove();
+    } else if(this.value.length == 0) {
+      self.toastShort.show();
+    } else {
+      self.toastLarge.show();
+    }
+  },
+  closeTapped: function() {
+    this.className ="animated fadeOut";
+    this.remove();
+  }
+});
+
+Element.prototype.remove = function() {
+  this.parentElement.removeChild(this);
+}
+NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+  for(var i = 0, len = this.length; i < len; i++) {
+    if(this[i] && this[i].parentElement) {
+      this[i].parentElement.removeChild(this[i]);
+    }
+  }
+}
+function discardDraft(el) {
+  el.show();
+}
+</script>
+</polymer-element>

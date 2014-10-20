@@ -33,7 +33,6 @@ on-tap="{{tapHandler}}" vertical layout center>
 <style>
 :host{
   /*position: absolute*/
-  overflow: hidden;
   width: 200px;
   white-space: nowrap;
   overflow: hidden;
@@ -45,7 +44,9 @@ on-tap="{{tapHandler}}" vertical layout center>
   font-size: 14px;
   padding: 2px;
   font-weight: 300;
-
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis
   text-align: center;
 }
 #right{
@@ -55,6 +56,9 @@ on-tap="{{tapHandler}}" vertical layout center>
   padding: 2px;
   font-weight: 300;
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis
 }
 </style>
 <div id="left"></div>
@@ -98,19 +102,19 @@ Polymer('widget-folksonomy-list', {
     });
     self.cardSocket.addEventListener("message", function(event) {
       var data = JSON.parse(event.detail.data).data;
-      if(data.substr(data.length-3) != "add") {
+      if((data.substr(data.length-3) != "add") && (data.length > 3) && (data.substring(0,4) != "http")) {
         folksonomy[folksonomy.length] = data;
-        var left  = randomItem();
-        var right = randomItem();
-        anm1.play();
-        anm2.play();
-        if(left != right){
-          self.left.innerHTML  = left;
-          self.right.innerHTML = right;
-        } else {
-          self.left.innerHTML = "";
-          self.right.innerHTML= left;
-        }
+      }
+      var left  = randomItem();
+      var right = randomItem();
+      anm1.play();
+      anm2.play();
+      if(left != right){
+        self.left.innerHTML  = left;
+        self.right.innerHTML = right;
+      } else {
+        self.left.innerHTML = "";
+        self.right.innerHTML= left;
       }
     });
     window.setInterval(function(){
@@ -127,7 +131,11 @@ Polymer('widget-folksonomy-list', {
       }
     }, 5000);
     function randomItem(){
-      return folksonomy[Math.floor(Math.random()*folksonomy.length)];
+      var random = folksonomy[Math.floor(Math.random()*folksonomy.length)];
+      if(folksonomy.length == 0){
+        random = " ";
+      }
+      return random;
     }
   },
   ready: function(){}

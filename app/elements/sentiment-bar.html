@@ -33,6 +33,9 @@ on-tap= "{{tapHandler}}">
 :host #ripple{
   overflow: hidden;
 }
+#favorite{
+  top: -20px;
+}
 </style>
 <div id="bar">
   <div id="emoticon"></div>
@@ -59,37 +62,51 @@ Polymer('sentiment-bar', {
       var socketData = JSON.parse(event.detail.data).data;
       if(sentiment == "very-positive"){
         if(!isNaN(socketData.excellent)){
+          if(socketData.excellent > 15){
+            self.emoticon.innerHTML =":D";
+            self.bar.style.height = socketData.good+"px";
+          } else {
+            self.bar.style.height = socketData.good+"px";
+          }
           self.bar.style.height = socketData.excellent+"px";
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.excellent.toFixed(0)});
         }
       } else if(sentiment == "positive"){
         if(!isNaN(socketData.good)){
-          self.bar.style.height = socketData.good+"px";
+          if(socketData.good > 15){
+            self.emoticon.innerHTML =":)";
+            self.bar.style.height = socketData.good+"px";
+          } else {
+            self.bar.style.height = socketData.good+"px";
+          }
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.good.toFixed(0)});
         }
       } else if(sentiment == "negative"){
         if(!isNaN(socketData.bad)){
-          self.bar.style.height = socketData.bad+"px";
+          if(socketData.bad > 15){
+            self.emoticon.innerHTML =":(";
+            self.bar.style.height = socketData.bad+"px";
+          } else {
+            self.bar.style.height = socketData.bad+"px";
+          }
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.bad.toFixed(0)});
         }
       } else if(sentiment == "very-negative"){
         if(!isNaN(socketData.terrible)){
-          self.bar.style.height = socketData.terrible+"px";
+          if(socketData.terrible > 15){
+            self.emoticon.innerHTML ="D:";
+            self.bar.style.height = socketData.terrible+"px";
+          } else {
+              self.bar.style.height = socketData.terrible+"px";
+          }
+          self.emoticon.style.transform = "rotate(-180deg)";
+          self.emoticon.style.webkitTransform = "rotate(-180deg)";
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.terrible.toFixed(0)});
         }
       } else if(sentiment == "neutral"){
         if(!isNaN(socketData.neutral)){
           self.bar.style.height = socketData.neutral+"px";
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.neutral.toFixed(0)})
-        }
-      }
-      if(this.emoticon == "true" && JSON.parse(event.detail.data).data.excellent > 10){
-        switch(this.sentiment) {
-          case "neutral":      self.emoticon.innerHTML =":|"; break;
-          case "positive":     self.emoticon.innerHTML =":)"; break;
-          case "negative":     self.emoticon.innerHTML =":("; break;
-          case "very-positive":self.emoticon.innerHTML =":D"; break;
-          case "very-negative":self.emoticon.innerHTML ="D:"; break;
         }
       }
     });
@@ -119,15 +136,15 @@ Polymer('sentiment-bar', {
     /*
     * Set the emoticon only if threshold is passed
     */
-    // if(this.emoticon == "true" && parseInt(this.val) > 10){
-    //   switch(this.sentiment) {
-    //     case "neutral":      self.emoticon.innerHTML =":|"; break;
-    //     case "positive":     self.emoticon.innerHTML =":)"; break;
-    //     case "negative":     self.emoticon.innerHTML =":("; break;
-    //     case "very-positive":self.emoticon.innerHTML =":D"; break;
-    //     case "very-negative":self.emoticon.innerHTML ="D:"; break;
-    //   }
-    // }
+    if(this.emoticon == "true" && parseInt(this.val) > 10){
+      switch(this.sentiment) {
+        case "neutral":      self.emoticon.innerHTML =":|"; break;
+        case "positive":     self.emoticon.innerHTML =":)"; break;
+        case "negative":     self.emoticon.innerHTML =":("; break;
+        case "very-positive":self.emoticon.innerHTML =":D"; break;
+        case "very-negative":self.emoticon.innerHTML ="D:"; break;
+      }
+    }
   },
   tapHandler: function() {
     if(this.expand == "true") {
