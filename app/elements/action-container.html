@@ -26,7 +26,7 @@ action-bar: A bar which holds a set of action items.
 <script>
 Polymer('action-container', {
   commentTap: function(){
-    /* Launch comment view, full-bleed onscreen */
+    this.asyncFire('tapped-action-comment');
   }
 });
 </script>
