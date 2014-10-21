@@ -102,8 +102,10 @@ Polymer('expression-app', {
     /*
     * Comment Action WebSocket event handler.
     */
-    self.content.addEventListener("tapped-action-comment", function() {
+    self.content.addEventListener("tapped-action-comment", function(callback) {
       var commentBox = document.createElement("fullbleed-comment-ui");
+      commentBox.setAttribute("cardtitle", callback.detail.title);
+      commentBox.setAttribute("cardid", callback.detail.id);
       self.out.appendChild(commentBox);
 
       setTimeout(function() {

@@ -18,6 +18,7 @@ on-tap= "{{tapHandler}}">
   -webkit-transition: height 1s;
   -moz-transition: height 1s;
   transition: height 1s;
+  border-radius: 2px 2px 0px 0px;
 }
 :host #emoticon{
   font-family: HelveticaNeue-Medium, Arial;
@@ -62,43 +63,43 @@ Polymer('sentiment-bar', {
       var socketData = JSON.parse(event.detail.data).data;
       if(sentiment == "very-positive"){
         if(!isNaN(socketData.excellent)){
-          if(socketData.excellent > 15){
-            self.emoticon.innerHTML =":D";
+          if(socketData.excellent > 20){
             self.bar.style.height = socketData.good+"px";
           } else {
-            self.bar.style.height = socketData.good+"px";
+            self.bar.style.height = "20px";
           }
           self.bar.style.height = socketData.excellent+"px";
+          self.emoticon.innerHTML =":D";
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.excellent.toFixed(0)});
         }
       } else if(sentiment == "positive"){
         if(!isNaN(socketData.good)){
-          if(socketData.good > 15){
-            self.emoticon.innerHTML =":)";
+          if(socketData.good > 20){
             self.bar.style.height = socketData.good+"px";
           } else {
-            self.bar.style.height = socketData.good+"px";
+            self.bar.style.height = "20px";
           }
+          self.emoticon.innerHTML =":)";
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.good.toFixed(0)});
         }
       } else if(sentiment == "negative"){
         if(!isNaN(socketData.bad)){
-          if(socketData.bad > 15){
-            self.emoticon.innerHTML =":(";
+          if(socketData.bad > 20){
             self.bar.style.height = socketData.bad+"px";
           } else {
-            self.bar.style.height = socketData.bad+"px";
+            self.bar.style.height = "20px";
           }
+          self.emoticon.innerHTML =":(";
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.bad.toFixed(0)});
         }
       } else if(sentiment == "very-negative"){
         if(!isNaN(socketData.terrible)){
-          if(socketData.terrible > 15){
-            self.emoticon.innerHTML ="D:";
+          if(socketData.terrible > 20){
             self.bar.style.height = socketData.terrible+"px";
           } else {
-              self.bar.style.height = socketData.terrible+"px";
+              self.bar.style.height = "20px";
           }
+          self.emoticon.innerHTML ="D:";
           self.emoticon.style.transform = "rotate(-180deg)";
           self.emoticon.style.webkitTransform = "rotate(-180deg)";
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.terrible.toFixed(0)});
