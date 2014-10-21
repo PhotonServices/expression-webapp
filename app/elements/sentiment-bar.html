@@ -64,11 +64,10 @@ Polymer('sentiment-bar', {
       if(sentiment == "very-positive"){
         if(!isNaN(socketData.excellent)){
           if(socketData.excellent > 20){
-            self.bar.style.height = socketData.good+"px";
+            self.bar.style.height = socketData.excellent+"px";
           } else {
             self.bar.style.height = "20px";
           }
-          self.bar.style.height = socketData.excellent+"px";
           self.emoticon.innerHTML =":D";
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.excellent.toFixed(0)});
         }
