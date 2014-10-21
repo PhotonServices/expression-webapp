@@ -113,7 +113,6 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   margin: 10px;
   font-weight: 300;
   font-size: 24px;
-  width: 280px;
   color: white;
   overflow: hidden;
   white-space: nowrap;
@@ -133,8 +132,13 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
 :host #widgetContainer {
   height: 65%;
 }
+:host #cardid{
+  visibility: hidden;
+  position: absolute;
+}
 </style>
 <div id="card" flex auto>
+  <div id="cardid">{{cardid}}</div>
   <div id="front" select="front">
     <core-icon id="img" icon="{{cardicon}}"></core-icon>
     <h1 id="frontTitle" class='title'>{{cardname}}</h1>

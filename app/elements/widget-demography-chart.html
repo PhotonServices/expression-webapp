@@ -66,7 +66,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
   <div id="widget" vertical layout center>
     <paper-fab icon="chevron-left" class="mini" id="backButton" on-tap="{{backHandler}}"></paper-fab>
     <core-icon icon="social:people"></core-icon>
-    <paper-button id="button" label="1,000" raisedButton  on-tap="{{tapHandler}}"></paper-button>
+    <paper-button id="button"  on-tap="{{tapHandler}}"></paper-button>
     <widget-folksonomy-list id="folkChart" cardid="{{cardid}}" socket="{{socket}}" sentiment="{{sentiment}}"></widget-folksonomy-chart>
   </div>
   <x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
@@ -104,7 +104,7 @@ Polymer('widget-demography-chart', {
     });
     self.cardSocket.addEventListener("message", function(event) {
       if(!isNaN(JSON.parse(event.detail.data).data)) {
-      self.button.setAttribute("label",JSON.parse(event.detail.data).data);
+      self.button.innerHTML = number_format(JSON.parse(event.detail.data).data);
     }
     });
     if(this.folksonomy == "false") {
@@ -157,5 +157,27 @@ Polymer('widget-demography-chart', {
     this.asyncFire('back-demography-chart-handler');
   }
 });
+
+function number_format(number, decimals, dec_point, thousands_sep) {
+    var n = !isFinite(+number) ? 0 : +number,
+        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+        toFixedFix = function (n, prec) {
+            // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+            var k = Math.pow(10, prec);
+            return Math.round(n * k) / k;
+        },
+        s = (prec ? toFixedFix(n, prec) : Math.round(n)).toString().split('.');
+    if (s[0].length > 3) {
+        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+    }
+    if ((s[1] || '').length < prec) {
+        s[1] = s[1] || '';
+        s[1] += new Array(prec - s[1].length + 1).join('0');
+    }
+    return s.join(dec);
+}
+
 </script>
 </polymer-element>

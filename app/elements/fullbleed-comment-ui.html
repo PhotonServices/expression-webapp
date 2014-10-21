@@ -15,7 +15,7 @@ found at http://opensource.org/licenses/MIT
 <!-- Sentiment Card View Component.
 Author: Francisco Gutiérrez (fsalvador23@gmail.com)
 -->
-<polymer-element name="fullbleed-comment-ui" fullbleed vertical layout attributes="cardid socket">
+<polymer-element name="fullbleed-comment-ui" fullbleed vertical layout attributes="cardid socket cardtitle">
   <template>
   <style>
   :host {
@@ -91,14 +91,14 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     width: 100%;
     background: #0D6FB0;
   }
-  paper-toast {
+  :host paper-toast {
     color: black;
     background: white;
     font-family: 'Roboto','Trebuchet', sans-serif;
     font-weight: 300;
     z-index: 1;
   }
-  core-icon > svg {
+  :host core-icon > svg {
     fill: #ff0035;
   }
   </style>
@@ -107,7 +107,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
       <div class="badge">
         <paper-fab id="close" icon="close" on-tap="{{closeTapped}}"></paper-fab>
       </div>
-      <h1 id="title">Sentiment Card Title</h1>
+      <h1 id="title">{{cardtitle}}</h1>
     </div>
     <div id="middle" layout horizontal center>
       <paper-input id="input" floatingLabel="true" inputValue="{{value}}" multiline label="Yo pienso que…" layout horizontal flex></paper-input>
@@ -133,6 +133,7 @@ Polymer('fullbleed-comment-ui', {
     var self   = this.$;
     var cardid = this.cardid;
     var socket = this.socket;
+    var cardtitle = this.cardtitle;
     /*
     * WebSocket event handler.
     */
@@ -153,11 +154,12 @@ Polymer('fullbleed-comment-ui', {
     var self   = this.$;
     var cardid = this.cardid;
     var socket = this.socket;
+    var cardtitle = this.cardtitle;
     /*
     * WebSocket event handler.
     */
     if(this.value.length <= 300 && this.value.length != 0) {
-      self.cardSocket.send('{"path": "cards-manager/ff968898-8dc4-47a1-8277-ab7b0d6955b9", "message": "comment", "content": "'+this.value+'"}');
+      self.cardSocket.send('{"path": "cards-manager/'+cardid+'", "message": "comment", "content": "'+this.value+'"}');
       this.remove();
     } else if(this.value.length == 0) {
       self.toastShort.show();
