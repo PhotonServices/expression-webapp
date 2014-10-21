@@ -50,6 +50,7 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   -webkit-font-smoothing: antialiased;
 }
 :host #card {
+  border-radius: 5px;
   /*width:  300px;*/
   height: 210px;
   /*Animation setup*/
@@ -76,6 +77,7 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
 }
 :host #card #front {
   /*width:  300px;*/
+  border-radius: 5px;
   height: 210px;
   backface-visibility:        hidden;
   -moz-backface-visibility:   hidden;
@@ -86,6 +88,7 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   cursor: pointer;
 }
 :host #card #back {
+  border-radius: 5px;
   /*width:  300px;*/
   height: 210px;
   backface-visibility:        hidden;
@@ -111,6 +114,7 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   position: absolute;
   bottom: 0px;
   margin: 10px;
+  width: 100%;
   font-weight: 300;
   font-size: 24px;
   color: white;
@@ -185,7 +189,7 @@ Polymer("sentiment-card", {
     self.cardSocket.addEventListener("message", function(event) {
       var cardname  = this.cardname;
       var sentiment = this.sentiment;
-      if(JSON.parse(event.detail.data).data >= 1) {
+      if(JSON.parse(event.detail.data).data >= 0.5) {
         self.front.style.backgroundColor = "#2ECC71";
         self.back.style.backgroundColor = "#2ECC71";
         /*
@@ -193,7 +197,7 @@ Polymer("sentiment-card", {
         * Version 37.0.2062.124 (Flickering)
         */
         //self.card.style.backgroundColor = "#2ECC71";
-      } else if (JSON.parse(event.detail.data).data <= -1) {
+      } else if (JSON.parse(event.detail.data).data <= -0.5) {
         self.front.style.backgroundColor = "#EA6153";
         self.back.style.backgroundColor = "#EA6153";
         /*

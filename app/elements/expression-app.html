@@ -93,6 +93,7 @@
 </core-header-panel>
 <div id="out"></div>
 <x-websocket id="newCardSocket" url="{{socket}}" ></x-websocket>
+<x-websocket id="removeCardSocket" url="{{socket}}" ></x-websocket>
 </template>
 <script>
 Polymer('expression-app', {
@@ -137,6 +138,16 @@ Polymer('expression-app', {
         self.content.appendChild(card);
       }
     });
+    /*
+    * Remove card WebSocket event handler.
+    */
+    self.removeCardSocket.addEventListener("open", function() {
+      self.newCardSocket.send('{"path": "events", "message": "subscribe", "content": "card-delete"}');
+    });
+    self.removeCardSocket.addEventListener("message", function(event) {
+        console.log("cardDeleted");
+    });
+
   }
 });
 </script>
