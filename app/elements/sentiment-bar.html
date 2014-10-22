@@ -1,7 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/core-icons/core-icons.html">
 <link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
-<link rel="import" href="../bower_components/paper-shadow/paper-shadow.html">
 <!--
 A widget bar
 -->
@@ -19,6 +18,9 @@ on-tap= "{{tapHandler}}">
   -moz-transition: height 1s;
   transition: height 1s;
   border-radius: 2px 2px 0px 0px;
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.45);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.45);
+  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.45);
 }
 :host #emoticon{
   font-family: HelveticaNeue-Medium, Arial;
@@ -32,7 +34,9 @@ on-tap= "{{tapHandler}}">
   -webkit-transform: scale(0.75);
 }
 :host #ripple{
-  overflow: hidden;
+  width: 23px;
+  top: 0px;
+  overflow:hidden;
 }
 #favorite{
   top: -20px;
@@ -41,8 +45,7 @@ on-tap= "{{tapHandler}}">
 <div id="bar">
   <div id="emoticon"></div>
   <core-icon icon='' size='24' id="favorite"></core-icon>
-  <paper-ripple id="ripple" fit></paper-ripple>
-  <paper-shadow z="1" id="myShadow" animated></paper-shadow>
+  <paper-ripple id="ripple" fit class="recenteringTouch"></paper-ripple>
 </div>
 <x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
 </template>
@@ -96,7 +99,7 @@ Polymer('sentiment-bar', {
           if(socketData.terrible > 20){
             self.bar.style.height = socketData.terrible+"px";
           } else {
-              self.bar.style.height = "20px";
+            self.bar.style.height = "20px";
           }
           self.emoticon.innerHTML ="D:";
           self.emoticon.style.transform = "rotate(-180deg)";
@@ -105,7 +108,11 @@ Polymer('sentiment-bar', {
         }
       } else if(sentiment == "neutral"){
         if(!isNaN(socketData.neutral)){
-          self.bar.style.height = socketData.neutral+"px";
+          if(socketData.neutral > 20){
+            self.bar.style.height = socketData.neutral+"px";
+          } else {
+            self.bar.style.height = "0px";
+          }
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.neutral.toFixed(0)})
         }
       }

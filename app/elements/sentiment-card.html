@@ -171,7 +171,7 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   </div>
   <paper-shadow z="1" id="myShadow" animated></paper-shadow>
 </div>
-<x-websocket id="cardSocket" url="ws://localhost:8080/ws" ></x-websocket>
+<x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
 </template>
 <script>
 Polymer("sentiment-card", {
