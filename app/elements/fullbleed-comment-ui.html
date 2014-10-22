@@ -25,18 +25,13 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     width:  100%;
     height: 100%;
   }
-  :host .badge {
-    width: 60px;
-    height:60px;
-    min-width: 60px;
-    border-radius: 50%;
-  }
   :host paper-fab{
     background: #0D6FB0;
   }
   :host paper-fab::shadow svg{
     fill: white;
     transform: scale(1.2);
+    -webkit-transform: scale(1.2);
   }
   :host paper-input{
     height: 140px;
@@ -98,15 +93,13 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     font-weight: 300;
     z-index: 1;
   }
-  :host core-icon > svg {
+  :host paper-toast::shadow svg {
     fill: #ff0035;
   }
   </style>
   <div id="container" vertical center layout>
     <div id="top" horizontal start-justified layout>
-      <div class="badge">
-        <paper-fab id="close" icon="close" on-tap="{{closeTapped}}"></paper-fab>
-      </div>
+      <paper-fab id="close" icon="close" on-tap="{{closeTapped}}"></paper-fab>
       <h1 id="title">{{cardtitle}}</h1>
     </div>
     <div id="middle" layout horizontal center>

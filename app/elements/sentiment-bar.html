@@ -35,7 +35,6 @@ on-tap= "{{tapHandler}}">
 }
 :host #ripple{
   width: 23px;
-  top: 0px;
   overflow:hidden;
 }
 #favorite{
@@ -68,8 +67,10 @@ Polymer('sentiment-bar', {
         if(!isNaN(socketData.excellent)){
           if(socketData.excellent > 20){
             self.bar.style.height = socketData.excellent+"px";
+            self.ripple.style.height = socketData.excellent+"px";
           } else {
             self.bar.style.height = "20px";
+            self.ripple.style.height = "20px";
           }
           self.emoticon.innerHTML =":D";
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.excellent.toFixed(0)});
@@ -78,8 +79,10 @@ Polymer('sentiment-bar', {
         if(!isNaN(socketData.good)){
           if(socketData.good > 20){
             self.bar.style.height = socketData.good+"px";
+            self.ripple.style.height = socketData.good+"px";
           } else {
             self.bar.style.height = "20px";
+            self.ripple.style.height = "20px";
           }
           self.emoticon.innerHTML =":)";
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.good.toFixed(0)});
@@ -88,8 +91,10 @@ Polymer('sentiment-bar', {
         if(!isNaN(socketData.bad)){
           if(socketData.bad > 20){
             self.bar.style.height = socketData.bad+"px";
+            self.ripple.style.height = socketData.bad+"px";
           } else {
             self.bar.style.height = "20px";
+            self.ripple.style.height = "20px";
           }
           self.emoticon.innerHTML =":(";
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.bad.toFixed(0)});
@@ -98,20 +103,22 @@ Polymer('sentiment-bar', {
         if(!isNaN(socketData.terrible)){
           if(socketData.terrible > 20){
             self.bar.style.height = socketData.terrible+"px";
+            self.ripple.style.height = socketData.terrible+"px";
           } else {
             self.bar.style.height = "20px";
+            self.ripple.style.height = "20px";
           }
-          self.emoticon.innerHTML ="D:";
-          self.emoticon.style.transform = "rotate(-180deg)";
-          self.emoticon.style.webkitTransform = "rotate(-180deg)";
+          self.emoticon.innerHTML =":[";
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.terrible.toFixed(0)});
         }
       } else if(sentiment == "neutral"){
         if(!isNaN(socketData.neutral)){
           if(socketData.neutral > 20){
             self.bar.style.height = socketData.neutral+"px";
+            self.ripple.style.height = socketData.neutral+"px";
           } else {
-            self.bar.style.height = "0px";
+            self.bar.style.height = "20px";
+            self.ripple.style.height = "20px";
           }
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.neutral.toFixed(0)})
         }
