@@ -107,11 +107,12 @@ Polymer('expression-app', {
       var commentBox = document.createElement("fullbleed-comment-ui");
       commentBox.setAttribute("cardtitle", callback.detail.title);
       commentBox.setAttribute("cardid", callback.detail.id);
+      commentBox.setAttribute("socket", socket);
       self.out.appendChild(commentBox);
 
       setTimeout(function() {
         commentBox.style.transition ="10s";
-        commentBox.className ="panimated fade";
+        commentBox.className ="animated fade";
         // var animation = new CoreAnimation();
         // animation.duration = 200;
         // animation.fill = "forwards"
