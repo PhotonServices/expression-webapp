@@ -3,6 +3,7 @@
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 <link href='//fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
+
 <!--
 @license
 The MIT License (MIT)
@@ -164,8 +165,16 @@ Polymer('fullbleed-comment-ui', {
     }
   },
   closeTapped: function() {
-    this.className ="animated fadeOut";
-    this.remove();
+    var fullbleed = this;
+    var animation = new CoreAnimation();
+    animation.duration = 400;
+    animation.fill = "forwards"
+    animation.keyframes = [ {opacity: "1"} , {opacity: "0"}];
+    animation.target = fullbleed;
+    animation.play();
+    animation.addEventListener('core-animation-finish', function(e) {
+      fullbleed.remove();
+    });
   }
 });
 
