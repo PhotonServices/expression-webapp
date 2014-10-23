@@ -2,12 +2,12 @@
 [![devDependency Status](https://david-dm.org/photonservices/expression-webapp/dev-status.svg)](https://david-dm.org/photonservices/expression-webapp#info=devDependencies)
 # Expression-WebApp
 
-Expression is a WebApp focused in give on-real-time sentiment analysis about live topics in the Web.
+Expression is a WebApp focused to give on-real-time sentiment analysis about live topics on the Web.
 
 Expression is:
- * User friendly.
- * Easy as pie.
- * Reactive.
+ * User friendly
+ * Easy as pie
+ * Reactive
 
  Supports:
   * Spanish (Only language supported by the moment)
