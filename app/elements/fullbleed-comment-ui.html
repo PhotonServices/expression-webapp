@@ -3,6 +3,7 @@
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 <link href='//fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
+
 <!--
 @license
 The MIT License (MIT)
@@ -25,18 +26,13 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     width:  100%;
     height: 100%;
   }
-  :host .badge {
-    width: 60px;
-    height:60px;
-    min-width: 60px;
-    border-radius: 50%;
-  }
   :host paper-fab{
     background: #0D6FB0;
   }
   :host paper-fab::shadow svg{
     fill: white;
     transform: scale(1.2);
+    -webkit-transform: scale(1.2);
   }
   :host paper-input{
     height: 140px;
@@ -98,15 +94,16 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     font-weight: 300;
     z-index: 1;
   }
-  :host core-icon > svg {
+  :host paper-toast::shadow svg {
+    fill: #ff0035;
+  }
+  :host paper-toast svg {
     fill: #ff0035;
   }
   </style>
   <div id="container" vertical center layout>
     <div id="top" horizontal start-justified layout>
-      <div class="badge">
-        <paper-fab id="close" icon="close" on-tap="{{closeTapped}}"></paper-fab>
-      </div>
+      <paper-fab id="close" icon="close" on-tap="{{closeTapped}}"></paper-fab>
       <h1 id="title">{{cardtitle}}</h1>
     </div>
     <div id="middle" layout horizontal center>
@@ -168,8 +165,16 @@ Polymer('fullbleed-comment-ui', {
     }
   },
   closeTapped: function() {
-    this.className ="animated fadeOut";
-    this.remove();
+    var fullbleed = this;
+    var animation = new CoreAnimation();
+    animation.duration = 400;
+    animation.fill = "forwards"
+    animation.keyframes = [ {opacity: "1"} , {opacity: "0"}];
+    animation.target = fullbleed;
+    animation.play();
+    animation.addEventListener('core-animation-finish', function(e) {
+      fullbleed.remove();
+    });
   }
 });
 
