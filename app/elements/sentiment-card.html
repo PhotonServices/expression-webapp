@@ -24,6 +24,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
 <link rel="import" href="widget-demography-counter.html">
 <link rel="import" href="sentiment-ribbon.html">
 <link href='//fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 <polymer-element
 name="sentiment-card"
 attributes="sentiment cardicon cardid cardname socket" flex auto>
@@ -52,8 +53,7 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   border-radius: 5px;
 }
 :host #card {
-  /*width:  300px;*/
-  height:300px;
+  height: 300px;
   /*Animation setup*/
   transition:        transform  0.5s;
   -moz-transition:   -moz-transform 0.5s;
@@ -108,24 +108,25 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
 */
 :host #front #img {
   fill: white;
-  width: 85%;
-  height: 85%;
+  width: 200px;
+  height: 200px;
   display: block;
   margin: auto;
 }
 :host .title {
-  margin: 15px;
+  opacity: .90;
+  margin: 10px;
   width: auto;
-  font-weight: 100;
-  font-size: 25px;
+  font-size: 22px;
+  font-weight: 300;
   color: white;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   cursor: pointer;
+  font-family: 'Roboto', sans-serif;
 }
 :host widget-container{
-  position:absolute;
   top:  40px;
   left: 20px;
 }
@@ -149,10 +150,10 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
 </style>
 <div id="card" flex auto>
   <div id="cardid">{{cardid}}</div>
-  <div id="front" select="front" vertical layout>
-    <core-icon id="img" icon="{{cardicon}}"></core-icon>
+  <div id="front" select="front" vertical layout style="height:300px">
+    <core-icon id="img" icon="{{cardicon}}" flex self-stretch></core-icon>
     <sentiment-ribbon></sentiment-ribbon>
-    <h1 id="frontTitle" class="title">{{cardname}}</h1>
+    <div id="frontTitle" class="title">{{cardname}}</div>
   </div>
   <div id="back" vertical layout>
     <div id="widgetContainer" vertical layout center>

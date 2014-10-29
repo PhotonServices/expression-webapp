@@ -1,0 +1,69 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<script src="../bower_components/js-emoji/emoji.js"></script>
+<link src="../bower_components/js-emoji/emoji.css"></link>
+
+<!--
+A widget bar
+-->
+<polymer-element name="sentiment-ribbon" layout horizontal center>
+  <template>
+  <style>
+  :host{
+    width: 100%;
+    background: #FF8F29;
+    color: white;
+    height: 50px;
+  }
+  span.emoji-outer {
+    display: -moz-inline-box;
+    display: inline-block;
+    height: 1em;
+    width: 1em;
+  }
+  span.emoji-sizer {
+    line-height: 0.81em;
+    font-size: 1em;
+    margin: -2px 0;
+  }
+  span.emoji-inner {
+    display: -moz-inline-box;
+    display: inline-block;
+    text-indent: -9999px;
+    width: 100%;
+    height: 100%;
+    vertical-align: baseline;
+  }
+  :host #text{
+    width: 100%;
+    font-weight: 300;
+    font-size: 18px;
+    color: white;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    opacity: 0.75;
+    padding: 5px;
+  }
+}
+</style>
+<div id="text">:smile:
+</div>
+</template>
+<script>
+Polymer('sentiment-ribbon', {
+  ready: function(){
+    emoji.img_path = '../bower_components/emoji-data/gemoji/images/emoji/unicode/';
+    emoji.sheet_path = '../bower_components/emoji-data/sheet_64.png';
+    emoji.use_sheet = true;
+    emoji.init_env();
+    /* Automatic replacement with CSS */
+    var auto_mode = emoji.replace_mode;
+    emoji.replace_mode = auto_mode;
+
+    this.$.text.innerHTML = emoji.replace_colons("testing with a message: :smile: :smiley: :wink:");
+  }
+});
+</script>
+</polymer-element>
