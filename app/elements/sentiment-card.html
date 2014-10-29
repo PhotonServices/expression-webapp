@@ -22,6 +22,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
 <link rel="import" href="action-container.html">
 <link rel="import" href="widget-sentiment-chart.html">
 <link rel="import" href="widget-demography-counter.html">
+<link rel="import" href="sentiment-ribbon.html">
 <link href='//fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
 <polymer-element
 name="sentiment-card"
@@ -48,7 +49,7 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   -webkit-transform:translateZ(1px);
   -moz-transform:translateZ(1px);
   -webkit-font-smoothing: antialiased;
-  border-radius: 3px;
+  border-radius: 5px;
 }
 :host #card {
   /*width:  300px;*/
@@ -78,7 +79,7 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
 }
 :host #card #front {
   /*width:  300px;*/
-  border-radius: 3px;
+  border-radius: 5px;
   height:300px;
   backface-visibility:        hidden;
   -moz-backface-visibility:   hidden;
@@ -89,7 +90,7 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   cursor: pointer;
 }
 :host #card #back {
-  border-radius: 3px;
+  border-radius: 5px;
   /*width:  300px;*/
   height:300px;
   backface-visibility:        hidden;
@@ -97,7 +98,7 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   -webkit-backface-visibility:hidden;
 }
 :host #card #back {
-  border-radius: 3px;
+  border-radius: 5px;
   transform:         rotateY(180deg);
   -moz-transform:    rotateY(180deg);
   -webkit-transform: rotateY(180deg);
@@ -113,12 +114,10 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   margin: auto;
 }
 :host .title {
-  position: absolute;
-  bottom: 0px;
-  margin: 10px;
-  width: 100%;
-  font-weight: 300;
-  font-size: 24px;
+  margin: 15px;
+  width: auto;
+  font-weight: 100;
+  font-size: 25px;
   color: white;
   overflow: hidden;
   white-space: nowrap;
@@ -144,17 +143,18 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
 }
 #counter{
   position: absolute;
-  bottom:20px;
-  right:40px;
+  bottom:10px;
+  right:20px;
 }
 </style>
 <div id="card" flex auto>
   <div id="cardid">{{cardid}}</div>
-  <div id="front" select="front">
+  <div id="front" select="front" vertical layout>
     <core-icon id="img" icon="{{cardicon}}"></core-icon>
-    <h1 id="frontTitle" class='title'>{{cardname}}</h1>
+    <sentiment-ribbon></sentiment-ribbon>
+    <h1 id="frontTitle" class="title">{{cardname}}</h1>
   </div>
-  <div id="back">
+  <div id="back" vertical layout>
     <div id="widgetContainer" vertical layout center>
       <widget-sentiment-chart id="sentimentChart"
       on-tap = "{{sentimentTap}}"
@@ -163,6 +163,7 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
       ></widget-sentiment-chart>
     </div>
     <action-container></action-container>
+    <sentiment-ribbon></sentiment-ribbon>
     <h1 id="backTitle" class='title' on-tap="{{titleTapped}}">{{cardname}}</h1>
   </div>
   <paper-shadow z="1" id="myShadow" animated></paper-shadow>
@@ -203,13 +204,13 @@ Polymer("sentiment-card", {
         */
         self.card.style.backgroundColor = "#EA6153";
       } else {
-        self.front.style.backgroundColor = "#F39C12";
-        self.back.style.backgroundColor = "#F39C12";
+        self.front.style.backgroundColor = "#FFA72B";
+        self.back.style.backgroundColor = "#FFA72B";
         /*
         * Next line causes a rendering bug when flipping the card in Chrome.
         * Version 37.0.2062.124 (Flickering)
         */
-        self.card .style.backgroundColor = "#F39C12";
+        self.card .style.backgroundColor = "#FFA72B";
       }
     });
     /*
@@ -234,13 +235,13 @@ Polymer("sentiment-card", {
       */
       // self.card.style.backgroundColor = "#EA6153";
     } else {
-      self.front.style.backgroundColor = "#F39C12";
-      self.back.style.backgroundColor = "#F39C12";
+      self.front.style.backgroundColor = "#FFA72B";
+      self.back.style.backgroundColor = "#FFA72B";
       /*
       * Next line causes a rendering bug when flipping the card in Chrome.
       * Version 37.0.2062.124 (Flickering)
       */
-      // self.card .style.backgroundColor = "#F39C12";
+      self.card .style.backgroundColor = "#FFA72B";
     }
     /*
     * Do the flip:
@@ -249,58 +250,7 @@ Polymer("sentiment-card", {
       self.card.className = "flipped";
       self.back.style.display = "block";
       self.front.style.display = "none";
-
     });
-  },
-  ready: function() {
-    var self = this.$;
-    /*
-    * Sentiment visualization listeners.
-    */
-    // self.sentimentChart.addEventListener('back-sentiment-chart-handler', function(e) {
-    //   var animation = new CoreAnimation();
-    //   animation.duration = 200;
-    //   animation.fill = "forwards"
-    //   animation.keyframes = [ {opacity: "0"},{opacity: "1"}];
-    //   animation.target = self.demographyChart;
-    //   animation.play();
-    //   animation.addEventListener('core-animation-finish', function(e) {
-    //     self.demographyChart.style.visibility = "visible";
-    //   });
-    // });
-    // self.demographyChart.addEventListener('back-demography-chart-handler', function(e) {
-    //   var animation = new CoreAnimation();
-    //   animation.duration = 200;
-    //   animation.fill = "forwards"
-    //   animation.keyframes = [ {opacity: "0"},{opacity: "1"}];
-    //   animation.target = self.sentimentChart;
-    //   animation.play();
-    //   animation.addEventListener('core-animation-finish', function(e) {
-    //     self.sentimentChart.style.visibility = "visible";
-    //   });
-    //
-    //   var anmTranslate = new CoreAnimation();
-    //   anmTranslate.duration = 500;
-    //   anmTranslate.fill = "forwards"
-    //   anmTranslate.keyframes = [{transform: "translate(-50px,0px)"},{transform: "translate(0px,0px)"}];
-    //   anmTranslate.target = self.demographyChart;
-    //   anmTranslate.play();
-    // });
-  },
-  sentimentTap: function(){
-    /*
-    * When tapping the sentiment widget:
-    */
-    // var self = this.$;
-    // var animation = new CoreAnimation();
-    // animation.duration = 200;
-    // animation.fill = "forwards"
-    // animation.keyframes = [{opacity: "1"}, {opacity: "0"}];
-    // animation.target = self.demographyChart;
-    // animation.play();
-    // animation.addEventListener('core-animation-finish', function(e) {
-    //   self.demographyChart.style.visibility = "hidden";
-    // });
   },
   titleTapped: function (){
     var self = this.$;

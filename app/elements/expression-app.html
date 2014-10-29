@@ -18,14 +18,17 @@
     color: #FFF;
     transition: height 0.2s;
     border-bottom: 2px solid #0E71B3;
+    -moz-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
+    -webkit-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
   }
   :host .core-header.tall {
     height: 180px;
-    border-bottom: 10px solid #0E71B3;
+    border-bottom: 5px solid #0E71B3;
   }
   :host .core-header.medium-tall {
     height: 120px;
-    border-bottom: 10px solid #0E71B3;
+    border-bottom: 5px solid #0E71B3;
   }
   :host #content {
     /*Rendering issue in safari. */
@@ -143,7 +146,7 @@ Polymer('expression-app', {
       self.newCardSocket.send('{"path": "events", "message": "subscribe", "content": "card-delete"}');
     });
     self.removeCardSocket.addEventListener("message", function(event) {
-        console.log("cardDeleted");
+      console.log("cardDeleted");
     });
 
   }
