@@ -1,4 +1,3 @@
-<link rel="stylesheet"  href="../bower_components/animate.css/animate.min.css">
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
@@ -105,6 +104,24 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     height:55px;
     min-width: 55px;
   }
+  /***/
+  #etext {
+    height: 140px;
+    padding: 10px;
+    font-weight: 300;
+    font-family: 'Roboto','Trebuchet', sans-serif;
+    border-radius: 3px;
+    /* Rectangle 71: */
+    background: #FCFEF5;
+    -moz-box-shadow:    inset 0px 0px 1px 0px rgba(0,0,0,0.50);
+    box-shadow:         inset 0px 0px 1px 0px rgba(0,0,0,0.50);
+    min-height: 60px;
+    font-size: 100%;
+  }
+  img{
+    width: 20px;
+    height: 20px;
+  }
   </style>
   <div id="container" vertical center layout>
     <div id="top" horizontal start-justified layout>
@@ -141,6 +158,10 @@ Polymer('fullbleed-comment-ui', {
     */
     self.cardSocket.addEventListener("open", function() {});
     self.cardSocket.addEventListener("message", function(event) {});
+
+  },
+  ready: function() {
+    var self = this.$;
   },
   valueChanged: function() {
     var self = this.$;
@@ -195,6 +216,39 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
 }
 function discardDraft(el) {
   el.show();
+}
+function insertNodeOverSelection(node, containerNode) {
+  var sel, range, html, str;
+  if (window.getSelection) {
+    sel = window.getSelection();
+    if (sel.getRangeAt && sel.rangeCount) {
+      range = sel.getRangeAt(0);
+      if (isOrContainsNode(containerNode, range.commonAncestorContainer)) {
+        range.deleteContents();
+        range.insertNode(node);
+      } else {
+        containerNode.appendChild(node);
+      }
+    }
+  } else if (document.selection && document.selection.createRange) {
+    range = document.selection.createRange();
+    if (isOrContainsNode(containerNode, range.parentElement())) {
+      html = (node.nodeType == 3) ? node.data : node.outerHTML;
+      range.pasteHTML(html);
+    } else {
+      containerNode.appendChild(node);
+    }
+  }
+}
+function isOrContainsNode(ancestor, descendant) {
+  var node = descendant;
+  while (node) {
+    if (node === ancestor) {
+      return true;
+    }
+    node = node.parentNode;
+  }
+  return false;
 }
 </script>
 </polymer-element>

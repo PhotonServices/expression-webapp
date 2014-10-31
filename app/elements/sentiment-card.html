@@ -152,7 +152,7 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   <div id="cardid">{{cardid}}</div>
   <div id="front" select="front" vertical layout style="height:300px">
     <core-icon id="img" icon="{{cardicon}}" flex self-stretch></core-icon>
-    <sentiment-ribbon></sentiment-ribbon>
+    <sentiment-ribbon cardid= "{{cardid}}" socket="{{socket}}" ></sentiment-ribbon>
     <div id="frontTitle" class="title">{{cardname}}</div>
   </div>
   <div id="back" vertical layout>
@@ -164,7 +164,7 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
       ></widget-sentiment-chart>
     </div>
     <action-container></action-container>
-    <sentiment-ribbon></sentiment-ribbon>
+    <sentiment-ribbon cardid= "{{cardid}}" socket="{{socket}}" ></sentiment-ribbon>
     <h1 id="backTitle" class='title' on-tap="{{titleTapped}}">{{cardname}}</h1>
   </div>
   <paper-shadow z="1" id="myShadow" animated></paper-shadow>
@@ -182,7 +182,6 @@ Polymer("sentiment-card", {
     * WebSocket event handler.
     */
     self.cardSocket.addEventListener("open", function() {
-      /*** commented for testing purposes ***/
       self.cardSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':sentiment-final"}');
     });
     self.cardSocket.addEventListener("message", function(event) {
@@ -204,7 +203,7 @@ Polymer("sentiment-card", {
         * Version 37.0.2062.124 (Flickering)
         */
         self.card.style.backgroundColor = "#EA6153";
-      } else {
+      } else if (JSON.parse(event.detail.data).data < 0.5 && JSON.parse(event.detail.data).data > -0.5){
         self.front.style.backgroundColor = "#FFA72B";
         self.back.style.backgroundColor = "#FFA72B";
         /*

@@ -1,12 +1,9 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-
-<script src="../bower_components/js-emoji/emoji.js"></script>
-<link src="../bower_components/js-emoji/emoji.css"></link>
-
+<link rel="import" href="../bower_components/x-websocket/dist/x-websocket.html">
 <!--
 A widget bar
 -->
-<polymer-element name="sentiment-ribbon" layout horizontal center>
+<polymer-element name="sentiment-ribbon" layout horizontal center attributes="cardid socket">
   <template>
   <style>
   :host{
@@ -48,21 +45,56 @@ A widget bar
   }
 }
 </style>
-<div id="text">:smile:
-</div>
+<marquee id="text"></marquee>
+<x-websocket id="sentimentSocket"  url="{{socket}}"></x-websocket>
+<x-websocket id="folksonomySocket" url="{{socket}}"></x-websocket>
 </template>
 <script>
 Polymer('sentiment-ribbon', {
-  ready: function(){
-    emoji.img_path = '../bower_components/emoji-data/gemoji/images/emoji/unicode/';
-    emoji.sheet_path = '../bower_components/emoji-data/sheet_64.png';
-    emoji.use_sheet = true;
-    emoji.init_env();
-    /* Automatic replacement with CSS */
-    var auto_mode = emoji.replace_mode;
-    emoji.replace_mode = auto_mode;
-
-    this.$.text.innerHTML = emoji.replace_colons("testing with a message: :smile: :smiley: :wink:");
+  attached: function(){
+    var self= this.$;
+    var ribbon = this;
+    var socket = this.socket;
+    var cardid = this.cardid;
+    var folksonomy = [];
+    /*
+    * Set the background accordinly to the sentiment.
+    */
+    self.sentimentSocket.addEventListener("open", function() {
+      self.sentimentSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':sentiment-final"}');
+    });
+    self.sentimentSocket.addEventListener("message", function(event) {
+      var cardname  = this.cardname;
+      var sentiment = JSON.parse(event.detail.data).data;
+      if(sentiment >= 0.5) {
+        ribbon.style.backgroundColor = "#18B061";
+      } else if (sentiment <= -0.5) {
+        ribbon.style.backgroundColor = "#F52E43";
+      } else if (sentiment < 0.5 && sentiment > -0.5){
+        ribbon.style.backgroundColor = "#FF8F29";
+      }
+    });
+    /*
+    * Folksonomy As default. By now.
+    */
+    var animation = new CoreAnimation();
+    animation.duration = 1000;
+    animation.keyframes = [{opacity: 0},{opacity: 1}];
+    animation.target = self.left;
+    /*
+    * WebSocket event handler.
+    */
+    self.folksonomySocket.addEventListener("open", function() {
+      self.folksonomySocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':folksonomy-global:add"}');
+    });
+    self.folksonomySocket.addEventListener("message", function(event) {
+      var data = JSON.parse(event.detail.data).data;
+      if((data.substr(data.length-3) != "add")) {
+        folksonomy[folksonomy.length] = data;
+      }
+      self.text.innerHTML  = folksonomy
+      animation.play();
+    });
   }
 });
 </script>
