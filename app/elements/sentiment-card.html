@@ -157,12 +157,7 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   </div>
   <div id="back" vertical layout>
     <div id="widgetContainer" vertical layout center>
-      <div flex></div>
-      <widget-sentiment-chart id="sentimentChart"
-      on-tap = "{{sentimentTap}}"
-      cardid = "{{cardid}}"
-      socket = "{{socket}}"
-      ></widget-sentiment-chart>
+      <widget-sentiment-chart id="sentimentChart" on-tap = "{{sentimentTap}}" cardid = "{{cardid}}" socket = "{{socket}}"></widget-sentiment-chart>
       <div flex></div>
       <widget-folksonomy-list cardid="{{cardid}}" socket="{{socket}}"></widget-folksonomy-list>
       <div flex></div>
