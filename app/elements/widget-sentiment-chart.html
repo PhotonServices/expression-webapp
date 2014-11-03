@@ -64,6 +64,15 @@ A widget bar
   #metadata {
     display: none;
   }
+  /*#bar1 {
+    margin-bottom: -50px;
+  }
+  #bar2 {
+    margin-bottom: -20px;
+  }
+  #bar3 {
+    margin-bottom: -10px;
+  }*/
   </style>
   <paper-fab icon="chevron-left" class="mini" id="backButton" on-tap="{{backHandler}}"></paper-fab>
   <paper-fab icon="undo" class="mini" id="backButtonExpand"   on-tap="{{backExpandHandler}}"></paper-fab>
@@ -658,12 +667,29 @@ Polymer('widget-sentiment-chart', {
   },
   backExpandHandler: function (){
     var self = this.$;
-    for(i=0; i <5; i++){
-      self.sentimentBar.children[i].style.transform = "translate("+(i+1.5)*20+"px, 0px)";
-      self.sentimentBar.children[i].style.webkitTransform = "translate("+(i+1.5)*20+"px, 0px)";
-      self.sentimentBar.children[i].style.transition = "all .4s";
-      self.sentimentBar.children[i].setAttribute("expand","true");
-    }
+    /*
+    * Translate Sentiment Bars
+    */
+    self.bar1.style.transform  = "translate(-40px, 0px)";
+    self.bar1.style.webkitTransform = "translate(-40px, 0px)";
+    self.bar1.style.transition = "all .4s";
+    self.bar1.setAttribute("expand","true");
+
+    self.bar2.style.transform  = "translate(-20px, 0px)";
+    self.bar2.style.webkitTransform = "translate(-20px, 0px)";
+    self.bar2.style.transition = "all .4s";
+    self.bar2.setAttribute("expand","true");
+
+    self.bar4.style.transform  = "translate(20px, 0px)";
+    self.bar4.style.webkitTransform = "translate(20px, 0px)";
+    self.bar4.style.transition = "all .4s";
+    self.bar4.setAttribute("expand","true");
+
+    self.bar5.style.transform  = "translate(40px, 0px)";
+    self.bar5.style.webkitTransform = "translate(40px, 0px)";
+    self.bar5.style.transition = "all .4s";
+    self.bar5.setAttribute("expand","true");
+
     self.backButtonExpand.style.display = "none";
     self.backButton.style.display = "block";
     var animation = new CoreAnimation();

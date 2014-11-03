@@ -11,7 +11,6 @@ A widget bar
     width: 30px;
     cursor: pointer;
     text-align: center;
-    border-radius: 2px 2px 0px 0px;
     -webkit-transition:height 1s;
     -moz-transition:   height 1s;
     transition:        height 1s;
@@ -22,7 +21,7 @@ A widget bar
   }
   :host #emoticon{
     padding-top: 1px;
-    opacity: 0.95;
+    opacity: 0.9;
     font-family: HelveticaNeue-Medium, Arial;
     font-size: 12px;
     color: rgba(255,255,255,0.75);
@@ -34,7 +33,7 @@ A widget bar
     -webkit-transform: scale(0.75);
   }
   :host #ripple{
-    width: 23px;
+    width: 30px;
     overflow:hidden;
   }
   #favorite{
@@ -93,7 +92,7 @@ Polymer('sentiment-bar', {
             self.bar.style.height = socketData.bad+"px";
             self.ripple.style.height = socketData.bad+"px";
           } else {
-            self.bar.style.height = "20px";
+            self.bar.style.height =    "20px";
             self.ripple.style.height = "20px";
           }
           self.emoticon.innerHTML =":(";
@@ -102,10 +101,10 @@ Polymer('sentiment-bar', {
       } else if(sentiment == "very-negative"){
         if(!isNaN(socketData.terrible)){
           if(socketData.terrible > 20){
-            self.bar.style.height = socketData.terrible+"px";
+            self.bar.style.height    = socketData.terrible+"px";
             self.ripple.style.height = socketData.terrible+"px";
           } else {
-            self.bar.style.height = "20px";
+            self.bar.style.height    = "20px";
             self.ripple.style.height = "20px";
           }
           self.emoticon.innerHTML =":[";
