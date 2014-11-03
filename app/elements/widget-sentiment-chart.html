@@ -29,21 +29,21 @@ A widget bar
     backface-visibility: hidden;
   }
   :host #backButton {
-    display: none;
-    position: absolute;
-    top:  0px;
-    left: -25px;
     background: #107FC9;
+    display:  none;
+    position: absolute;
+    top:  25px;
+    left: -105px;
   }
   :host #backButtonExpand {
-    display: none;
-    position: absolute;
-    top:  0px;
-    left: -25px;
-    background: #107FC9;
-    display: none;
+    background:#107FC9;
+    display:   none;
+    position:  absolute;
+    top:     25px;
+    left:    -105px;
     z-index: 1;
   }
+
   :host paper-fab{
     transform: scale(.75);
     -webkit-transform: scale(.75);
@@ -64,47 +64,24 @@ A widget bar
   #metadata {
     display: none;
   }
-  #meta3{
-    display: none;
-  }
   </style>
-  <paper-fab icon="chevron-left"
-  class="mini"
-  id="backButton"
-  on-tap="{{backHandler}}"></paper-fab>
-  <paper-fab icon="undo"
-  class="mini" id="backButtonExpand"
-  on-tap="{{backExpandHandler}}"></paper-fab>
+  <paper-fab icon="chevron-left" class="mini" id="backButton" on-tap="{{backHandler}}"></paper-fab>
+  <paper-fab icon="undo" class="mini" id="backButtonExpand"   on-tap="{{backExpandHandler}}"></paper-fab>
   <div id="sentimentBar" on-tap="{{clickHandler}}" layout horizontal end>
-  <sentiment-bar id="bar1" val="0"
-  sentiment="very-negative" emoticon="true"
-  cardid="{{cardid}}" socket="{{socket}}">
-  </sentiment-bar>
-  <sentiment-bar id="bar2" val="0"
-  sentiment="negative" emoticon="true"
-  cardid="{{cardid}}" socket="{{socket}}">
-  </sentiment-bar>
-  <sentiment-bar id="bar3" val="0"
-  sentiment="neutral"  emoticon="true" heart="true"
-  cardid="{{cardid}}" socket="{{socket}}">
-  </sentiment-bar>
-  <sentiment-bar id="bar4" val="0"
-  sentiment="positive"  emoticon="true"
-  cardid="{{cardid}}" socket="{{socket}}">
-</sentiment-bar>
-<sentiment-bar id="bar5" val="0"
-  sentiment="very-positive" emoticon="true"
-  cardid="{{cardid}}" socket="{{socket}}">
-  </sentiment-bar>
-</div>
-<div id="metadata" layout horizontal>
-  <div id="meta1" class="subtitle"></div>
-  <div id="meta2" class="subtitle"></div>
-  <div id="meta3" class="subtitle"></div>
-  <div id="meta4" class="subtitle"></div>
-  <div id="meta5" class="subtitle"></div>
-</div>
-<x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
+    <sentiment-bar id="bar1" val="0" sentiment="very-negative" emoticon="true" cardid="{{cardid}}" socket="{{socket}}"></sentiment-bar>
+    <sentiment-bar id="bar2" val="0" sentiment="negative"      emoticon="true" cardid="{{cardid}}" socket="{{socket}}"></sentiment-bar>
+    <sentiment-bar id="bar3" val="0" sentiment="neutral"       emoticon="true" cardid="{{cardid}}" socket="{{socket}}"></sentiment-bar>
+    <sentiment-bar id="bar4" val="0" sentiment="positive"      emoticon="true" cardid="{{cardid}}" socket="{{socket}}"></sentiment-bar>
+    <sentiment-bar id="bar5" val="0" sentiment="very-positive" emoticon="true" cardid="{{cardid}}" socket="{{socket}}"></sentiment-bar>
+  </div>
+  <div id="metadata" layout horizontal>
+    <div id="meta1" class="subtitle"></div>
+    <div id="meta2" class="subtitle"></div>
+    <div id="meta3" class="subtitle"></div>
+    <div id="meta4" class="subtitle"></div>
+    <div id="meta5" class="subtitle"></div>
+  </div>
+  <x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
 </template>
 <script>
 Polymer('widget-sentiment-chart', {
@@ -608,22 +585,53 @@ Polymer('widget-sentiment-chart', {
     /*
     * Translate Sentiment Bars
     */
-    for(i=0; i <5; i++){
+    self.bar1.style.transform  = "translate(-40px, 0px)";
+    self.bar1.style.webkitTransform = "translate(-40px, 0px)";
+    self.bar1.style.transition = "all .4s";
+    self.bar1.setAttribute("expand","true");
 
-      self.sentimentBar.children[i].style.transform  = "translate("+(i+1.5)*20+"px, 0px)";
-      self.sentimentBar.children[i].style.webkitTransform = "translate("+(i+1.5)*20+"px, 0px)";
-      self.sentimentBar.children[i].style.transition = "all .4s";
-      self.sentimentBar.children[i].setAttribute("expand","true");
-    }
+    self.bar2.style.transform  = "translate(-20px, 0px)";
+    self.bar2.style.webkitTransform = "translate(-20px, 0px)";
+    self.bar2.style.transition = "all .4s";
+    self.bar2.setAttribute("expand","true");
+
+    self.bar4.style.transform  = "translate(20px, 0px)";
+    self.bar4.style.webkitTransform = "translate(20px, 0px)";
+    self.bar4.style.transition = "all .4s";
+    self.bar4.setAttribute("expand","true");
+
+    self.bar5.style.transform  = "translate(40px, 0px)";
+    self.bar5.style.webkitTransform = "translate(40px, 0px)";
+    self.bar5.style.transition = "all .4s";
+    self.bar5.setAttribute("expand","true");
+
     /*
     * Translate metadata
     */
-    for(j=0; j <5; j++){
-      self.metadata.children[j].style.transform ="translate("+(j+.75)*42+"px, 0px)";
-      self.metadata.children[j].style.webkitTransform ="translate("+(j+.75)*42+"px, 0px)";
-      self.metadata.children[j].style.transition = "all .4s";
-      self.metadata.children[j].style.webkitTransition = "all .4s";
-    }
+    self.meta1.style.transform ="translate(-30px, 0px)";
+    self.meta1.style.webkitTransform ="translate(-30px, 0px)";
+    self.meta1.style.transition = "all .4s";
+    self.meta1.style.webkitTransition = "all .4s";
+
+    self.meta2.style.transform ="translate(17px, 0px)";
+    self.meta2.style.webkitTransform ="translate(17px, 0px)";
+    self.meta2.style.transition = "all .4s";
+    self.meta2.style.webkitTransition = "all .4s";
+
+    self.meta3.style.transform ="translate(70px, 0px)";
+    self.meta3.style.webkitTransform ="translate(70px, 0px)";
+    self.meta3.style.transition = "all .4s";
+    self.meta3.style.webkitTransition = "all .4s";
+
+    self.meta4.style.transform ="translate(120px, 0px)";
+    self.meta4.style.webkitTransform ="translate(120px, 0px)";
+    self.meta4.style.transition = "all .4s";
+    self.meta4.style.webkitTransition = "all .4s";
+
+    self.meta5.style.transform ="translate(160px, 0px)";
+    self.meta5.style.webkitTransform ="translate(160px, 0px)";
+    self.meta5.style.transition = "all .4s";
+    self.meta5.style.webkitTransition = "all .4s";
   },
   backHandler: function(){
     var self = this.$;

@@ -4,49 +4,49 @@
 <!--
 A widget bar
 -->
-<polymer-element
-name= "sentiment-bar"
-attributes= "val sentiment heart emoticon expand cardid socket"
-on-tap= "{{tapHandler}}">
-<template>
-<style>
-:host #bar{
-  width: 23px;
-  cursor: pointer;
-  text-align: center;
-  -webkit-transition: height 1s;
-  -moz-transition: height 1s;
-  transition: height 1s;
-  border-radius: 2px 2px 0px 0px;
-  -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.45);
-  -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.45);
-  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.45);
-}
-:host #emoticon{
-  font-family: HelveticaNeue-Medium, Arial;
-  font-size: 12px;
-  color: rgba(255,255,255,0.75);
-}
-:host core-icon > svg {
-  fill: rgba(255,255,255,0.5);
-  transform:         scale(0.75);
-  -moz-transform:    scale(0.75);
-  -webkit-transform: scale(0.75);
-}
-:host #ripple{
-  width: 23px;
-  overflow:hidden;
-}
-#favorite{
-  top: -20px;
-}
-</style>
-<div id="bar">
-  <div id="emoticon"></div>
-  <core-icon icon='' size='24' id="favorite"></core-icon>
-  <paper-ripple id="ripple" fit class="recenteringTouch"></paper-ripple>
-</div>
-<x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
+<polymer-element name= "sentiment-bar" attributes= "val sentiment heart emoticon expand cardid socket" on-tap= "{{tapHandler}}">
+  <template>
+  <style>
+  :host #bar{
+    width: 30px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 2px 2px 0px 0px;
+    -webkit-transition:height 1s;
+    -moz-transition:   height 1s;
+    transition:        height 1s;
+    -webkit-box-shadow: 1px 2px 2px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow:    1px 2px 2px 0px rgba(0,0,0,0.35);
+    box-shadow:         1px 2px 2px 0px rgba(0,0,0,0.35);
+    border-bottom: 1px solid rgba(37,39,37,0.35);
+  }
+  :host #emoticon{
+    padding-top: 1px;
+    opacity: 0.95;
+    font-family: HelveticaNeue-Medium, Arial;
+    font-size: 12px;
+    color: rgba(255,255,255,0.75);
+  }
+  :host core-icon > svg {
+    fill: rgba(255,255,255,0.5);
+    transform:         scale(0.75);
+    -moz-transform:    scale(0.75);
+    -webkit-transform: scale(0.75);
+  }
+  :host #ripple{
+    width: 23px;
+    overflow:hidden;
+  }
+  #favorite{
+    top: -20px;
+  }
+  </style>
+  <div id="bar">
+    <div id="emoticon"></div>
+    <core-icon icon='' size='24' id="favorite"></core-icon>
+    <paper-ripple id="ripple" fit class="recenteringTouch"></paper-ripple>
+  </div>
+  <x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>
 </template>
 <script>
 Polymer('sentiment-bar', {
@@ -120,6 +120,7 @@ Polymer('sentiment-bar', {
             self.bar.style.height = "20px";
             self.ripple.style.height = "20px";
           }
+          self.emoticon.innerHTML =":|";
           scoope.asyncFire('sentiment-bar-updated', {msg: socketData.neutral.toFixed(0)})
         }
       }

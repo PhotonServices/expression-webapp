@@ -157,17 +157,21 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   </div>
   <div id="back" vertical layout>
     <div id="widgetContainer" vertical layout center>
+      <div flex></div>
       <widget-sentiment-chart id="sentimentChart"
       on-tap = "{{sentimentTap}}"
       cardid = "{{cardid}}"
       socket = "{{socket}}"
       ></widget-sentiment-chart>
+      <div flex></div>
+      <widget-folksonomy-list cardid="{{cardid}}" socket="{{socket}}"></widget-folksonomy-list>
+      <div flex></div>
     </div>
     <action-container></action-container>
-    <sentiment-ribbon cardid= "{{cardid}}" socket="{{socket}}" ></sentiment-ribbon>
+    <sentiment-ribbon cardid= "{{cardid}}" socket="{{socket}}" stats="true"></sentiment-ribbon>
     <h1 id="backTitle" class='title' on-tap="{{titleTapped}}">{{cardname}}</h1>
   </div>
-  <paper-shadow z="1" id="myShadow" animated></paper-shadow>
+  <paper-shadow z="1" id="myShadow" animated ></paper-shadow>
 </div>
 <widget-demography-counter id="counter" on-tap = "{{counterTap}}" cardid = "{{cardid}}" socket = "{{socket}}"></widget-demography-counter>
 <x-websocket id="cardSocket" url="{{socket}}" ></x-websocket>

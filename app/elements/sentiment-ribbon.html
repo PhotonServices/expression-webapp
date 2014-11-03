@@ -3,38 +3,65 @@
 <!--
 A widget bar
 -->
-<polymer-element name="sentiment-ribbon" layout horizontal center attributes="cardid socket">
+<polymer-element name="sentiment-ribbon" layout horizontal center attributes="cardid socket stats">
   <template>
-  <style>
-  :host{
-    width: 100%;
-    background: #FF8F29;
-    color: white;
-    height: 50px;
-  }
-  :host #text{
-    width: 100%;
-    font-weight: 300;
-    font-size: 18px;
-    color: white;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    cursor: pointer;
-    opacity: 0.75;
-    padding: 5px;
-  }
+    <template if="{{!stats}}">
+    <style>
+    :host{
+      width: 100%;
+      background: #FF8F29;
+      color: white;
+      height: 50px;
+    }
+    :host #text{
+      width: 100%;
+      font-weight: 300;
+      font-size: 18px;
+      color: white;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      cursor: pointer;
+      opacity: 0.75;
+      padding: 5px;
+    }
+  </style>
+  <marquee id="text"></marquee>
+  <x-websocket id="sentimentSocket"  url="{{socket}}"></x-websocket>
+  <x-websocket id="folksonomySocket" url="{{socket}}"></x-websocket>
+</template>
+<!-- Template: statistics overall -->
+<template if="{{stats}}">
+<style>
+:host{
+  width: 100%;
+  background: #FF8F29;
+  color: white;
+  height: 50px;
+}
+:host #text{
+  width: 100%;
+  font-weight: 300;
+  font-size: 18px;
+  color: white;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  opacity: 0.75;
+  padding: 5px;
 }
 </style>
-<marquee id="text"></marquee>
+<div id="text"></div>
 <x-websocket id="sentimentSocket"  url="{{socket}}"></x-websocket>
-<x-websocket id="folksonomySocket" url="{{socket}}"></x-websocket>
+</template>
 </template>
 <script>
 Polymer('sentiment-ribbon', {
   attached: function(){
     var self= this.$;
     var ribbon = this;
+    var stats = this.stats;
     var socket = this.socket;
     var cardid = this.cardid;
     var folksonomy = [];
@@ -53,6 +80,15 @@ Polymer('sentiment-ribbon', {
         ribbon.style.backgroundColor = "#F52E43";
       } else if (sentiment < 0.5 && sentiment > -0.5){
         ribbon.style.backgroundColor = "#FF8F29";
+      }
+      if(stats){
+        if(sentiment >= 0.5) {
+          self.text.innerHTML = "El sentimiento es positivo.";
+        } else if (sentiment <= -0.5) {
+          self.text.innerHTML = "El sentimiento es negativo.";
+        } else if (sentiment < 0.5 && sentiment > -0.5){
+          self.text.innerHTML = "El sentimiento es neutro.";
+        }
       }
     });
     /*
