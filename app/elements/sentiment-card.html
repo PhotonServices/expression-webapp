@@ -108,8 +108,8 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
 */
 :host #front #img {
   fill: white;
-  width: 200px;
-  height: 200px;
+  width: 195px;
+  height: 195px;
   display: block;
   margin: auto;
 }
@@ -151,7 +151,7 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
 <div id="card" flex auto>
   <div id="cardid">{{cardid}}</div>
   <div id="front" select="front" vertical layout style="height:300px">
-    <core-icon id="img" icon="{{cardicon}}" flex self-stretch></core-icon>
+    <core-icon id="img" icon="{{cardicon}}"></core-icon>
     <sentiment-ribbon cardid= "{{cardid}}" socket="{{socket}}" ></sentiment-ribbon>
     <div id="frontTitle" class="title">{{cardname}}</div>
   </div>

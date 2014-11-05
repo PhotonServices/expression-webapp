@@ -8,16 +8,16 @@ A widget bar
   <template>
   <style>
   :host #bar{
-    width: 30px;
+    width: 27px;
     cursor: pointer;
     text-align: center;
     -webkit-transition:height 1s;
     -moz-transition:   height 1s;
     transition:        height 1s;
+    border-bottom: 3px solid rgba(37,39,37,0.15);
     -webkit-box-shadow: 1px 2px 2px 0px rgba(0,0,0,0.35);
     -moz-box-shadow:    1px 2px 2px 0px rgba(0,0,0,0.35);
     box-shadow:         1px 2px 2px 0px rgba(0,0,0,0.35);
-    border-bottom: 1px solid rgba(37,39,37,0.35);
   }
   :host #emoticon{
     padding-top: 1px;
@@ -33,7 +33,7 @@ A widget bar
     -webkit-transform: scale(0.75);
   }
   :host #ripple{
-    width: 30px;
+    width: 27px;
     overflow:hidden;
   }
   #favorite{
@@ -65,8 +65,8 @@ Polymer('sentiment-bar', {
       if(sentiment == "very-positive"){
         if(!isNaN(socketData.excellent)){
           if(socketData.excellent > 20){
-            self.bar.style.height = socketData.excellent+"px";
-            self.ripple.style.height = socketData.excellent+"px";
+            self.bar.style.height = socketData.excellent/2+"px";
+            self.ripple.style.height = socketData.excellent/2+"px";
           } else {
             self.bar.style.height = "20px";
             self.ripple.style.height = "20px";
@@ -77,8 +77,8 @@ Polymer('sentiment-bar', {
       } else if(sentiment == "positive"){
         if(!isNaN(socketData.good)){
           if(socketData.good > 20){
-            self.bar.style.height = socketData.good+"px";
-            self.ripple.style.height = socketData.good+"px";
+            self.bar.style.height = socketData.good/2+"px";
+            self.ripple.style.height = socketData.good/2+"px";
           } else {
             self.bar.style.height = "20px";
             self.ripple.style.height = "20px";
@@ -89,8 +89,8 @@ Polymer('sentiment-bar', {
       } else if(sentiment == "negative"){
         if(!isNaN(socketData.bad)){
           if(socketData.bad > 20){
-            self.bar.style.height = socketData.bad+"px";
-            self.ripple.style.height = socketData.bad+"px";
+            self.bar.style.height = socketData.bad*.75+"px";
+            self.ripple.style.height = socketData.bad*.75+"px";
           } else {
             self.bar.style.height =    "20px";
             self.ripple.style.height = "20px";
@@ -101,8 +101,8 @@ Polymer('sentiment-bar', {
       } else if(sentiment == "very-negative"){
         if(!isNaN(socketData.terrible)){
           if(socketData.terrible > 20){
-            self.bar.style.height    = socketData.terrible+"px";
-            self.ripple.style.height = socketData.terrible+"px";
+            self.bar.style.height    = socketData.terrible*.75+"px";
+            self.ripple.style.height = socketData.terrible*.75+"px";
           } else {
             self.bar.style.height    = "20px";
             self.ripple.style.height = "20px";
@@ -113,8 +113,8 @@ Polymer('sentiment-bar', {
       } else if(sentiment == "neutral"){
         if(!isNaN(socketData.neutral)){
           if(socketData.neutral > 20){
-            self.bar.style.height = socketData.neutral+"px";
-            self.ripple.style.height = socketData.neutral+"px";
+            self.bar.style.height = socketData.neutral*.75+"px";
+            self.ripple.style.height = socketData.neutral*.75+"px";
           } else {
             self.bar.style.height = "20px";
             self.ripple.style.height = "20px";

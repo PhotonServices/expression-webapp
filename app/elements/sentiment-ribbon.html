@@ -12,6 +12,8 @@ A widget bar
       background: #FF8F29;
       color: white;
       height: 50px;
+      border-top:    3px solid rgba(30,30,30,0.015);
+      border-bottom: 3px solid rgba(30,30,30,0.015);
     }
     :host #text{
       width: 100%;
@@ -25,35 +27,37 @@ A widget bar
       opacity: 0.75;
       padding: 5px;
     }
+    </style>
+    <marquee id="text"></marquee>
+    <x-websocket id="sentimentSocket"  url="{{socket}}"></x-websocket>
+    <x-websocket id="folksonomySocket" url="{{socket}}"></x-websocket>
+  </template>
+  <!-- Template: statistics overall -->
+  <template if="{{stats}}">
+  <style>
+  :host{
+    width: 100%;
+    background: #FF8F29;
+    color: white;
+    height: 50px;
+    border-top:    3px solid rgba(30,30,30,0.015);
+    border-bottom: 3px solid rgba(30,30,30,0.015);
+  }
+  :host #text{
+    width: 100%;
+    font-weight: 300;
+    font-size: 18px;
+    color: white;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    opacity: 0.75;
+    padding: 5px;
+  }
   </style>
-  <marquee id="text"></marquee>
+  <div id="text"></div>
   <x-websocket id="sentimentSocket"  url="{{socket}}"></x-websocket>
-  <x-websocket id="folksonomySocket" url="{{socket}}"></x-websocket>
-</template>
-<!-- Template: statistics overall -->
-<template if="{{stats}}">
-<style>
-:host{
-  width: 100%;
-  background: #FF8F29;
-  color: white;
-  height: 50px;
-}
-:host #text{
-  width: 100%;
-  font-weight: 300;
-  font-size: 18px;
-  color: white;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  cursor: pointer;
-  opacity: 0.75;
-  padding: 5px;
-}
-</style>
-<div id="text"></div>
-<x-websocket id="sentimentSocket"  url="{{socket}}"></x-websocket>
 </template>
 </template>
 <script>
@@ -61,7 +65,7 @@ Polymer('sentiment-ribbon', {
   attached: function(){
     var self= this.$;
     var ribbon = this;
-    var stats = this.stats;
+    var stats  = this.stats;
     var socket = this.socket;
     var cardid = this.cardid;
     var folksonomy = [];
@@ -101,17 +105,19 @@ Polymer('sentiment-ribbon', {
     /*
     * WebSocket event handler.
     */
-    self.folksonomySocket.addEventListener("open", function() {
-      self.folksonomySocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':folksonomy-global:add"}');
-    });
-    self.folksonomySocket.addEventListener("message", function(event) {
-      var data = JSON.parse(event.detail.data).data;
-      if((data.substr(data.length-3) != "add")) {
-        folksonomy[folksonomy.length] = data;
-      }
-      self.text.innerHTML  = folksonomy
-      animation.play();
-    });
+    if(self.folksonomySocket) {
+      self.folksonomySocket.addEventListener("open", function() {
+        self.folksonomySocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':folksonomy-global:add"}');
+      });
+      self.folksonomySocket.addEventListener("message", function(event) {
+        var data = JSON.parse(event.detail.data).data;
+        if((data.substr(data.length-3) != "add")) {
+          folksonomy[folksonomy.length] = data;
+        }
+        self.text.innerHTML  = folksonomy
+        animation.play();
+      });
+    }
   }
 });
 </script>
