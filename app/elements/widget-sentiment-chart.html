@@ -129,6 +129,11 @@ Polymer('widget-sentiment-chart', {
     self.bar1.addEventListener('sentiment-bar-expanded', function(e) {
       self.backButton.style.display = "none";
       self.backButtonExpand.style.display = "block";
+
+      self.bar1.style.transform  = "translate(47px, 0px)";
+      self.bar1.style.webkitTransform = "translate(47px, 0px)";
+      self.bar1.style.transition = "all .4s";
+
       var animation = new CoreAnimation();
       animation.duration = 100;
       animation.fill = "forwards"
@@ -160,7 +165,7 @@ Polymer('widget-sentiment-chart', {
         animation.fill = "forwards"
         animation.keyframes = [
         {transform: "translate(0px,0px) scale(1)"},
-        {transform: "translate(55px,-100px) scale(2)"}];
+        {transform: "translate(210px,-30px) scale(2)"}];
         animation.target = self.metadata;
         animation.play();
         /*
@@ -199,8 +204,8 @@ Polymer('widget-sentiment-chart', {
           animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(0px,0px) scale(.65)",opacity:"0"},
-          {transform: "translate(0px,0px) scale(.65)",opacity:"1"}];
+          {transform: "translate(-130px,18px) scale(.65)",opacity:"0"},
+          {transform: "translate(-130px,18px) scale(.65)",opacity:"1"}];
           animation.target = folksonomyList;
           animation.play();
         });
@@ -213,8 +218,8 @@ Polymer('widget-sentiment-chart', {
       self.backButton.style.display = "none";
       self.backButtonExpand.style.display = "block";
 
-      self.bar2.style.transform  = "translate(7px, 0px)";
-      self.bar2.style.webkitTransform = "translate(7px, 0px)";
+      self.bar2.style.transform  = "translate(27px, 0px)";
+      self.bar2.style.webkitTransform = "translate(27px, 0px)";
       self.bar2.style.transition = "all .4s";
 
       var animation = new CoreAnimation();
@@ -248,7 +253,7 @@ Polymer('widget-sentiment-chart', {
         animation.fill = "forwards"
         animation.keyframes = [
         {transform: "translate(0px,0px) scale(1)"},
-        {transform: "translate(-30px,-100px) scale(2)"}];
+        {transform: "translate(130px,-30px) scale(2)"}];
         animation.target = self.metadata;
         animation.play();
         /*
@@ -287,8 +292,8 @@ Polymer('widget-sentiment-chart', {
           animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(45px,0px) scale(0.65)",opacity:"0"},
-          {transform: "translate(45px,0px) scale(0.65)",opacity:"1"}];
+          {transform: "translate(-90px,20px) scale(0.65)",opacity:"0"},
+          {transform: "translate(-90px,20px) scale(0.65)",opacity:"1"}];
           animation.target = folksonomyList;
           animation.play();
         });
@@ -420,7 +425,7 @@ Polymer('widget-sentiment-chart', {
         animation.fill = "forwards"
         animation.keyframes = [
         {transform: "translate(0px,0px) scale(1)"},
-        {transform: "translate(-190px,-100px) scale(2)"}];
+        {transform: "translate(-70px,-30px) scale(2)"}];
         animation.target = self.metadata;
         animation.play();
         /*
@@ -459,8 +464,8 @@ Polymer('widget-sentiment-chart', {
           animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(130px,0px) scale(0.65)",opacity:"0"},
-          {transform: "translate(130px,0px) scale(0.65)",opacity:"1"}];
+          {transform: "translate(40px,20px) scale(0.65)",opacity:"0"},
+          {transform: "translate(40px,20px) scale(0.65)",opacity:"1"}];
           animation.target = folksonomyList;
           animation.play();
         });
@@ -506,7 +511,7 @@ Polymer('widget-sentiment-chart', {
         animation.fill = "forwards"
         animation.keyframes = [
         {transform: "translate(0px,0px) scale(1)"},
-        {transform: "translate(-280px,-100px) scale(2)"}];
+        {transform: "translate(-150px,-30px) scale(2)"}];
         animation.target = self.metadata;
         animation.play();
         /*
@@ -545,8 +550,8 @@ Polymer('widget-sentiment-chart', {
           animation.duration = 800;
           animation.fill = "forwards"
           animation.keyframes = [
-          {transform: "translate(180px,0px) scale(0.65)",opacity:"0"},
-          {transform: "translate(180px,0px) scale(0.65)",opacity:"1"}];
+          {transform: "translate(40px,20px) scale(0.65)",opacity:"0"},
+          {transform: "translate(40px,20px) scale(0.65)",opacity:"1"}];
           animation.target = folksonomyList;
           animation.play();
         });
@@ -733,6 +738,7 @@ Polymer('widget-sentiment-chart', {
       animation.target = self.metadata;
       animation.play();
     });
+    this.asyncFire('back-sentiment-expand-handler');
   }
 });
 </script>
