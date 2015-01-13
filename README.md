@@ -7,3 +7,10 @@ npm install
 bower update
 grunt serve
 ```
+to update devdepenencies in package.json:
+
+```bash
+$ npm install -g npm-check-updates
+$ npm-check-updates -u
+$ npm install
+```
