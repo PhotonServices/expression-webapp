@@ -24,6 +24,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     background: #107FC9;
     width:  100%;
     height: 100%;
+    z-index: 100000;
   }
   :host paper-fab{
     background: #0D6FB0;
@@ -93,6 +94,9 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
     font-weight: 300;
     z-index: 1;
   }
+  :host paper-input::shadow paper-input-decorator{
+    width: 100%;
+  }
   :host paper-toast::shadow svg {
     fill: #ff0035;
   }
@@ -129,7 +133,7 @@ Author: Francisco Gutiérrez (fsalvador23@gmail.com)
       <h1 id="title">{{cardtitle}}</h1>
     </div>
     <div id="middle" layout horizontal center>
-      <paper-input id="input" floatingLabel="true" inputValue="{{value}}" multiline label="Yo pienso que…" layout horizontal flex></paper-input>
+      <paper-input id="input" floatingLabel="true" value="{{value}}" label="Yo pienso que…" layout horizontal flex></paper-input>
     </div>
     <div id="bottom" horizontal end-justified layout>
       <span id="count" class="textcount" self-center>0</span>
