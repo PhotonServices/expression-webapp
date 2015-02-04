@@ -1,6 +1,6 @@
 {
   "name": "expression-components",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.5",
