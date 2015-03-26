@@ -114,6 +114,7 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   margin: auto;
 }
 :host .title {
+  position: absolute;
   opacity: .90;
   margin: 10px;
   width: auto;
@@ -125,6 +126,10 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   text-overflow: ellipsis;
   cursor: pointer;
   font-family: 'Roboto', sans-serif;
+  bottom: 0px;
+}
+:host #backTitle {
+  bottom: 0px;
 }
 :host widget-container{
   top:  40px;
@@ -152,7 +157,7 @@ attributes="sentiment cardicon cardid cardname socket" flex auto>
   <div id="cardid">{{cardid}}</div>
   <div id="front" select="front" vertical layout style="height:300px">
     <core-icon id="img" icon="{{cardicon}}"></core-icon>
-    <sentiment-ribbon cardid= "{{cardid}}" socket="{{socket}}" ></sentiment-ribbon>
+    <!-- <sentiment-ribbon cardid= "{{cardid}}" socket="{{socket}}" ></sentiment-ribbon> -->
     <div id="frontTitle" class="title">{{cardname}}</div>
   </div>
   <div id="back" vertical layout>

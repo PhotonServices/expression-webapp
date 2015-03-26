@@ -7,7 +7,7 @@ A widget bar
   <template>
     <template if="{{!stats}}">
     <style>
-    :host{
+    :host {
       width: 100%;
       background: #FF8F29;
       color: white;
@@ -40,8 +40,6 @@ A widget bar
     background: #FF8F29;
     color: white;
     height: 50px;
-    border-top:    3px solid rgba(30,30,30,0.015);
-    border-bottom: 3px solid rgba(30,30,30,0.015);
   }
   :host #text{
     width: 100%;
@@ -69,6 +67,14 @@ Polymer('sentiment-ribbon', {
     var socket = this.socket;
     var cardid = this.cardid;
     var folksonomy = [];
+
+    ribbon.style.color  = "white";
+    ribbon.style.height = "50px";
+    ribbon.style.cursor = "pointer";
+    ribbon.style.borderTop    = "3px solid rgba(30,30,30,0.015)";
+    ribbon.style.borderBottom = "3px solid rgba(30,30,30,0.015)";
+    self.text.style.opacity   = "0.75";
+
     /*
     * Set the background accordinly to the sentiment.
     */

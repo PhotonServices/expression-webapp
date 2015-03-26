@@ -2,30 +2,7 @@
 <link rel="import" href="../bower_components/x-websocket/dist/x-websocket.html">
 <link rel="import" href="../bower_components/core-animation/core-animation.html">
 <link href='//fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
-<!--
-@author Francisco Gutiérrez - fsalvador23@gmail.com
-/* Folksonomy input demo:
-folksonomy='{"folksonomy": [
-"Peña Nieto",
-"Reforma",
-"Gasolina",
-"Capital",
-"Precio",
-"Familia",
-"Reforma",
-"Gasolina",
-"Capital",
-"Precio",
-"Familia",
-"Reforma",
-"Gasolina",
-"Capital",
-"Precio",
-"Familia",
-"Ice Bucket Challenge"
-]}'
-*/
--->
+
 <polymer-element name="widget-folksonomy-list"
 attributes="folksonomy scrolling cardid socket sentiment"
 on-tap="{{tapHandler}}" vertical layout center>
@@ -82,9 +59,11 @@ Polymer('widget-folksonomy-list', {
     anm2.duration = 1000;
     anm2.keyframes = [{opacity: 0},{opacity: 1}];
     anm2.target = self.right;
+
     /*
-    * WebSocket event handler.
-    */
+     * WebSocket event handler.
+     */
+     
     self.cardSocket.addEventListener("open", function() {
       if(!sentiment){
         self.cardSocket.send('{"path":"events","message":"subscribe","content":"'+cardid+':folksonomy-global:add"}');

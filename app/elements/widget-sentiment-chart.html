@@ -76,8 +76,8 @@ A widget bar
     margin-bottom: -10px;
   }*/
   </style>
-  <paper-fab icon="chevron-left" class="mini" id="backButton" on-tap="{{backHandler}}"></paper-fab>
-  <paper-fab icon="undo" class="mini" id="backButtonExpand"   on-tap="{{backExpandHandler}}"></paper-fab>
+  <paper-fab icon="chevron-left" mini id="backButton" on-tap="{{backHandler}}"></paper-fab>
+  <paper-fab icon="undo" mini id="backButtonExpand"   on-tap="{{backExpandHandler}}"></paper-fab>
   <div id="sentimentBar" on-tap="{{clickHandler}}" layout horizontal end>
     <sentiment-bar id="bar1" val="0" sentiment="very-negative" emoticon="true" cardid="{{cardid}}" socket="{{socket}}"></sentiment-bar>
     <sentiment-bar id="bar2" val="0" sentiment="negative"      emoticon="true" cardid="{{cardid}}" socket="{{socket}}"></sentiment-bar>
